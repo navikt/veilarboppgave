@@ -1,4 +1,4 @@
-package no.nav.brukerdialog.oppstartsbilde;
+package no.nav.fo.veilarboppgave;
 
 
 import no.nav.dialogarena.config.DevelopmentSecurity;
