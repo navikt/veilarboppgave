@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://appconfig.aura.nav.no http://maven.adeo.no/xsd/appconfig.xsd">
+
+    <name>veilarboppgave</name>
+
+    <selftest>
+        <path>veilarboppgave/internal/selftest</path>
+    </selftest>
+
+    <artifacts>
+        <ear groupId="no.nav.brukerdialog" artifactId="veilarboppgave-jee"/>
+    </artifacts>
+
+    <resources>
+        <rest alias="veilarblogin.redirect-url" mapToProperty="oidc-redirect" />
+        <baseUrl alias="isso-host"/>
+        <baseUrl alias="isso-jwks"/>
+        <baseUrl alias="isso-issuer"/>
+        <credential alias="isso-rp-user"/>
+        <baseUrl alias="isso.isalive"/>
+    </resources>
+
+    <exposed-services>
+        <exposedRest path="/veilarboppgave/api/login" name="veilarboppgave.redirect-url" description="Login for veilarb"/>
+    </exposed-services>
+
+    <loadBalancer isAlive="/veilarboppgave/internal/isAlive" />
+    <security serviceUserResourceAlias="srvveilarboppgave">
+        <logins>
+            <openIdConnect moduleClass="no.nav.aura.loginModule.JWTLoginModule">
+                <contextRoot>/veilarboppgave/api/login</contextRoot>
+                <contextRoot>/veilarbpersonflatefs/api/login</contextRoot> <!--Denne ligger her midlertidig fordi den er hardkodet inn i test-config-->
+            </openIdConnect>
+        </logins>
+    </security>
+
+    <serverOptions>
+        <memoryParameters resourceAlias="veilarb-memparams"/>
+    </serverOptions>
+</application>
