@@ -1,6 +1,8 @@
 package no.nav.fo.veilarboppgave.norg;
 
 import lombok.extern.slf4j.Slf4j;
+import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
+import no.nav.fo.veilarboppgave.domene.OrganisasjonsEnhet;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.ArbeidsfordelingV1;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.FinnBehandlendeEnhetListeUgyldigInput;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSArbeidsfordelingKriterier;

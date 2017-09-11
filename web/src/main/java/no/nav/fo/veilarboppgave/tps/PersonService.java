@@ -2,6 +2,7 @@ package no.nav.fo.veilarboppgave.tps;
 
 
 import lombok.extern.slf4j.Slf4j;
+import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.tjeneste.virksomhet.person.v3.HentGeografiskTilknytningPersonIkkeFunnet;
 import no.nav.tjeneste.virksomhet.person.v3.HentGeografiskTilknytningSikkerhetsbegrensing;
 import no.nav.tjeneste.virksomhet.person.v3.PersonV3;
