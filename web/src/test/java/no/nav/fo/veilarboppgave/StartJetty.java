@@ -11,7 +11,7 @@ import static no.nav.sbl.dialogarena.common.jetty.JettyStarterUtils.*;
 public class StartJetty {
 
     public static final String CONTEXT_NAME = "veilarboppgave";
-    public static final int PORT = 8930;
+    public static final int PORT = 8940;
 
 
     public static void main(String[] args) throws Exception {
@@ -19,7 +19,7 @@ public class StartJetty {
                         .at(CONTEXT_NAME)
                         .loadProperties("/test.properties")
                         .port(PORT)
-                , new DevelopmentSecurity.ISSOSecurityConfig(CONTEXT_NAME,"t6")).buildJetty();
+                , new DevelopmentSecurity.ISSOSecurityConfig(CONTEXT_NAME,"t4")).buildJetty();
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
     }
 

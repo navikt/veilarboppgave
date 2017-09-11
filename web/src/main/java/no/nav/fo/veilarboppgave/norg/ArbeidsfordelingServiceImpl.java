@@ -26,8 +26,6 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
 
     @Override
     public List<OrganisasjonsEnhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning) {
-
-
         List<OrganisasjonsEnhet> enheter = emptyList();
         try {
             WSGeografi wsGeografi = new WSGeografi().withValue(geografiskTilknytning.getGeofrafiskTilknytning());
