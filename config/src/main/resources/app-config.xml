@@ -21,11 +21,11 @@
         <baseUrl alias="isso.isalive"/>
         <webservice mapToProperty="personV3.endpoint" alias="virksomhet:Person_v3"/>
         <webservice mapToProperty="arbeidsfordelingV1.endpoint" alias="virksomhet:Arbeidsfordeling_v1"/>
+        <applicationCertificate alias="srvveilarboppgave"/>
     </resources>
 
     <loadBalancer isAlive="/veilarboppgave/internal/isAlive" />
 
-    <applicationCertificate alias="srvveilarboppgave"/>
     <security serviceUserResourceAlias="srvveilarboppgave">
         <logins/>
     </security>
