@@ -9,15 +9,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PersonConfig {
 
+    private PersonV3 personV3Ping = new CXFClient<>(PersonV3.class)
+            .configureStsForSystemUserInFSS()
+            .build();
+
     @Bean
     public PersonV3 personV3() {
         return new CXFClient<>(PersonV3.class)
-                .configureStsForSystemUserInFSS()
+                .configureStsForOnBehalfOfWithJWT()
                 .build();
     }
 
     @Bean
     public Pingable arbeidsfordelingV1Ping() {
+
         Pingable.Ping.PingMetadata metadata = new Pingable.Ping.PingMetadata(
                 "PersonService via SOAP" + System.getProperty("person.endpoint.url"),
                 "Sjekker om Person-tjenesten svarer.",
@@ -26,13 +31,11 @@ public class PersonConfig {
 
         return () -> {
             try {
-                personV3().ping();
+                personV3Ping.ping();
                 return Pingable.Ping.lyktes(metadata);
             } catch (Exception e) {
                 return Pingable.Ping.feilet(metadata, e);
             }
         };
-
     }
-
 }
