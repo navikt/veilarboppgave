@@ -21,10 +21,10 @@ public class PersonConfig {
     }
 
     @Bean
-    public Pingable arbeidsfordelingV1Ping() {
+    public Pingable personV3Ping() {
 
         Pingable.Ping.PingMetadata metadata = new Pingable.Ping.PingMetadata(
-                "PersonService via SOAP" + System.getProperty("personV3.endpoint.url"),
+                "PersonService via SOAP " + System.getProperty("personV3.endpoint.url"),
                 "Sjekker om Person-tjenesten svarer.",
                 true
         );
