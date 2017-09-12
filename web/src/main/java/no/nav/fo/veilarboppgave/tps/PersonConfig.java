@@ -24,7 +24,7 @@ public class PersonConfig {
     public Pingable arbeidsfordelingV1Ping() {
 
         Pingable.Ping.PingMetadata metadata = new Pingable.Ping.PingMetadata(
-                "PersonService via SOAP" + System.getProperty("person.endpoint.url"),
+                "PersonService via SOAP" + System.getProperty("personV3.endpoint.url"),
                 "Sjekker om Person-tjenesten svarer.",
                 true
         );

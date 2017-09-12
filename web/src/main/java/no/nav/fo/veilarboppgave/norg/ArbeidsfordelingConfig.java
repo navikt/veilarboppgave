@@ -19,7 +19,7 @@ public class ArbeidsfordelingConfig {
     @Bean
     public Pingable arbeidsfordelingV1Ping() {
         Pingable.Ping.PingMetadata metadata = new Pingable.Ping.PingMetadata(
-                "Arbeidsfordeling via SOAP" + System.getProperty("arbeidsfordeling.endpoint.url"),
+                "Arbeidsfordeling via SOAP" + System.getProperty("arbeidsfordelingV1.endpoint.url"),
                 "Sjekker om Arbeidsfordeling-tjenesten svarer.",
                 true
         );
