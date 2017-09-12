@@ -25,6 +25,10 @@
 
     <loadBalancer isAlive="/veilarboppgave/internal/isAlive" />
 
+    <security serviceUserResourceAlias="srvveilarboppgave">
+        <logins/>
+    </security>
+
     <serverOptions>
         <memoryParameters resourceAlias="veilarb-memparams"/>
     </serverOptions>
