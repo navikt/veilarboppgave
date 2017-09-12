@@ -25,6 +25,7 @@
 
     <loadBalancer isAlive="/veilarboppgave/internal/isAlive" />
 
+    <applicationCertificate alias="srvveilarboppgave"/>
     <security serviceUserResourceAlias="srvveilarboppgave">
         <logins/>
     </security>
