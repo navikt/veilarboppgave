@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class PersonConfig {
 
     private PersonV3 personV3Ping = new CXFClient<>(PersonV3.class)
+            .address(System.getProperty("personV3.endpoint.url"))
             .configureStsForSystemUserInFSS()
             .build();
 

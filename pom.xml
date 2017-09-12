@@ -30,9 +30,9 @@
         <!--api-app-->
         <dependencies>
             <dependency>
-                <groupId>no.nav.sbl.dialogarena</groupId>
-                <artifactId>api-app-bom</artifactId>
-                <version>RELEASE</version>
+                <groupId>no.nav.sbl</groupId>
+                <artifactId>bom</artifactId>
+                <version>RELEASE</version> <!-- TODO lås denne til samme versjon som mor-pommen før prodsetting -->
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

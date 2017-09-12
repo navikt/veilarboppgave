@@ -10,16 +10,16 @@ import static no.nav.sbl.dialogarena.common.jetty.JettyStarterUtils.*;
 
 public class StartJetty {
 
-    public static final String CONTEXT_NAME = "veilarboppgave";
+    public static final String APPLICATION_NAME = "veilarboppgave";
     public static final int PORT = 8940;
 
 
     public static void main(String[] args) throws Exception {
         Jetty jetty = setupISSO(usingWar()
-                        .at(CONTEXT_NAME)
+                        .at(APPLICATION_NAME)
                         .loadProperties("/test.properties")
                         .port(PORT)
-                , new DevelopmentSecurity.ISSOSecurityConfig(CONTEXT_NAME,"t4")).buildJetty();
+                , new DevelopmentSecurity.ISSOSecurityConfig(APPLICATION_NAME)).buildJetty();
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
     }
 

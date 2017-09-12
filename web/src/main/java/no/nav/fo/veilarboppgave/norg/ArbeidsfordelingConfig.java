@@ -12,21 +12,29 @@ public class ArbeidsfordelingConfig {
     @Bean
     public ArbeidsfordelingV1 arbeidsfordelingV1() {
         return new CXFClient<>(ArbeidsfordelingV1.class)
-                .configureStsForSystemUserInFSS()
+                .address(System.getProperty("arbeidsfordelingV1.endpoint.url"))
+                .configureStsForOnBehalfOfWithJWT()
                 .build();
     }
 
     @Bean
     public Pingable arbeidsfordelingV1Ping() {
+
+        ArbeidsfordelingV1 arbeidsfordelingV1 = new CXFClient<>(ArbeidsfordelingV1.class)
+                .address(System.getProperty("arbeidsfordelingV1.endpoint.url"))
+                .configureStsForSystemUserInFSS()
+                .build();
+
+
         Pingable.Ping.PingMetadata metadata = new Pingable.Ping.PingMetadata(
-                "Arbeidsfordeling via SOAP" + System.getProperty("arbeidsfordelingV1.endpoint.url"),
+                "Arbeidsfordeling via SOAP " + System.getProperty("arbeidsfordelingV1.endpoint.url"),
                 "Sjekker om Arbeidsfordeling-tjenesten svarer.",
                 true
         );
 
         return () -> {
             try {
-                arbeidsfordelingV1().ping();
+                arbeidsfordelingV1.ping();
                 return Pingable.Ping.lyktes(metadata);
             } catch (Exception e) {
                 return Pingable.Ping.feilet(metadata, e);
