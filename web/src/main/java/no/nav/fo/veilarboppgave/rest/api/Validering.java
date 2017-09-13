@@ -14,7 +14,7 @@ public class Validering {
     @Inject
     private static PepClient pepClient;
 
-    public static Optional<String> valider(String data) {
+    public static Optional<String> of(String data) {
         return ofNullable(data);
     }
 

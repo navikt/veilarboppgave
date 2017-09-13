@@ -35,9 +35,10 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
             WSFinnBehandlendeEnhetListeRequest request = new WSFinnBehandlendeEnhetListeRequest().withArbeidsfordelingKriterier(arbeidsfordelingKriterier);
             WSFinnBehandlendeEnhetListeResponse response = arbeidsfordelingSoapTjeneste.finnBehandlendeEnhetListe(request);
             List<WSOrganisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
-             enheter = behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
-        } catch (FinnBehandlendeEnhetListeUgyldigInput finnBehandlendeEnhetListeUgyldigInput) {
+            enheter = behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
+        } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
             log.warn(format("Kunne ikke finne behandlende enheter for geografisk tilknytning %s", geografiskTilknytning));
+            throw new RuntimeException(e);
         }
         return enheter;
     }

@@ -1,5 +1,7 @@
 package no.nav.fo.veilarboppgave.rest.api;
 
+import no.nav.fo.veilarboppgave.domene.OppgaveId;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,7 +16,10 @@ public class OppgaveRessurs {
 
     @POST
     public OppgaveId opprettOppgave(OppgaveDTO oppgave) {
-        //TODO: Sjekk tilgang!!
+        Validering.of(oppgave.getFnr())
+                .map(Validering::erGyldigFnr)
+                .map(Validering::sjekkTilgangTilBruker);
+
         return OppgaveId.of(1);
     }
 }

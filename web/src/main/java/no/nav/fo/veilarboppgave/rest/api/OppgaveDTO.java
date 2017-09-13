@@ -4,6 +4,7 @@ import lombok.Value;
 
 @Value
 public class OppgaveDTO {
+    String fnr;
     String fagomradeKode;
     String oppgavetypeKode;
     String prioritetKode;

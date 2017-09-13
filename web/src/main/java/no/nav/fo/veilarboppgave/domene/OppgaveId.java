@@ -1,4 +1,4 @@
-package no.nav.fo.veilarboppgave.rest.api;
+package no.nav.fo.veilarboppgave.domene;
 
 import lombok.Value;
 
