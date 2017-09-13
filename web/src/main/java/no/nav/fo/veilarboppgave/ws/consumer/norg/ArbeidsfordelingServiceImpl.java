@@ -14,7 +14,6 @@ import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlend
 import java.util.List;
 
 import static java.lang.String.format;
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
@@ -28,18 +27,16 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
 
     @Override
     public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning) {
-        List<Enhet> enheter = emptyList();
         try {
             WSGeografi wsGeografi = new WSGeografi().withValue(geografiskTilknytning.getGeofrafiskTilknytning());
             WSArbeidsfordelingKriterier arbeidsfordelingKriterier = new WSArbeidsfordelingKriterier().withGeografiskTilknytning(wsGeografi);
             WSFinnBehandlendeEnhetListeRequest request = new WSFinnBehandlendeEnhetListeRequest().withArbeidsfordelingKriterier(arbeidsfordelingKriterier);
             WSFinnBehandlendeEnhetListeResponse response = arbeidsfordelingSoapTjeneste.finnBehandlendeEnhetListe(request);
             List<WSOrganisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
-            enheter = behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
+            return behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
         } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
             log.warn(format("Kunne ikke finne behandlende enheter for geografisk tilknytning %s", geografiskTilknytning));
             throw new RuntimeException(e);
         }
-        return enheter;
     }
 }
