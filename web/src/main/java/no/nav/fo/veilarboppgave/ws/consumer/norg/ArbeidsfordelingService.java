@@ -1,4 +1,4 @@
-package no.nav.fo.veilarboppgave.norg;
+package no.nav.fo.veilarboppgave.ws.consumer.norg;
 
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;

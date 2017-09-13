@@ -2,11 +2,14 @@ package no.nav.fo.veilarboppgave.config;
 
 import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.security.PepClient;
-import no.nav.fo.veilarboppgave.norg.ArbeidsfordelingService;
-import no.nav.fo.veilarboppgave.norg.ArbeidsfordelingServiceImpl;
 import no.nav.fo.veilarboppgave.rest.api.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.OppgaveRessurs;
-import no.nav.fo.veilarboppgave.tps.PersonServiceImpl;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingServiceImpl;
+import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
+import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonServiceImpl;
 import no.nav.sbl.dialogarena.common.abac.pep.Pep;
 import no.nav.sbl.dialogarena.common.abac.pep.context.AbacContext;
 import no.nav.sbl.dialogarena.common.cxf.CXFClient;
@@ -39,8 +42,13 @@ public class ApplicationConfig implements ApiApplication {
     }
 
     @Bean
-    public PersonServiceImpl personService() {
+    public PersonService personService() {
         return new PersonServiceImpl(personV3());
+    }
+
+    @Bean
+    public OppgaveService oppgaveService() {
+        return new OppgaveServiceMock();
     }
 
     @Bean

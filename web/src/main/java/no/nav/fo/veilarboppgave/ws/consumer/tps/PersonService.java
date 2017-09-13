@@ -1,4 +1,4 @@
-package no.nav.fo.veilarboppgave.tps;
+package no.nav.fo.veilarboppgave.ws.consumer.tps;
 
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;

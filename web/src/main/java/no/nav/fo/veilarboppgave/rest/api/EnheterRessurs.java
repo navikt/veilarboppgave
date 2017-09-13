@@ -2,8 +2,8 @@ package no.nav.fo.veilarboppgave.rest.api;
 
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
-import no.nav.fo.veilarboppgave.norg.ArbeidsfordelingService;
-import no.nav.fo.veilarboppgave.tps.PersonService;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
+import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

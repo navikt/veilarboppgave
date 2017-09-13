@@ -1,4 +1,4 @@
-package no.nav.fo.veilarboppgave.norg;
+package no.nav.fo.veilarboppgave.ws.consumer.norg;
 
 import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarboppgave.domene.Enhet;
