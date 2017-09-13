@@ -11,7 +11,6 @@ import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSOrganisasjon
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlendeEnhetListeRequest;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlendeEnhetListeResponse;
 
-import javax.inject.Inject;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -21,8 +20,11 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
 
-    @Inject
-    ArbeidsfordelingV1 arbeidsfordelingSoapTjeneste;
+    private final ArbeidsfordelingV1 arbeidsfordelingSoapTjeneste;
+
+    public ArbeidsfordelingServiceImpl(ArbeidsfordelingV1 arbeidsfordelingV1) {
+        this.arbeidsfordelingSoapTjeneste = arbeidsfordelingV1;
+    }
 
     @Override
     public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning) {

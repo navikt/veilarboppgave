@@ -10,7 +10,6 @@ import no.nav.tjeneste.virksomhet.person.v3.informasjon.WSNorskIdent;
 import no.nav.tjeneste.virksomhet.person.v3.informasjon.WSPersonIdent;
 import no.nav.tjeneste.virksomhet.person.v3.meldinger.WSHentGeografiskTilknytningRequest;
 
-import javax.inject.Inject;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -18,8 +17,11 @@ import static java.util.Optional.ofNullable;
 @Slf4j
 public class PersonServiceImpl implements PersonService {
 
-    @Inject
-    PersonV3 personSoapService;
+    private final PersonV3 personSoapService;
+
+    public PersonServiceImpl(PersonV3 personSoapService) {
+        this.personSoapService = personSoapService;
+    }
 
     @Override
     public Optional<String> hentGeografiskTilknytning(Fnr fnr) {
