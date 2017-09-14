@@ -1,8 +1,10 @@
 package no.nav.fo.veilarboppgave.rest.api;
 
+import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.domene.OppgaveId;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -13,16 +15,19 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class OppgaveRessurs {
 
     private final OppgaveService oppgaveService;
+    private final PepClient pepClient;
 
-    public OppgaveRessurs(OppgaveService oppgaveService) {
+    @Inject
+    public OppgaveRessurs(OppgaveService oppgaveService, PepClient pepClient) {
         this.oppgaveService = oppgaveService;
+        this.pepClient = pepClient;
     }
 
     @POST
     public OppgaveId opprettOppgave(OppgaveDTO oppgave) {
         Validering.of(oppgave.getFnr())
                 .map(Validering::erGyldigFnr)
-                .map(Validering::sjekkTilgangTilBruker);
+                .map(pepClient::sjekkTilgangTilFnr);
 
         return oppgaveService
                 .opprettOppgave()

@@ -27,7 +27,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
         OppgaveRessurs.class,
         ArbeidsfordelingServiceHelsesjekk.class,
         PersonServiceHelsesjekk.class,
-        AbacContext.class
+        AbacContext.class,
 })
 public class ApplicationConfig implements ApiApplication {
 

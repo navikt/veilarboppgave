@@ -1,5 +1,6 @@
 package no.nav.fo.veilarboppgave.rest.api;
 
+import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
@@ -18,11 +19,13 @@ public class EnheterRessurs {
 
     private final ArbeidsfordelingService arbeidsfordelingService;
     private final PersonService personService;
+    private final PepClient pepClient;
 
     @Inject
-    public EnheterRessurs(ArbeidsfordelingService arbeidsfordelingService, PersonService personService) {
+    public EnheterRessurs(ArbeidsfordelingService arbeidsfordelingService, PersonService personService, PepClient pepClient) {
         this.arbeidsfordelingService = arbeidsfordelingService;
         this.personService = personService;
+        this.pepClient = pepClient;
     }
 
     @GET
@@ -30,7 +33,7 @@ public class EnheterRessurs {
     public List<Enhet> hentEnheter(@PathParam("fnr") String fnr) {
         return Validering.of(fnr)
                 .map(Validering::erGyldigFnr)
-                .map(Validering::sjekkTilgangTilBruker)
+//                .map(pepClient::sjekkTilgangTilFnr)
                 .map(Fnr::of)
                 .flatMap(personService::hentGeografiskTilknytning)
                 .map(arbeidsfordelingService::hentBehandlendeEnheter)
