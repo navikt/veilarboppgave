@@ -1,8 +1,9 @@
-package no.nav.fo.veilarboppgave.rest.api;
+package no.nav.fo.veilarboppgave.rest.api.enheter;
 
 import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
+import no.nav.fo.veilarboppgave.rest.api.Validering;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 

@@ -4,9 +4,7 @@ import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.mocks.ArbeidsfordelingServiceMock;
 import no.nav.fo.veilarboppgave.mocks.PersonServiceMock;
-import no.nav.fo.veilarboppgave.rest.api.EnheterRessurs;
-import no.nav.fo.veilarboppgave.rest.api.OppgaveRessurs;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
+import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static no.nav.fo.veilarboppgave.TestData.GYLDIG_FNR;
 import static no.nav.fo.veilarboppgave.TestData.IKKE_GYLDIG_FNR;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;

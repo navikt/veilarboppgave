@@ -1,6 +1,6 @@
 package no.nav.fo.veilarboppgave;
 
-import no.nav.fo.veilarboppgave.rest.api.OppgaveDTO;
+import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
 public class TestData {
     public static final String GYLDIG_FNR ="XXXXXXXXXXX";

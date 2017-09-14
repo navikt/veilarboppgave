@@ -2,7 +2,7 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.apiapp.security.PepClient;
-import no.nav.fo.veilarboppgave.rest.api.OppgaveRessurs;
+import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
 import org.junit.Before;
 import org.junit.Rule;

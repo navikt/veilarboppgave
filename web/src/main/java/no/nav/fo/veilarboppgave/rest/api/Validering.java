@@ -13,7 +13,7 @@ public class Validering {
         return ofNullable(data);
     }
 
-    static String erGyldigFnr(String fnr) {
+    public static String erGyldigFnr(String fnr) {
         if (isValid(fnr)) {
             return fnr;
         }
