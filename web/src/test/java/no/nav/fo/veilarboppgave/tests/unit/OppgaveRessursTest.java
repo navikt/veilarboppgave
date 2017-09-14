@@ -2,7 +2,6 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.apiapp.security.PepClient;
-import no.nav.fo.veilarboppgave.rest.api.OppgaveDTO;
 import no.nav.fo.veilarboppgave.rest.api.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
 import org.junit.Before;
@@ -13,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static no.nav.fo.veilarboppgave.TestData.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +32,7 @@ public class OppgaveRessursTest {
     @Before
     public void setUp() throws Exception {
         oppgaveRessurs = new OppgaveRessurs(new OppgaveServiceMock(), pepClient);
-        when(pepClient.sjekkTilgangTilFnr(anyString())).thenReturn("XXXXXXXXXXX");
+        when(pepClient.sjekkTilgangTilFnr(anyString())).thenReturn(GYLDIG_FNR);
     }
 
     @Test
@@ -44,21 +44,7 @@ public class OppgaveRessursTest {
     @Test
     public void skalValidereFnr() throws Exception {
         exception.expect(UgyldigRequest.class);
-        oppgaveRessurs.opprettOppgave(testData("00000000000"));
+        oppgaveRessurs.opprettOppgave(testData(IKKE_GYLDIG_FNR));
     }
 
-    private static OppgaveDTO testData(String fnr) {
-        return new OppgaveDTO(
-                fnr,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
-        );
-
-    }
 }

@@ -15,16 +15,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static no.nav.fo.veilarboppgave.TestData.GYLDIG_FNR;
+import static no.nav.fo.veilarboppgave.TestData.IKKE_GYLDIG_FNR;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnhetRessursTest {
-
     private static final String GYLDIG_FNR ="XXXXXXXXXXX";
-
     private EnheterRessurs enheterRessurs;
-    private OppgaveRessurs oppgaveRessurs;
 
     @Mock
     private PepClient pepClient;
@@ -35,8 +34,8 @@ public class EnhetRessursTest {
     @Before
     public void setUp() throws Exception {
         enheterRessurs = new EnheterRessurs(new ArbeidsfordelingServiceMock(), new PersonServiceMock(), pepClient);
-        oppgaveRessurs = new OppgaveRessurs(new OppgaveServiceMock(), pepClient);
-        when(pepClient.sjekkTilgangTilFnr(anyString())).thenReturn("XXXXXXXXXXX");
+        when(pepClient.sjekkTilgangTilFnr(anyString())).thenReturn(GYLDIG_FNR);
+
     }
 
     @Test
@@ -48,6 +47,6 @@ public class EnhetRessursTest {
     @Test
     public void skalValidereFnr() throws Exception {
         exception.expect(UgyldigRequest.class);
-        enheterRessurs.hentEnheter("00000000000");
+        enheterRessurs.hentEnheter(IKKE_GYLDIG_FNR);
     }
 }
