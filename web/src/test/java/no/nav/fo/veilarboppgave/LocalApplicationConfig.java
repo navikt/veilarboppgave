@@ -2,6 +2,8 @@ package no.nav.fo.veilarboppgave;
 
 import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.security.PepClient;
+import no.nav.fo.veilarboppgave.mocks.ArbeidsfordelingServiceMock;
+import no.nav.fo.veilarboppgave.mocks.PersonServiceMock;
 import no.nav.fo.veilarboppgave.rest.api.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;

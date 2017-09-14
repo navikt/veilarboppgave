@@ -2,7 +2,7 @@
   <configuration default="false" name="StartJetty" type="Application" factoryName="Application" singleton="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
-        <option name="PATTERN" value="no.nav.fo.veilarboppgave.*" />
+        <option name="PATTERN" value="no.nav.fo.veilarboppgave.test.unit.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

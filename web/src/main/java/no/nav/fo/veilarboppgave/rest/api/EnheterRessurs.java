@@ -33,7 +33,7 @@ public class EnheterRessurs {
     public List<Enhet> hentEnheter(@PathParam("fnr") String fnr) {
         return Validering.of(fnr)
                 .map(Validering::erGyldigFnr)
-//                .map(pepClient::sjekkTilgangTilFnr)
+                .map(pepClient::sjekkTilgangTilFnr)
                 .map(Fnr::of)
                 .flatMap(personService::hentGeografiskTilknytning)
                 .map(arbeidsfordelingService::hentBehandlendeEnheter)

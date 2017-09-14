@@ -1,4 +1,4 @@
-package no.nav.fo.veilarboppgave;
+package no.nav.fo.veilarboppgave.mocks;
 
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
