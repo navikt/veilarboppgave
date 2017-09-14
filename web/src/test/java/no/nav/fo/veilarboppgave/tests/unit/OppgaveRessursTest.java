@@ -36,13 +36,13 @@ public class OppgaveRessursTest {
     }
 
     @Test
-    public void skalSjekkeTilgangTilFnr() throws Exception {
+    public void skal_sjekke_tilgang_til_fnr() throws Exception {
         oppgaveRessurs.opprettOppgave(testData(GYLDIG_FNR));
         verify(pepClient, times(1)).sjekkTilgangTilFnr(anyString());
     }
 
     @Test
-    public void skalValidereFnr() throws Exception {
+    public void skal_validere_fnr() throws Exception {
         exception.expect(UgyldigRequest.class);
         oppgaveRessurs.opprettOppgave(testData(IKKE_GYLDIG_FNR));
     }

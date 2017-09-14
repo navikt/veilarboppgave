@@ -36,13 +36,13 @@ public class EnhetRessursTest {
     }
 
     @Test
-    public void skalSjekkeTilgangTilFnr() throws Exception {
+    public void skal_sjekke_tilgang_til_fnr() throws Exception {
         enheterRessurs.hentEnheter(GYLDIG_FNR);
         verify(pepClient, times(1)).sjekkTilgangTilFnr(anyString());
     }
 
     @Test
-    public void skalValidereFnr() throws Exception {
+    public void skal_validere_fnr() throws Exception {
         exception.expect(UgyldigRequest.class);
         enheterRessurs.hentEnheter(IKKE_GYLDIG_FNR);
     }
