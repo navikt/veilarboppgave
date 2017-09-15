@@ -1,6 +1,8 @@
 package no.nav.fo.veilarboppgave.rest.api;
 
 import no.nav.apiapp.feil.UgyldigRequest;
+import no.nav.fo.veilarboppgave.domene.Fnr;
+import no.nav.fo.veilarboppgave.domene.Tema;
 
 import java.util.Optional;
 
@@ -13,10 +15,14 @@ public class Validering {
         return ofNullable(data);
     }
 
-    public static String erGyldigFnr(String fnr) {
+    public static Fnr erGyldigFnr(String fnr) {
         if (isValid(fnr)) {
-            return fnr;
+            return Fnr.of(fnr);
         }
         throw new UgyldigRequest();
+    }
+
+    public static Tema erGyldigTema(String tema) {
+        return Tema.OPPFOLGING;
     }
 }

@@ -3,6 +3,7 @@ package no.nav.fo.veilarboppgave.ws.consumer.norg;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
+import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.ArbeidsfordelingV1;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.FinnBehandlendeEnhetListeUgyldigInput;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSArbeidsfordelingKriterier;
@@ -26,7 +27,7 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
     }
 
     @Override
-    public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning) {
+    public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, Tema gyldigTema) {
         try {
             WSGeografi wsGeografi = new WSGeografi().withValue(geografiskTilknytning.getGeofrafiskTilknytning());
             WSArbeidsfordelingKriterier arbeidsfordelingKriterier = new WSArbeidsfordelingKriterier().withGeografiskTilknytning(wsGeografi);

@@ -2,6 +2,8 @@ package no.nav.fo.veilarboppgave.rest.api.enheter;
 
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
+import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
+import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.fo.veilarboppgave.rest.api.Validering;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
@@ -13,7 +15,7 @@ import java.util.List;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-@Path("/enheter/")
+@Path("/enheter")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class EnheterRessurs {
@@ -30,14 +32,20 @@ public class EnheterRessurs {
     }
 
     @GET
-    @Path("{fnr}/")
-    public List<Enhet> hentEnheter(@PathParam("fnr") String fnr) {
-        return Validering.of(fnr)
+    public List<Enhet> hentEnheter(@QueryParam("fnr") String fnr, @QueryParam("tema") String tema) {
+
+        Fnr gyldigFnr = Validering.of(fnr)
                 .map(Validering::erGyldigFnr)
                 .map(pepClient::sjekkTilgangTilFnr)
-                .map(Fnr::of)
-                .flatMap(personService::hentGeografiskTilknytning)
-                .map(arbeidsfordelingService::hentBehandlendeEnheter)
-                .orElseThrow(NotFoundException::new);
+                .orElseThrow(RuntimeException::new);
+
+        Tema gyldigTema = Validering.erGyldigTema(tema);
+
+        GeografiskTilknytning tilknytning = personService
+                .hentGeografiskTilknytning(gyldigFnr)
+                .orElseThrow(RuntimeException::new);
+
+        return arbeidsfordelingService
+                .hentBehandlendeEnheter(tilknytning, gyldigTema);
     }
 }

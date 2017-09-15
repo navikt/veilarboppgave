@@ -2,6 +2,7 @@ package no.nav.fo.veilarboppgave.security.abac;
 
 import lombok.SneakyThrows;
 import no.nav.apiapp.feil.IngenTilgang;
+import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.sbl.dialogarena.common.abac.pep.Pep;
 import no.nav.sbl.dialogarena.common.abac.pep.domain.response.Decision;
 
@@ -18,8 +19,8 @@ public class PepClientImpl implements PepClient {
 
     @Override
     @SneakyThrows
-    public String sjekkTilgangTilFnr(String fnr) {
-        if (Decision.Permit == pep.harInnloggetBrukerTilgangTilPerson(fnr, "veilarboppgave").getBiasedDecision()) {
+    public Fnr sjekkTilgangTilFnr(Fnr fnr) {
+        if (Decision.Permit == pep.harInnloggetBrukerTilgangTilPerson(fnr.getFnr(), "veilarboppgave").getBiasedDecision()) {
             return fnr;
         } else {
             throw new IngenTilgang();

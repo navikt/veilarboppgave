@@ -1,5 +1,7 @@
 package no.nav.fo.veilarboppgave.security.abac;
 
+import no.nav.fo.veilarboppgave.domene.Fnr;
+
 public interface PepClient {
-    String sjekkTilgangTilFnr(String fnr);
+    Fnr sjekkTilgangTilFnr(Fnr fnr);
 }
