@@ -33,12 +33,12 @@ public class EnheterRessurs {
 
     @GET
     public List<Enhet> hentEnheter(@QueryParam("fnr") String fnr, @QueryParam("tema") String tema) {
-        Tema gyldigTema = Validering.erGyldigTema(tema);
-
         Fnr gyldigFnr = Validering.of(fnr)
                 .map(Validering::erGyldigFnr)
                 .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
+
+        Tema gyldigTema = Validering.erGyldigTema(tema);
 
         GeografiskTilknytning tilknytning = personService
                 .hentGeografiskTilknytning(gyldigFnr)

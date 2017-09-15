@@ -1,6 +1,5 @@
 package no.nav.fo.veilarboppgave.rest.api;
 
-import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.Tema;
@@ -28,6 +27,6 @@ public class Validering {
         return Arrays.stream(Tema.values())
                 .filter(value -> value.name().equals(tema.toUpperCase()))
                 .findFirst()
-                .orElseThrow(IngenTilgang::new);
+                .orElseThrow(UgyldigRequest::new);
     }
 }
