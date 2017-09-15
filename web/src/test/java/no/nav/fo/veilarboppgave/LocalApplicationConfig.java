@@ -1,22 +1,22 @@
 package no.nav.fo.veilarboppgave;
 
+import lombok.SneakyThrows;
 import no.nav.apiapp.ApiApplication;
-import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.mocks.ArbeidsfordelingServiceMock;
+import no.nav.fo.veilarboppgave.mocks.PepClientMock;
 import no.nav.fo.veilarboppgave.mocks.PersonServiceMock;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
+import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
-import no.nav.sbl.dialogarena.common.abac.pep.Pep;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import static no.nav.apiapp.ApiApplication.Sone.FSS;
-import static org.mockito.Mockito.mock;
 
 @Configuration
 @Import({
@@ -41,8 +41,9 @@ public class LocalApplicationConfig implements ApiApplication{
     }
 
     @Bean
+    @SneakyThrows
     public PepClient pepClient() {
-        return new PepClient(mock(Pep.class), "veilarb");
+        return new PepClientMock();
     }
 
     @Override

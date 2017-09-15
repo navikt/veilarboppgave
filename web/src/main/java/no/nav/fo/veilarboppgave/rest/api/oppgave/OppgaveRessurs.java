@@ -1,8 +1,8 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
-import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.domene.OppgaveId;
 import no.nav.fo.veilarboppgave.rest.api.Validering;
+import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
 
 import javax.inject.Inject;
