@@ -31,7 +31,7 @@ public class OppgaveRessursTest {
     @Test
     public void skal_nekte_tilgang_til_fnr() throws Exception {
         exception.expect(IngenTilgang.class);
-        oppgaveRessurs.opprettOppgave(testData(IKKE_AUTORISERT_FNR));
+        oppgaveRessurs.opprettOppgave(testData(genererFnrForMann()));
     }
 
     @Test
@@ -39,5 +39,4 @@ public class OppgaveRessursTest {
         exception.expect(UgyldigRequest.class);
         oppgaveRessurs.opprettOppgave(testData(IKKE_GYLDIG_FNR));
     }
-
 }

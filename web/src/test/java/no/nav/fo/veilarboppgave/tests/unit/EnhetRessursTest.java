@@ -13,8 +13,8 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static no.nav.fo.veilarboppgave.TestData.IKKE_AUTORISERT_FNR;
 import static no.nav.fo.veilarboppgave.TestData.IKKE_GYLDIG_FNR;
+import static no.nav.fo.veilarboppgave.TestData.genererFnrForMann;
 import static no.nav.fo.veilarboppgave.domene.Tema.OPPFOLGING;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +36,7 @@ public class EnhetRessursTest {
     @Test
     public void skal_nekte_tilgang_til_fnr() throws Exception {
         exception.expect(IngenTilgang.class);
-        enheterRessurs.hentEnheter(IKKE_AUTORISERT_FNR.getFnr(), OPPFOLGING.name());
+        enheterRessurs.hentEnheter(genererFnrForMann().getFnr(), OPPFOLGING.name());
     }
 
     @Test
