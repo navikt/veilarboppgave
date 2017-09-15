@@ -10,14 +10,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
-import static no.nav.fo.veilarboppgave.TestData.IKKE_GYLDIG_FNR;
-import static no.nav.fo.veilarboppgave.TestData.genererFnrForMann;
+import static no.nav.fo.veilarboppgave.TestData.*;
 import static no.nav.fo.veilarboppgave.domene.Tema.OPPFOLGING;
 
-@RunWith(MockitoJUnitRunner.class)
 public class EnhetRessursTest {
     private EnheterRessurs enheterRessurs;
 
@@ -36,12 +32,19 @@ public class EnhetRessursTest {
     @Test
     public void skal_nekte_tilgang_til_fnr() throws Exception {
         exception.expect(IngenTilgang.class);
-        enheterRessurs.hentEnheter(genererFnrForMann().getFnr(), OPPFOLGING.name());
+        enheterRessurs.hentEnheter(genererTilfeldigFnrUtenTilgang().getFnr(), OPPFOLGING.name());
     }
 
     @Test
-    public void skal_validere_fnr() throws Exception {
+    public void skal_feile_ved_validering_av_ugyldig_fnr() throws Exception {
         exception.expect(UgyldigRequest.class);
         enheterRessurs.hentEnheter(IKKE_GYLDIG_FNR.getFnr(), OPPFOLGING.name());
     }
+
+    @Test
+    public void skal_feile_ved_validering_av_ugyldig_tema() throws Exception {
+        exception.expect(UgyldigRequest.class);
+        enheterRessurs.hentEnheter(genererTilfeldigFnrMedTilgang().getFnr(), "UGYLDIG_TEMA");
+    }
+
 }

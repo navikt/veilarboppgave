@@ -1,9 +1,11 @@
 package no.nav.fo.veilarboppgave.rest.api;
 
+import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.Tema;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -23,6 +25,9 @@ public class Validering {
     }
 
     public static Tema erGyldigTema(String tema) {
-        return Tema.OPPFOLGING;
+        return Arrays.stream(Tema.values())
+                .filter(value -> value.name().equals(tema.toUpperCase()))
+                .findFirst()
+                .orElseThrow(IngenTilgang::new);
     }
 }

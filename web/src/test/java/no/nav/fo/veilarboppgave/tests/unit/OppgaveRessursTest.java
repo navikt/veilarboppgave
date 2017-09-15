@@ -9,14 +9,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static no.nav.fo.veilarboppgave.TestData.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class OppgaveRessursTest {
-    private static final String GYLDIG_FNR ="XXXXXXXXXXX";
 
     private OppgaveRessurs oppgaveRessurs;
 
@@ -31,11 +27,11 @@ public class OppgaveRessursTest {
     @Test
     public void skal_nekte_tilgang_til_fnr() throws Exception {
         exception.expect(IngenTilgang.class);
-        oppgaveRessurs.opprettOppgave(testData(genererFnrForMann()));
+        oppgaveRessurs.opprettOppgave(testData(genererTilfeldigFnrUtenTilgang()));
     }
 
     @Test
-    public void skal_validere_fnr() throws Exception {
+    public void skal_feile_ved_validering_av_ugyldig_fnr() throws Exception {
         exception.expect(UgyldigRequest.class);
         oppgaveRessurs.opprettOppgave(testData(IKKE_GYLDIG_FNR));
     }
