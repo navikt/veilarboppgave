@@ -1,9 +1,10 @@
-package no.nav.fo.veilarboppgave.rest.api;
+package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 import lombok.Value;
 
 @Value
 public class OppgaveDTO {
+    String fnr;
     String fagomradeKode;
     String oppgavetypeKode;
     String prioritetKode;
