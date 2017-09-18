@@ -27,12 +27,12 @@ public class OppgaveRessursTest {
     @Test
     public void skal_nekte_tilgang_til_fnr() throws Exception {
         exception.expect(IngenTilgang.class);
-        oppgaveRessurs.opprettOppgave(testData(genererTilfeldigFnrUtenTilgang()));
+        oppgaveRessurs.opprettOppgave(oppgaveDTO(genererTilfeldigFnrUtenTilgang()));
     }
 
     @Test
-    public void skal_feile_ved_validering_av_ugyldig_fnr() throws Exception {
+    public void skal_kaste_exception_ved_validering_av_ugyldig_fnr() throws Exception {
         exception.expect(UgyldigRequest.class);
-        oppgaveRessurs.opprettOppgave(testData(IKKE_GYLDIG_FNR));
+        oppgaveRessurs.opprettOppgave(oppgaveDTO(IKKE_GYLDIG_FNR));
     }
 }

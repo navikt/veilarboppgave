@@ -36,13 +36,13 @@ public class EnhetRessursTest {
     }
 
     @Test
-    public void skal_feile_ved_validering_av_ugyldig_fnr() throws Exception {
+    public void skal_kaste_exception_ved_validering_av_ugyldig_fnr() throws Exception {
         exception.expect(UgyldigRequest.class);
         enheterRessurs.hentEnheter(IKKE_GYLDIG_FNR.getFnr(), OPPFOLGING.name());
     }
 
     @Test
-    public void skal_feile_ved_validering_av_ugyldig_tema() throws Exception {
+    public void skal_kaste_exception_ved_validering_av_ugyldig_tema() throws Exception {
         exception.expect(UgyldigRequest.class);
         enheterRessurs.hentEnheter(genererTilfeldigFnrMedTilgang().getFnr(), "UGYLDIG_TEMA");
     }

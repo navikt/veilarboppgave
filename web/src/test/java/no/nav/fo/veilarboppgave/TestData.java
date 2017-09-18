@@ -31,15 +31,30 @@ public class TestData {
         return genererFnr(MANN);
     }
 
-    public static OppgaveDTO testData(Fnr fnr) {
+    public static OppgaveDTO oppgaveDTO(Fnr fnr) {
         return new OppgaveDTO(
                 fnr.getFnr(),
                 "",
                 "",
                 "",
                 "",
+                "2017-09-18",
+                "2017-10-18",
+                "",
+                ""
+        );
+
+    }
+
+    public static OppgaveDTO oppgaveDTO(String fraDato, String tilDato) {
+        return new OppgaveDTO(
+                genererTilfeldigFnrMedTilgang().getFnr(),
                 "",
                 "",
+                "",
+                "",
+                fraDato,
+                tilDato,
                 "",
                 ""
         );
@@ -60,5 +75,9 @@ public class TestData {
         int maxDay = (int) LocalDate.of(2017, 1, 1).toEpochDay();
         long randomDay = minDay + new Random().nextInt(maxDay - minDay);
         return new Date(randomDay);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(genererFnr(KVINNE));
     }
 }

@@ -4,7 +4,7 @@ import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
 import no.nav.fo.veilarboppgave.domene.Tema;
-import no.nav.fo.veilarboppgave.rest.api.Validering;
+import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.List;
 
+import static java.util.Optional.ofNullable;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/enheter")
@@ -33,12 +34,12 @@ public class EnheterRessurs {
 
     @GET
     public List<Enhet> hentEnheter(@QueryParam("fnr") String fnr, @QueryParam("tema") String tema) {
-        Fnr gyldigFnr = Validering.of(fnr)
-                .map(Validering::erGyldigFnr)
+        Fnr gyldigFnr = ofNullable(fnr)
+                .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
 
-        Tema gyldigTema = Validering.erGyldigTema(tema);
+        Tema gyldigTema = Valider.tema(tema);
 
         GeografiskTilknytning tilknytning = personService
                 .hentGeografiskTilknytning(gyldigFnr)

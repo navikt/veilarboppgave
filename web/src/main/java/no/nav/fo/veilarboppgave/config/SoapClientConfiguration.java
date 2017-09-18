@@ -31,4 +31,8 @@ public class SoapClientConfiguration {
                 .configureStsForSystemUserInFSS()
                 .build();
     }
+
+    public static void behandleOppgave() {
+
+    }
 }

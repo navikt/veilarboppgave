@@ -1,16 +1,17 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 import no.nav.fo.veilarboppgave.domene.OppgaveId;
-import no.nav.fo.veilarboppgave.rest.api.Validering;
+import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 
+import static java.util.Optional.ofNullable;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
-@Path("/oppgave/")
+@Path("/oppgave")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class OppgaveRessurs {
@@ -25,13 +26,16 @@ public class OppgaveRessurs {
     }
 
     @POST
-    public OppgaveId opprettOppgave(OppgaveDTO oppgave) {
-        Validering.of(oppgave.getFnr())
-                .map(Validering::erGyldigFnr)
-                .map(pepClient::sjekkTilgangTilFnr);
+    public OppgaveId opprettOppgave(OppgaveDTO oppgaveDTO) {
+        ofNullable(oppgaveDTO.getFnr())
+                .map(Valider::fnr)
+                .map(pepClient::sjekkTilgangTilFnr)
+                .orElseThrow(RuntimeException::new);
+
+        Valider.fraTilDato(oppgaveDTO);
 
         return oppgaveService
-                .opprettOppgave()
+                .opprettOppgave(oppgaveDTO)
                 .orElseThrow(NotFoundException::new);
     }
 }
