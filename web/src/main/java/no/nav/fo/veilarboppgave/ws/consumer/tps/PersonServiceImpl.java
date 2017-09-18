@@ -11,6 +11,7 @@ import no.nav.tjeneste.virksomhet.person.v3.informasjon.WSNorskIdent;
 import no.nav.tjeneste.virksomhet.person.v3.informasjon.WSPersonIdent;
 import no.nav.tjeneste.virksomhet.person.v3.meldinger.WSHentGeografiskTilknytningRequest;
 
+import javax.ws.rs.NotFoundException;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
@@ -46,9 +47,12 @@ public class PersonServiceImpl implements PersonService {
                 return ofNullable(GeografiskTilknytning.of(valueFromResponse));
             }
 
-        } catch (HentGeografiskTilknytningSikkerhetsbegrensing | HentGeografiskTilknytningPersonIkkeFunnet e) {
-            log.warn(String.format("Kunne ikke hente geografisk tilknytning for fnr %s : %s", fnr, e.getMessage()));
+        } catch (HentGeografiskTilknytningSikkerhetsbegrensing e) {
+            log.warn("Kunne ikke hente geografisk tilknytning for fnr {} pga sikkerhetsbegrensning mot baktjeneste", fnr);
             throw new RuntimeException(e);
+        } catch (HentGeografiskTilknytningPersonIkkeFunnet e) {
+            log.info("Fant ikke geografisk tilknytning for fnr {}", fnr);
+            throw new NotFoundException(e);
         }
 
         return maybeResponse;

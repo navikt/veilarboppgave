@@ -12,9 +12,9 @@ import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSOrganisasjon
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlendeEnhetListeRequest;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlendeEnhetListeResponse;
 
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 
-import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
@@ -36,8 +36,8 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
             List<WSOrganisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
             return behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
         } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
-            log.warn(format("Kunne ikke finne behandlende enheter for geografisk tilknytning %s", geografiskTilknytning));
-            throw new RuntimeException(e);
+            log.warn("Kunne ikke finne behandlende enheter for geografisk tilknytning {} og tema {}", geografiskTilknytning, gyldigTema);
+            throw new NotFoundException(e);
         }
     }
 }
