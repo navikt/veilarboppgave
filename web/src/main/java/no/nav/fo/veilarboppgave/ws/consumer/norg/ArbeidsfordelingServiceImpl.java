@@ -36,7 +36,7 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
             List<WSOrganisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
             return behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
         } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
-            log.warn("Kunne ikke finne behandlende enheter for geografisk tilknytning {} og tema {}", geografiskTilknytning, gyldigTema);
+            log.info("Kunne ikke finne behandlende enheter for geografisk tilknytning og tema ");
             throw new NotFoundException(e);
         }
     }

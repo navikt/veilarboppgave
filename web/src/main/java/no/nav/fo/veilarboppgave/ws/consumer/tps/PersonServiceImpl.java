@@ -48,10 +48,10 @@ public class PersonServiceImpl implements PersonService {
             }
 
         } catch (HentGeografiskTilknytningSikkerhetsbegrensing e) {
-            log.warn("Kunne ikke hente geografisk tilknytning for fnr {} pga sikkerhetsbegrensning mot baktjeneste", fnr);
+            log.warn("Kunne ikke hente geografisk tilknytning for fnr pga sikkerhetsbegrensning mot baktjeneste");
             throw new RuntimeException(e);
         } catch (HentGeografiskTilknytningPersonIkkeFunnet e) {
-            log.info("Fant ikke geografisk tilknytning for fnr {}", fnr);
+            log.info("Fant ikke geografisk tilknytning for fnr);");
             throw new NotFoundException(e);
         }
 
