@@ -31,7 +31,7 @@ public class Valider {
         LocalDate fra = Valider.dato(oppgaveDTO.getAktivFra());
         LocalDate til = Valider.dato(oppgaveDTO.getAktivTil());
 
-        if (fra.isBefore(til)) {
+        if (fra.isBefore(til.plusDays(1))) {
             return oppgaveDTO;
         } else {
             throw new UgyldigRequest();
