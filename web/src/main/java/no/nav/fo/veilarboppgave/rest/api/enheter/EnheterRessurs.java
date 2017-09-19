@@ -11,15 +11,14 @@ import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/enheter")
-@Produces(APPLICATION_JSON)
-@Consumes(APPLICATION_JSON)
 public class EnheterRessurs {
 
     private final ArbeidsfordelingService arbeidsfordelingService;

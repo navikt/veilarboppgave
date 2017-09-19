@@ -39,12 +39,6 @@ public class ValideringTest {
         assertThrows(UgyldigRequest.class, () -> Valider.fraTilDato(testData));
     }
 
-    @Test
-    public void skal_kaste_exception_om_dato_er_paa_ugyldig_format() throws Exception {
-        String ugyldigDatoFormat = "19.09.2017";
-        assertThrows(UgyldigRequest.class, () -> Valider.dato(ugyldigDatoFormat));
-    }
-
     private static Stream<String> tilfeldigFnrStream() {
         return Stream.generate(TestData::genererTilfeldigFnr)
                 .map(Fnr::getFnr)

@@ -1,8 +1,6 @@
 package no.nav.fo.veilarboppgave.tests.integration;
 
-import no.nav.fo.veilarboppgave.Util;
 import no.nav.fo.veilarboppgave.domene.Fnr;
-import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,7 +25,7 @@ public class EnheterRessursIntegrationTest {
     @BeforeAll
     static void beforeAll() {
         switchOffLogging();
-        jetty = startJetty();
+        jetty = startJettyUtenSikkerhet();
         client = newClient();
     }
 

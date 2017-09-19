@@ -8,7 +8,6 @@ import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import java.io.File;
 
 import static no.nav.dialogarena.config.DevelopmentSecurity.setupISSO;
-import static no.nav.dialogarena.config.DevelopmentSecurity.setupIntegrationTestSecurity;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 import static no.nav.sbl.dialogarena.common.jetty.JettyStarterUtils.*;
 
@@ -41,7 +40,7 @@ public class StartJetty {
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
     }
 
-    public static Jetty startJetty() {
+    public static Jetty startJettyUtenSikkerhet() {
         return Jetty
                 .usingWar()
                 .at(APPLICATION_NAME)

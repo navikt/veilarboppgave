@@ -2,7 +2,6 @@ package no.nav.fo.veilarboppgave.tests.integration;
 
 import no.nav.fo.veilarboppgave.TestData;
 import no.nav.fo.veilarboppgave.domene.Fnr;
-import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterAll;
@@ -30,7 +29,7 @@ class OppgaveRessursIntegrationTest {
     @BeforeAll
     static void beforeAll() {
         switchOffLogging();
-        jetty = startJetty();
+        jetty = startJettyUtenSikkerhet();
         client = newClient();
     }
 
