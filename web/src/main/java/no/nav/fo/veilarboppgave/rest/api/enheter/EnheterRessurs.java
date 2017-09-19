@@ -1,5 +1,6 @@
 package no.nav.fo.veilarboppgave.rest.api.enheter;
 
+import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
@@ -37,13 +38,15 @@ public class EnheterRessurs {
         Fnr gyldigFnr = ofNullable(fnr)
                 .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(UgyldigRequest::new);
 
-        Tema gyldigTema = Valider.tema(tema);
+        Tema gyldigTema = ofNullable(tema)
+                .map(Valider::tema)
+                .orElseThrow(UgyldigRequest::new);
 
         GeografiskTilknytning tilknytning = personService
                 .hentGeografiskTilknytning(gyldigFnr)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(UgyldigRequest::new);
 
         return arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTema);
     }
