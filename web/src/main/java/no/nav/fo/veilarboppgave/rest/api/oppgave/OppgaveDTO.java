@@ -1,8 +1,12 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Value
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OppgaveDTO {
     String fnr;
     String fagomradeKode;
