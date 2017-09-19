@@ -48,6 +48,19 @@
                 <artifactId>person-v3-tjenestespesifikasjon</artifactId>
                 <version>${person-v3-tjenestespesifikasjon.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>2.7.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>5.0.0</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
                    
     </dependencyManagement>

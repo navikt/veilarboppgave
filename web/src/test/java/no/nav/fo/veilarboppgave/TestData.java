@@ -4,6 +4,7 @@ import no.bekk.bekkopen.person.Fodselsnummer;
 import no.bekk.bekkopen.person.KJONN;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -13,6 +14,7 @@ import static no.bekk.bekkopen.person.FodselsnummerCalculator.getFodselsnummerFo
 import static no.bekk.bekkopen.person.FodselsnummerCalculator.getFodselsnummerForDateAndGender;
 import static no.bekk.bekkopen.person.KJONN.KVINNE;
 import static no.bekk.bekkopen.person.KJONN.MANN;
+import static org.json.JSONObject.NULL;
 
 public class TestData {
 
@@ -59,6 +61,22 @@ public class TestData {
                 ""
         );
 
+    }
+
+    public static JSONObject oppgaveSomJson(Fnr fnr, String aktivFra, String aktivTil) {
+        return new JSONObject()
+                .put("fnr", fnr.getFnr())
+                .put("oppgavetypeKode", NULL)
+                .put("prioritetKode",  NULL)
+                .put("beskrivelse", NULL)
+                .put("aktivFra", aktivFra)
+                .put("aktivTil", aktivTil)
+                .put("ansvarligEnhetId", NULL)
+                .put("ansvarligId", NULL);
+    }
+
+    public static JSONObject oppgaveSomJson(Fnr fnr) {
+        return oppgaveSomJson(fnr, "2017-09-19", "2018-09-19");
     }
 
     private static Fnr genererFnr(KJONN kjonn) {
