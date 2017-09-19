@@ -36,7 +36,7 @@ public class ValideringTest {
     }
 
     @Test
-    void skal_kaste_exception_om_fra_dato_er_etter_til_dato() throws Exception {
+    public void skal_kaste_exception_om_fra_dato_er_etter_til_dato() throws Exception {
         expectedException.expect(UgyldigRequest.class);
         String fraDato = "2000-09-18";
         String tilDato = "1900-09-18";
@@ -45,7 +45,7 @@ public class ValideringTest {
     }
 
     @Test
-    void skal_kaste_exception_om_dato_er_paa_ugyldig_format() throws Exception {
+    public void skal_kaste_exception_om_dato_er_paa_ugyldig_format() throws Exception {
         expectedException.expect(UgyldigRequest.class);
         String ugyldigDatoFormat = "19.09.2017";
         Valider.dato(ugyldigDatoFormat);
