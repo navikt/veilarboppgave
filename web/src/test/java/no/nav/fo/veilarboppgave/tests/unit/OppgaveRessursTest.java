@@ -3,36 +3,33 @@ package no.nav.fo.veilarboppgave.tests.unit;
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.mocks.PepClientMock;
+import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static no.nav.fo.veilarboppgave.TestData.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OppgaveRessursTest {
 
     private OppgaveRessurs oppgaveRessurs;
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         oppgaveRessurs = new OppgaveRessurs(new OppgaveServiceMock(), new PepClientMock());
     }
 
     @Test
     public void skal_nekte_tilgang_til_fnr() throws Exception {
-        exception.expect(IngenTilgang.class);
-        oppgaveRessurs.opprettOppgave(oppgaveDTO(genererTilfeldigFnrUtenTilgang()));
+        OppgaveDTO testData = oppgaveDTO(genererTilfeldigFnrUtenTilgang());
+        assertThrows(IngenTilgang.class, () -> oppgaveRessurs.opprettOppgave(testData));
     }
 
     @Test
     public void skal_kaste_exception_ved_validering_av_ugyldig_fnr() throws Exception {
-        exception.expect(UgyldigRequest.class);
-        oppgaveRessurs.opprettOppgave(oppgaveDTO(IKKE_GYLDIG_FNR));
+        OppgaveDTO testData = oppgaveDTO(IKKE_GYLDIG_FNR);
+        assertThrows(UgyldigRequest.class, () -> oppgaveRessurs.opprettOppgave(testData));
     }
 }

@@ -1,5 +1,6 @@
 package no.nav.fo.veilarboppgave.rest.api.enheter;
 
+import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
@@ -10,15 +11,14 @@ import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/enheter")
-@Produces(APPLICATION_JSON)
-@Consumes(APPLICATION_JSON)
 public class EnheterRessurs {
 
     private final ArbeidsfordelingService arbeidsfordelingService;
@@ -37,13 +37,15 @@ public class EnheterRessurs {
         Fnr gyldigFnr = ofNullable(fnr)
                 .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(UgyldigRequest::new);
 
-        Tema gyldigTema = Valider.tema(tema);
+        Tema gyldigTema = ofNullable(tema)
+                .map(Valider::tema)
+                .orElseThrow(UgyldigRequest::new);
 
         GeografiskTilknytning tilknytning = personService
                 .hentGeografiskTilknytning(gyldigFnr)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(UgyldigRequest::new);
 
         return arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTema);
     }
