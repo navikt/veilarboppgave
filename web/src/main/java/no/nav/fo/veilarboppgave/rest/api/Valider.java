@@ -56,13 +56,13 @@ public class Valider {
     }
 
     public static void obligatoriskeFelter(OppgaveDTO dto) {
-        StringUtils.of(dto.getAktivTil()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getAktivFra()).orElseThrow(UgyldigRequest::new);
+        StringUtils.of(dto.getTilDato()).orElseThrow(UgyldigRequest::new);
+        StringUtils.of(dto.getFraDato()).orElseThrow(UgyldigRequest::new);
         StringUtils.of(dto.getBeskrivelse()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getAnsvarligEnhetId()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getFagomradeKode()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getOppgavetypeKode()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getPrioritetKode()).orElseThrow(UgyldigRequest::new);
+        StringUtils.of(dto.getEnhet()).orElseThrow(UgyldigRequest::new);
+        StringUtils.of(dto.getTema()).orElseThrow(UgyldigRequest::new);
+        StringUtils.of(dto.getType()).orElseThrow(UgyldigRequest::new);
+        StringUtils.of(dto.getPrioritet()).orElseThrow(UgyldigRequest::new);
         StringUtils.of(dto.getFnr()).orElseThrow(UgyldigRequest::new);
     }
 }
