@@ -57,8 +57,8 @@ class OppgaveRessursIntegrationTest {
     @Test
     void skal_returnere_400_bad_request_ved_ugyldige_datoer() {
         JSONObject json = TestData.json();
-        json.put(AKTIVFRA, "2017-09-19");
-        json.put(AKTIVTIL, "1999-09-19");
+        json.put(FRADATO, "2017-09-19");
+        json.put(TILDATO, "1999-09-19");
         Response response = sendRequest(json);
         assertEquals(400, response.getStatus());
     }
@@ -66,7 +66,7 @@ class OppgaveRessursIntegrationTest {
     @Test
     void skal_returnere_400_bad_request_ved_ugyldig_datoformat() {
         JSONObject json = TestData.json();
-        json.put(AKTIVFRA, "2017.09.19");
+        json.put(FRADATO, "2017.09.19");
         Response response = sendRequest(json);
         assertEquals(400, response.getStatus());
     }
@@ -74,7 +74,7 @@ class OppgaveRessursIntegrationTest {
     @Test
     void skal_returnere_400_bad_request_ved_manglende_obligatoriske_felter() {
         JSONObject json = TestData.json();
-        json.put(PRIORITETKODE, NULL);
+        json.put(PRIORITET, NULL);
         Response response = sendRequest(json);
         assertEquals(400, response.getStatus());
     }
@@ -82,7 +82,7 @@ class OppgaveRessursIntegrationTest {
     @Test
     void skal_returnere_200_ok_ved_manglende_valgfrie_felter() {
         JSONObject json = TestData.json();
-        json.put(ANSVARLIG_ID, NULL);
+        json.put(VEILEDER, NULL);
         Response response = sendRequest(json);
         assertEquals(200, response.getStatus());
     }
@@ -90,7 +90,7 @@ class OppgaveRessursIntegrationTest {
     @Test
     void skal_returnere_400_ved_ugyldig_prioritet() {
         JSONObject json = TestData.json();
-        json.put(PRIORITETKODE, "ugyldig_prioritetKode");
+        json.put(PRIORITET, "ugyldig_prioritetKode");
         Response response = sendRequest(json);
         assertEquals(400, response.getStatus());
     }

@@ -22,15 +22,15 @@ public class TestData {
     public static final Fnr IKKE_GYLDIG_FNR = Fnr.of("00000000000");
 
     public class FeltNavn {
-        public static final String ANSVARLIG_ID = "ansvarligId";
-        public static final String PRIORITETKODE = "prioritetKode";
-        public static final String ANSVARLIGENHETID = "ansvarligEnhetId";
+        public static final String VEILEDER = "veileder";
+        public static final String PRIORITET = "prioritet";
+        public static final String ENHET = "enhet";
         public static final String FNR = "fnr";
-        public static final String FAGOMRADEKODE = "fagomradeKode";
-        public static final String OPPGAVETYPEKODE = "oppgavetypeKode";
+        public static final String TEMA = "tema";
+        public static final String TYPE = "type";
         public static final String BESKRIVELSE = "beskrivelse";
-        public static final String AKTIVFRA = "aktivFra";
-        public static final String AKTIVTIL = "aktivTil";
+        public static final String FRADATO = "fraDato";
+        public static final String TILDATO = "tilDato";
     }
 
     public static OppgaveDTO oppgaveDTO(Fnr fnr) {
@@ -66,14 +66,14 @@ public class TestData {
     public static JSONObject json() {
         return new JSONObject()
                 .put(FNR, genererTilfeldigFnrMedTilgang().getFnr())
-                .put(FAGOMRADEKODE, Tema.OPPFOLGING.name().toLowerCase())
-                .put(OPPGAVETYPEKODE, "konsekvens_for_ytelse")
-                .put(PRIORITETKODE, "lav")
+                .put(TEMA, Tema.OPPFOLGING.name().toLowerCase())
+                .put(TYPE, "konsekvens_for_ytelse")
+                .put(PRIORITET, "lav")
                 .put(BESKRIVELSE, "Dette er en testbeskrivelse")
-                .put(AKTIVFRA, "2017-09-19")
-                .put(AKTIVTIL, "2018-09-19")
-                .put(ANSVARLIGENHETID, "0000")
-                .put(ANSVARLIG_ID, "X000000");
+                .put(FRADATO, "2017-09-19")
+                .put(TILDATO, "2018-09-19")
+                .put(ENHET, "0000")
+                .put(VEILEDER, "X000000");
     }
 
     public static Fnr genererTilfeldigFnr() {
