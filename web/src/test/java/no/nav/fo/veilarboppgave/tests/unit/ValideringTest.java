@@ -6,58 +6,47 @@ import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ValideringTest {
+class ValideringTest {
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
-    @Test
-    public void skal_validere_alle_gyldige_input_for_tema() throws Exception {
-        long antallValiderteTema = Arrays.stream(Tema.values())
-                .map(Enum::name)
-                .map(String::toLowerCase)
-                .map(Valider::tema)
-                .count();
-
-        int antallMuligeTema = Tema.values().length;
-        assertEquals(antallValiderteTema, antallMuligeTema);
+    @ParameterizedTest
+    @EnumSource(Tema.class)
+    void skal_validere_alle_gyldige_input_for_tema(Tema tema) throws Exception {
+        assertNotNull(Valider.tema(tema.name()));
     }
 
     @Test
-    public void skal_validere_gyldige_fnr() throws Exception {
-        long expected = 100;
-        long actual = Stream
-                .generate(TestData::genererTilfeldigFnr)
-                .map(Fnr::getFnr)
-                .map(Valider::fnr)
-                .limit(expected)
-                .count();
+    void skal_ikke_validere_ugyldig_tema() {
+        assertThrows(UgyldigRequest.class, () -> Valider.tema("ugyldig_tema"));
+    }
 
-        assertEquals(expected, actual);
+    @ParameterizedTest
+    @MethodSource("tilfeldigFnrStream")
+    void skal_validere_gyldige_fnr(String fnr) throws Exception {
+        Assert.assertNotNull(Valider.fnr(fnr));
     }
 
     @Test
-    public void skal_kaste_exception_om_fra_dato_er_etter_til_dato() throws Exception {
-        expectedException.expect(UgyldigRequest.class);
+    void skal_kaste_exception_om_fra_dato_er_etter_til_dato() throws Exception {
         String fraDato = "2000-09-18";
         String tilDato = "1900-09-18";
         OppgaveDTO testData = TestData.oppgaveDTO(fraDato, tilDato);
-        Valider.fraTilDato(testData);
+        assertThrows(UgyldigRequest.class, () -> Valider.fraTilDato(testData));
     }
 
-    @Test
-    public void skal_kaste_exception_om_dato_er_paa_ugyldig_format() throws Exception {
-        expectedException.expect(UgyldigRequest.class);
-        String ugyldigDatoFormat = "19.09.2017";
-        Valider.dato(ugyldigDatoFormat);
+    private static Stream<String> tilfeldigFnrStream() {
+        return Stream.generate(TestData::genererTilfeldigFnr)
+                .map(Fnr::getFnr)
+                .limit(100);
     }
 }
