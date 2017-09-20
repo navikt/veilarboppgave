@@ -3,14 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <properties>
         <arbeidsfordeling-v1-tjenestespesifikasjon.version>1.1.0</arbeidsfordeling-v1-tjenestespesifikasjon.version>
         <person-v3-tjenestespesifikasjon.version>3.0.2</person-v3-tjenestespesifikasjon.version>
+        <json.version>20160810</json.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <junit-platform-surefire-provider.version>1.0.0</junit-platform-surefire-provider.version>
+        <junit-jupiter-engine.version>5.0.0</junit-jupiter-engine.version>
     </properties>
+
     <parent>
         <groupId>no.nav.sbl</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>3.2</version>
+        <version>1-SNAPSHOT</version> <!-- TODO lås denne til samme versjon som mor-pommen før prodsetting -->
     </parent>
 
     <name>veilarboppgave</name>
@@ -27,7 +33,7 @@
     </modules>
 
     <dependencyManagement>
-        <!--api-app-->
+        <!--bom-->
         <dependencies>
             <dependency>
                 <groupId>no.nav.sbl</groupId>
@@ -47,6 +53,20 @@
                 <groupId>no.nav.sbl.dialogarena</groupId>
                 <artifactId>person-v3-tjenestespesifikasjon</artifactId>
                 <version>${person-v3-tjenestespesifikasjon.version}</version>
+            </dependency>
+
+            <!--test-->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>5.0.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
                    
