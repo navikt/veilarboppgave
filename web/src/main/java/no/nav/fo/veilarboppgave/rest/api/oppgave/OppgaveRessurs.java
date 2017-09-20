@@ -25,16 +25,18 @@ public class OppgaveRessurs {
     }
 
     @POST
-    public OppgaveId opprettOppgave(OppgaveDTO oppgaveDTO) {
-        ofNullable(oppgaveDTO.getFnr())
+    public OppgaveId opprettOppgave(OppgaveDTO dto) {
+
+        ofNullable(dto.getFnr())
                 .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
 
-        Valider.fraTilDato(oppgaveDTO);
+        Valider.fraTilDato(dto);
+        Valider.obligatoriskeFelter(dto);
 
         return oppgaveService
-                .opprettOppgave(oppgaveDTO)
+                .opprettOppgave(dto)
                 .orElseThrow(NotFoundException::new);
     }
 }

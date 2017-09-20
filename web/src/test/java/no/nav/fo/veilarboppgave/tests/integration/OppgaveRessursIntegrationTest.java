@@ -66,6 +66,20 @@ class OppgaveRessursIntegrationTest {
         assertEquals(400, response.getStatus());
     }
 
+    @Test
+    void skal_returnere_400_bad_request_ved_manglende_obligatoriske_felter() {
+        JSONObject json = TestData.jsonUtenObligatoriskeFelter();
+        Response response = sendRequest(json);
+        assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void skal_returnere_200_ok_ved_manglende_valgfrie_felter() {
+        JSONObject json = TestData.jsonUtenValgfrieFelter();
+        Response response = sendRequest(json);
+        assertEquals(200, response.getStatus());
+    }
+
     private static Response sendRequest(JSONObject json) {
         return client
                 .target(uri)
