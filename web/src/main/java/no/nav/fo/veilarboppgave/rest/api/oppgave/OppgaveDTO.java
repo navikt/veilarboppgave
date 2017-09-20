@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OppgaveDTO {
     String fnr;
-    String fagomradeKode;
-    String oppgavetypeKode;
-    String prioritetKode;
+    String tema;
+    String type;
+    String prioritet;
     String beskrivelse;
-    String aktivFra;
-    String aktivTil;
-    String ansvarligEnhetId;
-    String ansvarligId;
+    String fraDato;
+    String tilDato;
+    String enhet;
+    String veileder;
 }
