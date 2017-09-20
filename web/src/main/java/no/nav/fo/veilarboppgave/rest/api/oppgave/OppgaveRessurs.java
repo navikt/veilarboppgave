@@ -6,14 +6,13 @@ import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
 import static java.util.Optional.ofNullable;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 @Path("/oppgave")
-@Produces(APPLICATION_JSON)
-@Consumes(APPLICATION_JSON)
 public class OppgaveRessurs {
 
     private final OppgaveService oppgaveService;
@@ -26,16 +25,18 @@ public class OppgaveRessurs {
     }
 
     @POST
-    public OppgaveId opprettOppgave(OppgaveDTO oppgaveDTO) {
-        ofNullable(oppgaveDTO.getFnr())
+    public OppgaveId opprettOppgave(OppgaveDTO dto) {
+
+        ofNullable(dto.getFnr())
                 .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
 
-        Valider.fraTilDato(oppgaveDTO);
+        Valider.fraTilDato(dto);
+        Valider.obligatoriskeFelter(dto);
 
         return oppgaveService
-                .opprettOppgave(oppgaveDTO)
+                .opprettOppgave(dto)
                 .orElseThrow(NotFoundException::new);
     }
 }
