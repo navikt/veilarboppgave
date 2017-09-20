@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import no.nav.dialogarena.config.DevelopmentSecurity;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 
+import java.io.File;
+
 import static no.nav.dialogarena.config.DevelopmentSecurity.setupISSO;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 import static no.nav.sbl.dialogarena.common.jetty.JettyStarterUtils.*;
@@ -36,5 +38,16 @@ public class StartJetty {
 
         Jetty jetty = jettyBuilder.buildJetty();
         jetty.startAnd(first(waitFor(gotKeypress())).then(jetty.stop));
+    }
+
+    public static Jetty startJettyUtenSikkerhet() {
+        return Jetty
+                .usingWar()
+                .at(APPLICATION_NAME)
+                .port(PORT)
+                .overrideWebXml(new File("src/test/resources/disable-security-web.xml"))
+                .disableAnnotationScanning()
+                .buildJetty()
+                .start();
     }
 }
