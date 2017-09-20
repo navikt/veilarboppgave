@@ -29,6 +29,10 @@
         <webservice mapToProperty="arbeidsfordelingV1.endpoint" alias="virksomhet:Arbeidsfordeling_v1"/>
     </resources>
 
+    <exposed-services>
+        <exposedRest path="/veilarboppgave/api" name="veilarboppgave.api" description="Api for veilarboppgave"/>
+    </exposed-services>
+
     <loadBalancer isAlive="/veilarboppgave/internal/isAlive" />
 
     <abacSecurity serviceUserResourceAlias="srvveilarboppgave"/>
