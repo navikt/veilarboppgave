@@ -28,8 +28,8 @@ public class Valider {
     }
 
     public static OppgaveDTO fraTilDato(OppgaveDTO oppgaveDTO) {
-        LocalDate fra = Valider.dato(oppgaveDTO.getAktivFra());
-        LocalDate til = Valider.dato(oppgaveDTO.getAktivTil());
+        LocalDate fra = Valider.dato(oppgaveDTO.getFraDato());
+        LocalDate til = Valider.dato(oppgaveDTO.getTilDato());
 
         if (fra.isBefore(til.plusDays(1))) {
             return oppgaveDTO;
@@ -38,9 +38,9 @@ public class Valider {
         }
     }
 
-    public static LocalDate dato(String aktivFra) {
+    public static LocalDate dato(String fraDato) {
         try {
-            return LocalDate.parse(aktivFra);
+            return LocalDate.parse(fraDato);
         } catch (DateTimeParseException e) {
             throw new UgyldigRequest();
         }
