@@ -78,6 +78,13 @@
         </dependency>
 
         <!--test-->
+
+        <!--Denne må ligge føre test-config siden test-config inneholder en org.json-pakke i kildekoden!-->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>no.nav.sbl.dialogarena</groupId>
             <artifactId>test-config</artifactId>
@@ -89,10 +96,6 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
