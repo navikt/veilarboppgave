@@ -12,23 +12,23 @@ import org.junit.jupiter.api.Test;
 import static no.nav.fo.veilarboppgave.TestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class OppgaveRessursTest {
+class OppgaveRessursTest {
 
     private OppgaveRessurs oppgaveRessurs;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         oppgaveRessurs = new OppgaveRessurs(new OppgaveServiceMock(), new PepClientMock());
     }
 
     @Test
-    public void skal_nekte_tilgang_til_fnr() throws Exception {
+    void skal_nekte_tilgang_til_fnr() throws Exception {
         OppgaveDTO testData = oppgaveDTO(genererTilfeldigFnrUtenTilgang());
         assertThrows(IngenTilgang.class, () -> oppgaveRessurs.opprettOppgave(testData));
     }
 
     @Test
-    public void skal_kaste_exception_ved_validering_av_ugyldig_fnr() throws Exception {
+    void skal_kaste_exception_ved_validering_av_ugyldig_fnr() throws Exception {
         OppgaveDTO testData = oppgaveDTO(IKKE_GYLDIG_FNR);
         assertThrows(UgyldigRequest.class, () -> oppgaveRessurs.opprettOppgave(testData));
     }

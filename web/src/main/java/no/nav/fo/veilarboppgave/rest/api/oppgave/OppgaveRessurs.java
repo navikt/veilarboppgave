@@ -34,6 +34,7 @@ public class OppgaveRessurs {
 
         Valider.fraTilDato(dto);
         Valider.obligatoriskeFelter(dto);
+        Valider.prioritet(dto.getPrioritetKode());
 
         return oppgaveService
                 .opprettOppgave(dto)

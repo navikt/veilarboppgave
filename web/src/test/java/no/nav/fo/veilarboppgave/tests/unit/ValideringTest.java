@@ -17,12 +17,17 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ValideringTest {
+class ValideringTest {
 
     @ParameterizedTest
     @EnumSource(Tema.class)
     void skal_validere_alle_gyldige_input_for_tema(Tema tema) throws Exception {
         assertNotNull(Valider.tema(tema.name()));
+    }
+
+    @Test
+    void skal_ikke_validere_ugyldig_tema() {
+        assertThrows(UgyldigRequest.class, () -> Valider.tema("ugyldig_tema"));
     }
 
     @ParameterizedTest
@@ -32,7 +37,7 @@ public class ValideringTest {
     }
 
     @Test
-    public void skal_kaste_exception_om_fra_dato_er_etter_til_dato() throws Exception {
+    void skal_kaste_exception_om_fra_dato_er_etter_til_dato() throws Exception {
         String fraDato = "2000-09-18";
         String tilDato = "1900-09-18";
         OppgaveDTO testData = TestData.oppgaveDTO(fraDato, tilDato);

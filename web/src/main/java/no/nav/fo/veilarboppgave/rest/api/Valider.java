@@ -3,6 +3,7 @@ package no.nav.fo.veilarboppgave.rest.api;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.apiapp.util.StringUtils;
 import no.nav.fo.veilarboppgave.domene.Fnr;
+import no.nav.fo.veilarboppgave.domene.Prioritet;
 import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
@@ -24,6 +25,13 @@ public class Valider {
     public static Tema tema(String tema) {
         return Arrays.stream(Tema.values())
                 .filter(value -> value.name().equals(tema.toUpperCase()))
+                .findFirst()
+                .orElseThrow(UgyldigRequest::new);
+    }
+
+    public static Prioritet prioritet(String prioritet) {
+        return Arrays.stream(Prioritet.values())
+                .filter(value -> value.name().equals(prioritet.toUpperCase()))
                 .findFirst()
                 .orElseThrow(UgyldigRequest::new);
     }
