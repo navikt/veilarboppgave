@@ -9,6 +9,7 @@ import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.FinnBehandlendeEnhetListeU
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSArbeidsfordelingKriterier;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSGeografi;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSOrganisasjonsenhet;
+import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSTema;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlendeEnhetListeRequest;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.WSFinnBehandlendeEnhetListeResponse;
 
@@ -27,12 +28,18 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
     }
 
     @Override
-    public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, Tema gyldigTema) {
+    public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, Tema tema) {
         try {
             WSGeografi wsGeografi = new WSGeografi().withValue(geografiskTilknytning.getGeofrafiskTilknytning());
             WSArbeidsfordelingKriterier arbeidsfordelingKriterier = new WSArbeidsfordelingKriterier().withGeografiskTilknytning(wsGeografi);
+
+            WSTema wsTema = new WSTema();
+            wsTema.setValue(tema.getTemaKode());
+            arbeidsfordelingKriterier.setTema(wsTema);
+
             WSFinnBehandlendeEnhetListeRequest request = new WSFinnBehandlendeEnhetListeRequest().withArbeidsfordelingKriterier(arbeidsfordelingKriterier);
             WSFinnBehandlendeEnhetListeResponse response = arbeidsfordelingSoapTjeneste.finnBehandlendeEnhetListe(request);
+
             List<WSOrganisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
             return behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
         } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
