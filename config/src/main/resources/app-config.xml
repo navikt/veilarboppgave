@@ -28,6 +28,7 @@
         <webservice mapToProperty="personV3.endpoint" alias="virksomhet:Person_v3"/>
         <webservice mapToProperty="behandleoppgaveV1.endpoint" alias="behandleOppgave_v1"/>
         <webservice mapToProperty="arbeidsfordelingV1.endpoint" alias="virksomhet:Arbeidsfordeling_v1"/>
+        <webservice mapToProperty="behandleoppgaveV1.endpoint" alias="behandleOppgave_v1"/>
     </resources>
 
     <exposed-services>

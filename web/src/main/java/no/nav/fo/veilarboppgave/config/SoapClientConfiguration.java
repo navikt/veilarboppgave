@@ -16,6 +16,7 @@ public class SoapClientConfiguration {
 
     public static PersonV3 personV3OnBehalfOfUser() {
         return new CXFClient<>(PersonV3.class)
+                .address(System.getProperty("personV3.endpoint.url"))
                 .configureStsForOnBehalfOfWithJWT()
                 .build();
     }
