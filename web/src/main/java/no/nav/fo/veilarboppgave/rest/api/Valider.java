@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
+import static java.util.Optional.ofNullable;
 import static no.bekk.bekkopen.person.FodselsnummerValidator.isValid;
 
 public class Valider {
@@ -23,6 +24,13 @@ public class Valider {
     }
 
     public static Tema tema(String tema) {
+        return ofNullable(tema)
+                .map(Valider::obligatoriskFelt)
+                .map(Valider::erGyldigTema)
+                .orElseThrow(UgyldigRequest::new);
+    }
+
+    private static Tema erGyldigTema(String tema) {
         return Arrays.stream(Tema.values())
                 .filter(value -> value.name().equals(tema.toUpperCase()))
                 .findFirst()
@@ -30,13 +38,20 @@ public class Valider {
     }
 
     public static Prioritet prioritet(String prioritet) {
+        return ofNullable(prioritet)
+                .map(Valider::obligatoriskFelt)
+                .map(Valider::erGyldigPrioritet)
+                .orElseThrow(UgyldigRequest::new);
+    }
+
+    private static Prioritet erGyldigPrioritet(String prioritet) {
         return Arrays.stream(Prioritet.values())
                 .filter(value -> value.name().equals(prioritet.toUpperCase()))
                 .findFirst()
                 .orElseThrow(UgyldigRequest::new);
     }
 
-    public static OppgaveDTO fraTilDato(OppgaveDTO oppgaveDTO) {
+    public static OppgaveDTO fraDatoErFoerTilDato(OppgaveDTO oppgaveDTO) {
         LocalDate fra = Valider.dato(oppgaveDTO.getFraDato());
         LocalDate til = Valider.dato(oppgaveDTO.getTilDato());
 
@@ -55,15 +70,8 @@ public class Valider {
         }
     }
 
-    public static OppgaveDTO obligatoriskeFelter(OppgaveDTO dto) {
-        StringUtils.of(dto.getTilDato()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getFraDato()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getBeskrivelse()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getEnhet()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getTema()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getType()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getPrioritet()).orElseThrow(UgyldigRequest::new);
-        StringUtils.of(dto.getFnr()).orElseThrow(UgyldigRequest::new);
-        return dto;
+    public static String obligatoriskFelt(String enhet) {
+        return StringUtils.of(enhet).orElseThrow(UgyldigRequest::new);
     }
+
 }

@@ -41,7 +41,7 @@ class ValideringTest {
         String fraDato = "2000-09-18";
         String tilDato = "1900-09-18";
         OppgaveDTO testData = TestData.oppgaveDTO(fraDato, tilDato);
-        assertThrows(UgyldigRequest.class, () -> Valider.fraTilDato(testData));
+        assertThrows(UgyldigRequest.class, () -> Valider.fraDatoErFoerTilDato(testData));
     }
 
     private static Stream<String> tilfeldigFnrStream() {
