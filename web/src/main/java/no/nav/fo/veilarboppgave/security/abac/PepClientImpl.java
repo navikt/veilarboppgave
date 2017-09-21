@@ -22,7 +22,7 @@ public class PepClientImpl implements PepClient {
     @Override
     @SneakyThrows
     public Fnr sjekkTilgangTilFnr(Fnr fnr) {
-        if (Decision.Permit == pep.harInnloggetBrukerTilgangTilPerson(fnr.getFnr(), "veilarboppgave", Action.ActionId.READ, ResourceType.VeilArbPerson).getBiasedDecision()) {
+        if (Decision.Permit == pep.harInnloggetBrukerTilgangTilPerson(fnr.getFnr(), "veilarb", Action.ActionId.READ, ResourceType.VeilArbPerson).getBiasedDecision()) {
             return fnr;
         } else {
             throw new IngenTilgang();
