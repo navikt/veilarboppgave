@@ -74,4 +74,17 @@ public class Valider {
         return StringUtils.of(enhet).orElseThrow(UgyldigRequest::new);
     }
 
+    public static String beskrivelse(String beskrivelse) {
+        return ofNullable(beskrivelse)
+                .map(Valider::obligatoriskFelt)
+                .map(Valider::erIkkeOver500Tegn)
+                .orElseThrow(UgyldigRequest::new);
+    }
+
+    private static String erIkkeOver500Tegn(String beskrivelse) {
+        if (beskrivelse.length() > 500) {
+            throw new UgyldigRequest();
+        }
+        return beskrivelse;
+    }
 }

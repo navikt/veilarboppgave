@@ -40,7 +40,7 @@ public class OppgaveRessurs {
                 Valider.tema(dto.getTema()),
                 Valider.obligatoriskFelt(dto.getType()),
                 Valider.prioritet(dto.getPrioritet()),
-                Valider.obligatoriskFelt(dto.getBeskrivelse()),
+                Valider.beskrivelse(dto.getBeskrivelse()),
                 Valider.dato(dto.getFraDato()),
                 Valider.dato(dto.getTilDato()),
                 Valider.obligatoriskFelt(dto.getEnhet()),
