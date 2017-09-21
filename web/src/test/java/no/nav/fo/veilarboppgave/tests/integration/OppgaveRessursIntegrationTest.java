@@ -16,6 +16,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static no.nav.fo.veilarboppgave.StartJetty.*;
 import static no.nav.fo.veilarboppgave.TestData.FeltNavn.*;
 import static no.nav.fo.veilarboppgave.TestData.genererTilfeldigFnrUtenTilgang;
+import static no.nav.fo.veilarboppgave.Util.lagStringAvLengde;
 import static no.nav.fo.veilarboppgave.Util.switchOffLogging;
 import static org.json.JSONObject.NULL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,6 +92,14 @@ class OppgaveRessursIntegrationTest {
     void skal_returnere_400_ved_ugyldig_prioritet() {
         JSONObject json = TestData.json();
         json.put(PRIORITET, "ugyldig_prioritetKode");
+        Response response = sendRequest(json);
+        assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    void skal_returnere_400_ved_for_lang_beskrivelse() {
+        JSONObject json = TestData.json();
+        json.put(BESKRIVELSE, lagStringAvLengde(501));
         Response response = sendRequest(json);
         assertEquals(400, response.getStatus());
     }
