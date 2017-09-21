@@ -67,7 +67,7 @@ public class TestData {
         return new JSONObject()
                 .put(FNR, genererTilfeldigFnrMedTilgang().getFnr())
                 .put(TEMA, Tema.OPPFOLGING.name().toLowerCase())
-                .put(TYPE, "konsekvens_for_ytelse")
+                .put(TYPE, "VURDER_KONSEKVENS_FOR_YTELSE")
                 .put(PRIORITET, "lav")
                 .put(BESKRIVELSE, "Dette er en testbeskrivelse")
                 .put(FRADATO, "2017-09-19")
