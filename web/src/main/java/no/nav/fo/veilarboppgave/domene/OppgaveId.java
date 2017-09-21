@@ -2,7 +2,16 @@ package no.nav.fo.veilarboppgave.domene;
 
 import lombok.Value;
 
-@Value(staticConstructor = "of")
+import java.util.Optional;
+
+@Value
 public class OppgaveId {
-   int oppgaveId;
+    String oppgaveId;
+
+    public static Optional<OppgaveId> of(String oppgaveId) {
+        if (oppgaveId == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new OppgaveId(oppgaveId));
+    }
 }

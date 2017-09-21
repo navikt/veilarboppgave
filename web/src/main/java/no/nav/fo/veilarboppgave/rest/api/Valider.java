@@ -55,7 +55,7 @@ public class Valider {
         }
     }
 
-    public static void obligatoriskeFelter(OppgaveDTO dto) {
+    public static OppgaveDTO obligatoriskeFelter(OppgaveDTO dto) {
         StringUtils.of(dto.getTilDato()).orElseThrow(UgyldigRequest::new);
         StringUtils.of(dto.getFraDato()).orElseThrow(UgyldigRequest::new);
         StringUtils.of(dto.getBeskrivelse()).orElseThrow(UgyldigRequest::new);
@@ -64,5 +64,6 @@ public class Valider {
         StringUtils.of(dto.getType()).orElseThrow(UgyldigRequest::new);
         StringUtils.of(dto.getPrioritet()).orElseThrow(UgyldigRequest::new);
         StringUtils.of(dto.getFnr()).orElseThrow(UgyldigRequest::new);
+        return dto;
     }
 }
