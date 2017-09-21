@@ -5,8 +5,8 @@ import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.security.abac.PepClientImpl;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceMock;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
@@ -27,6 +27,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.personV3On
         OppgaveRessurs.class,
         ArbeidsfordelingServiceHelsesjekk.class,
         PersonServiceHelsesjekk.class,
+        BehandleOppgaveServiceHelsesjekk.class,
         AbacContext.class,
 })
 public class ApplicationConfig implements ApiApplication {
@@ -47,8 +48,8 @@ public class ApplicationConfig implements ApiApplication {
     }
 
     @Bean
-    public OppgaveService oppgaveService() {
-        return new OppgaveServiceMock();
+    public BehandleOppgaveService oppgaveService() {
+        return new BehandleOppgaveServiceMock();
     }
 
     @Bean

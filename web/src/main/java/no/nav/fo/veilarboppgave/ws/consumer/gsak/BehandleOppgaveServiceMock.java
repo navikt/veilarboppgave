@@ -5,7 +5,7 @@ import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
 import java.util.Optional;
 
-public class OppgaveServiceMock implements OppgaveService{
+public class BehandleOppgaveServiceMock implements BehandleOppgaveService {
 
     @Override
     public Optional<OppgaveId> opprettOppgave(OppgaveDTO oppgave) {

@@ -8,8 +8,8 @@ import no.nav.fo.veilarboppgave.mocks.PersonServiceMock;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveServiceMock;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceMock;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +36,8 @@ public class LocalApplicationConfig implements ApiApplication{
     }
 
     @Bean
-    public OppgaveService oppgaveService() {
-        return new OppgaveServiceMock();
+    public BehandleOppgaveService oppgaveService() {
+        return new BehandleOppgaveServiceMock();
     }
 
     @Bean

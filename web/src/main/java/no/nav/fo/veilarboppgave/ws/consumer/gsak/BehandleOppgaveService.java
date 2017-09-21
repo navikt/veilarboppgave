@@ -5,7 +5,7 @@ import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
 import java.util.Optional;
 
-public interface OppgaveService {
+public interface BehandleOppgaveService {
 
     Optional<OppgaveId> opprettOppgave(OppgaveDTO oppgave);
 

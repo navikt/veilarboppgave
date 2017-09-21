@@ -76,6 +76,10 @@
             <groupId>no.nav.sbl.dialogarena</groupId>
             <artifactId>person-v3-tjenestespesifikasjon</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.sbl.dialogarena</groupId>
+            <artifactId>behandleoppgave-v1-tjenestespesifikasjon</artifactId>
+        </dependency>
 
         <!--test-->
 
@@ -122,7 +126,6 @@
                 </excludes>
             </testResource>
         </testResources>
-
     </build>
 
     <profiles>
