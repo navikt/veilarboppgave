@@ -6,7 +6,7 @@ import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.security.abac.PepClientImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceMock;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
@@ -18,8 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import static no.nav.apiapp.ApiApplication.Sone.FSS;
-import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.arbeidsfordelingV1OnBehalfOfUser;
-import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.personV3OnBehalfOfUser;
+import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
 
 @Configuration
 @Import({
@@ -49,7 +48,7 @@ public class ApplicationConfig implements ApiApplication {
 
     @Bean
     public BehandleOppgaveService oppgaveService() {
-        return new BehandleOppgaveServiceMock();
+        return new BehandleOppgaveServiceImpl(behandleOppgaveV1OnBehalfOfUser());
     }
 
     @Bean

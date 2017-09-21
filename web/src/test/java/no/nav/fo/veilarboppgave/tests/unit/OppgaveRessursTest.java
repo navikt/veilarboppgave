@@ -2,10 +2,10 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
+import no.nav.fo.veilarboppgave.mocks.BehandleOppgaveServiceMock;
 import no.nav.fo.veilarboppgave.mocks.PepClientMock;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
