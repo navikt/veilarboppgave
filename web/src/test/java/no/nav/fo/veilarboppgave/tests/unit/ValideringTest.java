@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static no.nav.fo.veilarboppgave.Util.lagStringAvLengde;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -41,8 +42,17 @@ class ValideringTest {
         String fraDato = "2000-09-18";
         String tilDato = "1900-09-18";
         OppgaveDTO testData = TestData.oppgaveDTO(fraDato, tilDato);
-        assertThrows(UgyldigRequest.class, () -> Valider.fraTilDato(testData));
+        assertThrows(UgyldigRequest.class, () -> Valider.fraDatoErFoerTilDato(testData));
     }
+
+    @Test
+    void skal_ikke_godta_beskrivelse_over_500_tegn() {
+        String akkuratForLangBeskrivelse = lagStringAvLengde(501);
+        String akkuratPasseLangBeskrivelse = lagStringAvLengde(500);
+        assertThrows(UgyldigRequest.class, () -> Valider.beskrivelse(akkuratForLangBeskrivelse));
+        assertNotNull(Valider.beskrivelse(akkuratPasseLangBeskrivelse));
+    }
+
 
     private static Stream<String> tilfeldigFnrStream() {
         return Stream.generate(TestData::genererTilfeldigFnr)

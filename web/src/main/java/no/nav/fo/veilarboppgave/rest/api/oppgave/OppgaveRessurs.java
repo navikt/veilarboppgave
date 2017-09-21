@@ -1,9 +1,10 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
+import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.OppgaveId;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
-import no.nav.fo.veilarboppgave.ws.consumer.gsak.OppgaveService;
+import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
@@ -15,11 +16,11 @@ import static java.util.Optional.ofNullable;
 @Path("/oppgave")
 public class OppgaveRessurs {
 
-    private final OppgaveService oppgaveService;
+    private final BehandleOppgaveService oppgaveService;
     private final PepClient pepClient;
 
     @Inject
-    public OppgaveRessurs(OppgaveService oppgaveService, PepClient pepClient) {
+    public OppgaveRessurs(BehandleOppgaveService oppgaveService, PepClient pepClient) {
         this.oppgaveService = oppgaveService;
         this.pepClient = pepClient;
     }
@@ -27,17 +28,27 @@ public class OppgaveRessurs {
     @POST
     public OppgaveId opprettOppgave(OppgaveDTO dto) {
 
-        ofNullable(dto.getFnr())
+        Fnr fnr = ofNullable(dto.getFnr())
                 .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
 
-        Valider.fraTilDato(dto);
-        Valider.obligatoriskeFelter(dto);
-        Valider.prioritet(dto.getPrioritet());
+        Valider.fraDatoErFoerTilDato(dto);
+
+        Oppgave oppgave = new Oppgave(
+                fnr,
+                Valider.tema(dto.getTema()),
+                Valider.obligatoriskFelt(dto.getType()),
+                Valider.prioritet(dto.getPrioritet()),
+                Valider.beskrivelse(dto.getBeskrivelse()),
+                Valider.dato(dto.getFraDato()),
+                Valider.dato(dto.getTilDato()),
+                Valider.obligatoriskFelt(dto.getEnhet()),
+                dto.getVeileder()
+        );
 
         return oppgaveService
-                .opprettOppgave(dto)
+                .opprettOppgave(oppgave)
                 .orElseThrow(NotFoundException::new);
     }
 }
