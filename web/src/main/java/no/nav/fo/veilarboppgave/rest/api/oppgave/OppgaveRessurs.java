@@ -38,7 +38,7 @@ public class OppgaveRessurs {
         Oppgave oppgave = new Oppgave(
                 fnr,
                 Valider.tema(dto.getTema()),
-                Valider.obligatoriskFelt(dto.getType()),
+                Valider.oppgavetype(dto.getType()),
                 Valider.prioritet(dto.getPrioritet()),
                 Valider.beskrivelse(dto.getBeskrivelse()),
                 Valider.dato(dto.getFraDato()),

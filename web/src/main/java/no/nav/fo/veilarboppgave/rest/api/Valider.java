@@ -5,6 +5,7 @@ import no.nav.apiapp.util.StringUtils;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.Prioritet;
 import no.nav.fo.veilarboppgave.domene.Tema;
+import no.nav.fo.veilarboppgave.domene.Type;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
 import java.time.LocalDate;
@@ -86,5 +87,13 @@ public class Valider {
             throw new UgyldigRequest();
         }
         return beskrivelse;
+    }
+
+    public static Type oppgavetype(String type) {
+        return ofNullable(type)
+                .map(Valider::obligatoriskFelt)
+                .filter(Type::contains)
+                .map(Type::valueOf)
+                .orElseThrow(UgyldigRequest::new);
     }
 }

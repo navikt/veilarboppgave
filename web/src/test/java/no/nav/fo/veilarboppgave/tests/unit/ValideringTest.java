@@ -53,6 +53,11 @@ class ValideringTest {
         assertNotNull(Valider.beskrivelse(akkuratPasseLangBeskrivelse));
     }
 
+    @Test
+    void skal_ikke_valider_ugyldig_oppgavetype() {
+        String ugyldigOppgavetype = "ugyldigOppgavetype";
+        assertThrows(UgyldigRequest.class, () -> Valider.oppgavetype(ugyldigOppgavetype));
+    }
 
     private static Stream<String> tilfeldigFnrStream() {
         return Stream.generate(TestData::genererTilfeldigFnr)
