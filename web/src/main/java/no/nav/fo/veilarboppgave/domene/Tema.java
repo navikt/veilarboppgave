@@ -1,5 +1,7 @@
 package no.nav.fo.veilarboppgave.domene;
 
+import java.util.Arrays;
+
 public enum Tema {
     OPPFOLGING("OPP"),
     DAGPENGER("DAG"),
@@ -16,5 +18,11 @@ public enum Tema {
 
     public String getTemaKode() {
         return temaKode;
+    }
+
+    public static boolean contains(String value) {
+        return Arrays
+                .stream(Tema.values())
+                .anyMatch(v -> v.name().equals(value));
     }
 }

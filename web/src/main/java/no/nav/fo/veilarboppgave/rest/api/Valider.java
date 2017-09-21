@@ -3,14 +3,13 @@ package no.nav.fo.veilarboppgave.rest.api;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.apiapp.util.StringUtils;
 import no.nav.fo.veilarboppgave.domene.Fnr;
+import no.nav.fo.veilarboppgave.domene.OppgaveType;
 import no.nav.fo.veilarboppgave.domene.Prioritet;
 import no.nav.fo.veilarboppgave.domene.Tema;
-import no.nav.fo.veilarboppgave.domene.Type;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 
 import static java.util.Optional.ofNullable;
 import static no.bekk.bekkopen.person.FodselsnummerValidator.isValid;
@@ -27,28 +26,27 @@ public class Valider {
     public static Tema tema(String tema) {
         return ofNullable(tema)
                 .map(Valider::obligatoriskFelt)
-                .map(Valider::erGyldigTema)
-                .orElseThrow(UgyldigRequest::new);
-    }
-
-    private static Tema erGyldigTema(String tema) {
-        return Arrays.stream(Tema.values())
-                .filter(value -> value.name().equals(tema.toUpperCase()))
-                .findFirst()
+                .map(String::toUpperCase)
+                .filter(Tema::contains)
+                .map(Tema::valueOf)
                 .orElseThrow(UgyldigRequest::new);
     }
 
     public static Prioritet prioritet(String prioritet) {
         return ofNullable(prioritet)
                 .map(Valider::obligatoriskFelt)
-                .map(Valider::erGyldigPrioritet)
+                .map(String::toUpperCase)
+                .filter(Prioritet::contains)
+                .map(Prioritet::valueOf)
                 .orElseThrow(UgyldigRequest::new);
     }
 
-    private static Prioritet erGyldigPrioritet(String prioritet) {
-        return Arrays.stream(Prioritet.values())
-                .filter(value -> value.name().equals(prioritet.toUpperCase()))
-                .findFirst()
+    public static OppgaveType oppgavetype(String oppgaveType) {
+        return ofNullable(oppgaveType)
+                .map(Valider::obligatoriskFelt)
+                .map(String::toUpperCase)
+                .filter(OppgaveType::contains)
+                .map(OppgaveType::valueOf)
                 .orElseThrow(UgyldigRequest::new);
     }
 
@@ -89,11 +87,4 @@ public class Valider {
         return beskrivelse;
     }
 
-    public static Type oppgavetype(String type) {
-        return ofNullable(type)
-                .map(Valider::obligatoriskFelt)
-                .filter(Type::contains)
-                .map(Type::valueOf)
-                .orElseThrow(UgyldigRequest::new);
-    }
 }
