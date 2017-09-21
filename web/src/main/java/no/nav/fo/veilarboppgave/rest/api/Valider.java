@@ -25,7 +25,7 @@ public class Valider {
 
     public static Tema tema(String tema) {
         return ofNullable(tema)
-                .map(Valider::obligatoriskFelt)
+                .map(Valider::atFeltErUtfylt)
                 .map(String::toUpperCase)
                 .filter(Tema::contains)
                 .map(Tema::valueOf)
@@ -34,7 +34,7 @@ public class Valider {
 
     public static Prioritet prioritet(String prioritet) {
         return ofNullable(prioritet)
-                .map(Valider::obligatoriskFelt)
+                .map(Valider::atFeltErUtfylt)
                 .map(String::toUpperCase)
                 .filter(Prioritet::contains)
                 .map(Prioritet::valueOf)
@@ -43,7 +43,7 @@ public class Valider {
 
     public static OppgaveType oppgavetype(String oppgaveType) {
         return ofNullable(oppgaveType)
-                .map(Valider::obligatoriskFelt)
+                .map(Valider::atFeltErUtfylt)
                 .map(String::toUpperCase)
                 .filter(OppgaveType::contains)
                 .map(OppgaveType::valueOf)
@@ -69,13 +69,13 @@ public class Valider {
         }
     }
 
-    public static String obligatoriskFelt(String enhet) {
+    public static String atFeltErUtfylt(String enhet) {
         return StringUtils.of(enhet).orElseThrow(UgyldigRequest::new);
     }
 
     public static String beskrivelse(String beskrivelse) {
         return ofNullable(beskrivelse)
-                .map(Valider::obligatoriskFelt)
+                .map(Valider::atFeltErUtfylt)
                 .map(Valider::erIkkeOver500Tegn)
                 .orElseThrow(UgyldigRequest::new);
     }

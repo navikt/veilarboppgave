@@ -43,7 +43,7 @@ public class OppgaveRessurs {
                 Valider.beskrivelse(dto.getBeskrivelse()),
                 Valider.dato(dto.getFraDato()),
                 Valider.dato(dto.getTilDato()),
-                Valider.obligatoriskFelt(dto.getEnhet()),
+                Valider.atFeltErUtfylt(dto.getEnhet()),
                 dto.getVeileder()
         );
 
