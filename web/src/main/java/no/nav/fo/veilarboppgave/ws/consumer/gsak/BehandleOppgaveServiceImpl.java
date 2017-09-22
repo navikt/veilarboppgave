@@ -33,16 +33,18 @@ public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
             XMLGregorianCalendar tilDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getTilDato().toString());
             XMLGregorianCalendar fraDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getFraDato().toString());
 
+            opprettOppgave.setFagomradeKode(oppgave.getTema().getFagomradeKode());
             opprettOppgave.setAktivFra(fraDato);
             opprettOppgave.setAktivTil(tilDato);
             opprettOppgave.setBeskrivelse(oppgave.getBeskrivelse());
             opprettOppgave.setPrioritetKode(oppgave.getPrioritet());
-            opprettOppgave.setAnsvarligEnhetId(oppgave.getEnhet());
-            opprettOppgave.setAnsvarligId(oppgave.getVeileder());
-            opprettOppgave.setOppgavetypeKode(oppgave.getType().getKode());
+            opprettOppgave.setAnsvarligEnhetId(oppgave.getEnhetId());
+            opprettOppgave.setAnsvarligId(oppgave.getVeilederId());
+            opprettOppgave.setOppgavetypeKode(oppgave.getType());
             opprettOppgave.setLest(false);
 
             OpprettOppgaveRequest request = new OpprettOppgaveRequest();
+            request.setOpprettetAvEnhetId(Integer.parseInt(oppgave.getAvsenderenhetId()));
             request.setWsOpprettOppgave(opprettOppgave);
 
             OpprettOppgaveResponse response = soapClient.opprettOppgave(request);

@@ -12,6 +12,7 @@
         <junit-platform-surefire-provider.version>1.0.0</junit-platform-surefire-provider.version>
         <junit-jupiter-engine.version>5.0.0</junit-jupiter-engine.version>
         <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.3</behandleoppgave-v1-tjenestespesifikasjon.version>
+        <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
     </properties>
 
     <parent>
@@ -60,6 +61,12 @@
                 <artifactId>behandleoppgave-v1-tjenestespesifikasjon</artifactId>
                 <version>${behandleoppgave-v1-tjenestespesifikasjon.version}</version>
             </dependency>
+            <dependency>
+                <groupId>no.nav.fo</groupId>
+                <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
+                <version>${enhet.tjenestespesifikasjon.versjon}</version>
+            </dependency>
+
             <!--test-->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

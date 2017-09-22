@@ -4,6 +4,7 @@ import no.nav.sbl.dialogarena.common.cxf.CXFClient;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.ArbeidsfordelingV1;
 import no.nav.tjeneste.virksomhet.behandleoppgave.v1.BehandleOppgaveV1;
 import no.nav.tjeneste.virksomhet.person.v3.PersonV3;
+import no.nav.virksomhet.tjenester.enhet.v1.Enhet;
 
 public class SoapClientConfiguration {
 
@@ -46,6 +47,20 @@ public class SoapClientConfiguration {
         return new CXFClient<>(BehandleOppgaveV1.class)
                 .address(System.getProperty("behandleoppgaveV1.endpoint.url"))
                 .configureStsForSystemUserInFSS()
+                .build();
+    }
+
+    public static Enhet virksomhetenhetOnBehalfOfSystemUser() {
+        return new CXFClient<>(Enhet.class)
+                .address(System.getProperty("norg.virksomhet_enhet.url"))
+                .configureStsForSystemUserInFSS()
+                .build();
+    }
+
+    public static Enhet virksomhetenhetOnBehalfOfUser() {
+        return new CXFClient<>(Enhet.class)
+                .address(System.getProperty("norg.virksomhet_enhet.url"))
+                .configureStsForOnBehalfOfWithJWT()
                 .build();
     }
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum OppgaveType {
     VURDER_KONSEKVENS_FOR_YTELSE("VUR_KONS_YTE"),
-    VURDER_HENVENDELSE("VURD_HENV ");
+    VURDER_HENVENDELSE("VURD_HENV");
 
     private String typeKode;
 
@@ -20,5 +20,9 @@ public enum OppgaveType {
         return Arrays
                 .stream(OppgaveType.values())
                 .anyMatch(v -> v.name().equals(value));
+    }
+
+    public static String utledOppgaveTypeKode(Tema tema, OppgaveType oppgaveType) {
+        return oppgaveType.getKode() + "_" + tema.getFagomradeKode();
     }
 }

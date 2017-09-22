@@ -10,14 +10,14 @@ public enum Tema {
     ENSLIGFORSORGER("ENF"),
     TILLEGSSTONAD("TSO");
 
-    private String temaKode;
+    private String fagomradeKode;
 
-    Tema(String temaKode) {
-        this.temaKode = temaKode;
+    Tema(String fagomradeKode) {
+        this.fagomradeKode = fagomradeKode;
     }
 
-    public String getTemaKode() {
-        return temaKode;
+    public String getFagomradeKode() {
+        return fagomradeKode;
     }
 
     public static boolean contains(String value) {

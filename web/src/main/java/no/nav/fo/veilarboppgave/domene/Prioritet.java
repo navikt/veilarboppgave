@@ -14,7 +14,7 @@ public enum  Prioritet {
     }
 
     public static String utledPrioritetKode(Tema tema, Prioritet prioritet) {
-        return prioritet.name() + "_" + tema.getTemaKode();
+        return prioritet.name() + "_" + tema.getFagomradeKode();
     }
 
 }
