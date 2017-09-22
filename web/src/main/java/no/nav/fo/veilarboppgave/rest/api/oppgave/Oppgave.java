@@ -16,6 +16,7 @@ public class Oppgave {
     String beskrivelse;
     LocalDate fraDato;
     LocalDate tilDato;
-    String enhet;
-    String veileder;
+    String enhetId;
+    String veilederId;
+    String avsenderenhetId;
 }

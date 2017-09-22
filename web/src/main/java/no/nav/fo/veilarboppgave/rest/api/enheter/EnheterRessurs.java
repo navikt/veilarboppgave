@@ -1,13 +1,13 @@
 package no.nav.fo.veilarboppgave.rest.api.enheter;
 
 import no.nav.apiapp.feil.UgyldigRequest;
-import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
+import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
 import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
-import no.nav.fo.veilarboppgave.ws.consumer.norg.ArbeidsfordelingService;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 
 import javax.inject.Inject;
@@ -33,7 +33,7 @@ public class EnheterRessurs {
     }
 
     @GET
-    public List<Enhet> hentEnheter(@QueryParam("fnr") String fnr, @QueryParam("tema") String tema) {
+    public List<OppfolgingEnhet> hentEnheter(@QueryParam("fnr") String fnr, @QueryParam("tema") String tema) {
         Fnr gyldigFnr = ofNullable(fnr)
                 .map(Valider::fnr)
                 .map(pepClient::sjekkTilgangTilFnr)

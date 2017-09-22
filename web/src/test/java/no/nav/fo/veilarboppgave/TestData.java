@@ -43,7 +43,8 @@ public class TestData {
                 "2017-09-18",
                 "2017-10-18",
                 "",
-                ""
+                "",
+                "0104"
         );
 
     }
@@ -58,7 +59,8 @@ public class TestData {
                 fraDato,
                 tilDato,
                 "",
-                ""
+                "",
+                "0104"
         );
 
     }

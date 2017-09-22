@@ -36,6 +36,9 @@ public class OppgaveRessurs {
                 .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
 
+        ofNullable(dto.avsenderenhetId)
+                .map(Valider::atFeltErUtfylt);
+
         Valider.fraDatoErFoerTilDato(dto);
 
         Tema tema = Valider.tema(dto.getTema());
@@ -50,8 +53,9 @@ public class OppgaveRessurs {
                 Valider.beskrivelse(dto.getBeskrivelse()),
                 Valider.dato(dto.getFraDato()),
                 Valider.dato(dto.getTilDato()),
-                Valider.atFeltErUtfylt(dto.getEnhet()),
-                dto.getVeileder()
+                Valider.atFeltErUtfylt(dto.getEnhetId()),
+                dto.getVeilederId(),
+                Valider.avsenderEnhetId(dto.getAvsenderenhetId())
         );
 
         return oppgaveService

@@ -87,4 +87,7 @@ public class Valider {
         return beskrivelse;
     }
 
+    public static String avsenderEnhetId(String avsenderenhetId) {
+        return avsenderenhetId;
+    }
 }

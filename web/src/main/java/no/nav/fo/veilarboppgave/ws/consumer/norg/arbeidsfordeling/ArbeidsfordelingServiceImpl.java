@@ -1,8 +1,8 @@
-package no.nav.fo.veilarboppgave.ws.consumer.norg;
+package no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling;
 
 import lombok.extern.slf4j.Slf4j;
-import no.nav.fo.veilarboppgave.domene.Enhet;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
+import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
 import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.ArbeidsfordelingV1;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.FinnBehandlendeEnhetListeUgyldigInput;
@@ -28,7 +28,7 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
     }
 
     @Override
-    public List<Enhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, Tema tema) {
+    public List<OppfolgingEnhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, Tema tema) {
         try {
             WSGeografi wsGeografi = new WSGeografi().withValue(geografiskTilknytning.getGeofrafiskTilknytning());
             WSArbeidsfordelingKriterier arbeidsfordelingKriterier = new WSArbeidsfordelingKriterier().withGeografiskTilknytning(wsGeografi);
@@ -41,7 +41,7 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
             WSFinnBehandlendeEnhetListeResponse response = arbeidsfordelingSoapTjeneste.finnBehandlendeEnhetListe(request);
 
             List<WSOrganisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
-            return behandlendeEnhetListe.stream().map(Enhet::of).collect(toList());
+            return behandlendeEnhetListe.stream().map(OppfolgingEnhet::of).collect(toList());
         } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
             log.info("Kunne ikke finne behandlende enheter for geografisk tilknytning og tema ");
             throw new NotFoundException(e);
