@@ -37,6 +37,10 @@
             <artifactId>nocommons</artifactId>
             <version>0.6</version>
         </dependency>
+        <dependency>
+            <groupId>no.nav.dialogarena</groupId>
+            <artifactId>oidc-security</artifactId>
+        </dependency>
 
 
         <!--java api-er-->
