@@ -46,9 +46,9 @@ class ValideringTest {
     }
 
     @Test
-    void skal_ikke_godta_beskrivelse_over_500_tegn() {
-        String akkuratForLangBeskrivelse = lagStringAvLengde(501);
-        String akkuratPasseLangBeskrivelse = lagStringAvLengde(500);
+    void skal_ikke_godta_beskrivelse_over_250_tegn() {
+        String akkuratForLangBeskrivelse = lagStringAvLengde(251);
+        String akkuratPasseLangBeskrivelse = lagStringAvLengde(250);
         assertThrows(UgyldigRequest.class, () -> Valider.beskrivelse(akkuratForLangBeskrivelse));
         assertNotNull(Valider.beskrivelse(akkuratPasseLangBeskrivelse));
     }

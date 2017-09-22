@@ -76,12 +76,12 @@ public class Valider {
     public static String beskrivelse(String beskrivelse) {
         return ofNullable(beskrivelse)
                 .map(Valider::atFeltErUtfylt)
-                .map(Valider::erIkkeOver500Tegn)
+                .map(Valider::erIkkeOver250Tegn)
                 .orElseThrow(UgyldigRequest::new);
     }
 
-    private static String erIkkeOver500Tegn(String beskrivelse) {
-        if (beskrivelse.length() > 500) {
+    private static String erIkkeOver250Tegn(String beskrivelse) {
+        if (beskrivelse.length() > 250) {
             throw new UgyldigRequest();
         }
         return beskrivelse;
