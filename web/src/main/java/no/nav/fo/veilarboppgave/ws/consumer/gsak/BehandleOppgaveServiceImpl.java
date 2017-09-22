@@ -36,7 +36,7 @@ public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
             opprettOppgave.setAktivFra(fraDato);
             opprettOppgave.setAktivTil(tilDato);
             opprettOppgave.setBeskrivelse(oppgave.getBeskrivelse());
-            opprettOppgave.setPrioritetKode(oppgave.getPrioritet().name());
+            opprettOppgave.setPrioritetKode(oppgave.getPrioritet());
             opprettOppgave.setAnsvarligEnhetId(oppgave.getEnhet());
             opprettOppgave.setAnsvarligId(oppgave.getVeileder());
             opprettOppgave.setOppgavetypeKode(oppgave.getType().getKode());

@@ -2,6 +2,8 @@ package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.OppgaveId;
+import no.nav.fo.veilarboppgave.domene.Prioritet;
+import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
@@ -12,6 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import static java.util.Optional.ofNullable;
+import static no.nav.fo.veilarboppgave.domene.Prioritet.utledPrioritetKode;
 
 @Path("/oppgave")
 public class OppgaveRessurs {
@@ -35,11 +38,15 @@ public class OppgaveRessurs {
 
         Valider.fraDatoErFoerTilDato(dto);
 
+        Tema tema = Valider.tema(dto.getTema());
+        Prioritet prioritet = Valider.prioritet(dto.getPrioritet());
+        String prioritetKode = utledPrioritetKode(tema, prioritet);
+
         Oppgave oppgave = new Oppgave(
                 fnr,
                 Valider.tema(dto.getTema()),
                 Valider.oppgavetype(dto.getType()),
-                Valider.prioritet(dto.getPrioritet()),
+                prioritetKode,
                 Valider.beskrivelse(dto.getBeskrivelse()),
                 Valider.dato(dto.getFraDato()),
                 Valider.dato(dto.getTilDato()),
