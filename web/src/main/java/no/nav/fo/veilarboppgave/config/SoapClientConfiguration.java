@@ -50,10 +50,17 @@ public class SoapClientConfiguration {
                 .build();
     }
 
-    public static Enhet virksomhetenhet() {
+    public static Enhet virksomhetenhetOnBehalfOfSystemUser() {
         return new CXFClient<>(Enhet.class)
                 .address(System.getProperty("norg.virksomhet_enhet.url"))
                 .configureStsForSystemUserInFSS()
+                .build();
+    }
+
+    public static Enhet virksomhetenhetOnBehalfOfUser() {
+        return new CXFClient<>(Enhet.class)
+                .address(System.getProperty("norg.virksomhet_enhet.url"))
+                .configureStsForOnBehalfOfWithJWT()
                 .build();
     }
 }

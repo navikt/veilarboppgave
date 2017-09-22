@@ -22,15 +22,16 @@ public class TestData {
     public static final Fnr IKKE_GYLDIG_FNR = Fnr.of("00000000000");
 
     public class FeltNavn {
-        public static final String VEILEDER = "veileder";
+        public static final String VEILEDER = "veilederId";
         public static final String PRIORITET = "prioritet";
-        public static final String ENHET = "enhet";
+        public static final String ENHET = "enhetId";
         public static final String FNR = "fnr";
         public static final String TEMA = "tema";
         public static final String TYPE = "type";
         public static final String BESKRIVELSE = "beskrivelse";
         public static final String FRADATO = "fraDato";
         public static final String TILDATO = "tilDato";
+        public static final String AVSENDERENHET = "avsenderenhetId";
     }
 
     public static OppgaveDTO oppgaveDTO(Fnr fnr) {
@@ -75,7 +76,8 @@ public class TestData {
                 .put(FRADATO, "2017-09-19")
                 .put(TILDATO, "2018-09-19")
                 .put(ENHET, "0000")
-                .put(VEILEDER, "X000000");
+                .put(VEILEDER, "X000000")
+                .put(AVSENDERENHET, "1111");
     }
 
     public static Fnr genererTilfeldigFnr() {

@@ -34,7 +34,7 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
             WSArbeidsfordelingKriterier arbeidsfordelingKriterier = new WSArbeidsfordelingKriterier().withGeografiskTilknytning(wsGeografi);
 
             WSTema wsTema = new WSTema();
-            wsTema.setValue(tema.getTemaKode());
+            wsTema.setValue(tema.getFagomradeKode());
             arbeidsfordelingKriterier.setTema(wsTema);
 
             WSFinnBehandlendeEnhetListeRequest request = new WSFinnBehandlendeEnhetListeRequest().withArbeidsfordelingKriterier(arbeidsfordelingKriterier);

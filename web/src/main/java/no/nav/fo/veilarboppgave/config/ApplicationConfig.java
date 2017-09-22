@@ -9,6 +9,8 @@ import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingServiceImpl;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetService;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonServiceImpl;
 import no.nav.sbl.dialogarena.common.abac.pep.Pep;
@@ -49,6 +51,11 @@ public class ApplicationConfig implements ApiApplication {
     @Bean
     public BehandleOppgaveService oppgaveService() {
         return new BehandleOppgaveServiceImpl(behandleOppgaveV1OnBehalfOfUser());
+    }
+
+    @Bean
+    public EnhetService enhetService() {
+        return new EnhetServiceImpl(virksomhetenhetOnBehalfOfUser());
     }
 
     @Bean

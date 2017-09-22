@@ -2,6 +2,7 @@ package no.nav.fo.veilarboppgave.ws.consumer.norg.enhet;
 
 import lombok.extern.slf4j.Slf4j;
 import no.nav.apiapp.feil.IngenTilgang;
+import no.nav.brukerdialog.security.context.SubjectHandler;
 import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
 import no.nav.virksomhet.tjenester.enhet.meldinger.v1.WSHentEnhetListeRequest;
 import no.nav.virksomhet.tjenester.enhet.v1.Enhet;
@@ -9,9 +10,6 @@ import no.nav.virksomhet.tjenester.enhet.v1.HentEnhetListeRessursIkkeFunnet;
 import no.nav.virksomhet.tjenester.enhet.v1.HentEnhetListeUgyldigInput;
 
 import javax.inject.Inject;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 public class EnhetServiceImpl implements EnhetService {
@@ -24,7 +22,9 @@ public class EnhetServiceImpl implements EnhetService {
     }
 
     @Override
-    public List<OppfolgingEnhet> harTilgangTilEnhet(String veilederId) {
+    public boolean harTilgangTilEnhet(String enhetId) {
+        String veilederId = SubjectHandler.getSubjectHandler().getUid();
+
         WSHentEnhetListeRequest request = new WSHentEnhetListeRequest();
         request.setRessursId(veilederId);
         try {
@@ -33,7 +33,7 @@ public class EnhetServiceImpl implements EnhetService {
                     .getEnhetListe()
                     .stream()
                     .map(OppfolgingEnhet::of)
-                    .collect(toList());
+                    .anyMatch((enhet) -> enhet.getEnhetId().equals(enhetId));
 
         } catch (HentEnhetListeUgyldigInput e) {
             log.warn("Ugyldig input til virksomhetenhettjeneste: {}", e.getFaultInfo().getFeilmelding());
