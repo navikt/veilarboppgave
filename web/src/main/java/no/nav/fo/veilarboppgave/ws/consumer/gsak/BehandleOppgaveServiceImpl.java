@@ -20,6 +20,7 @@ import java.util.Optional;
 public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
 
     private BehandleOppgaveV1 soapClient;
+    private static final String PERSON = "PERSON";
 
     @Inject
     public BehandleOppgaveServiceImpl(BehandleOppgaveV1 soapClient) {
@@ -33,6 +34,8 @@ public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
             XMLGregorianCalendar tilDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getTilDato().toString());
             XMLGregorianCalendar fraDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getFraDato().toString());
 
+            opprettOppgave.setBrukerId(oppgave.getFnr().getFnr());
+            opprettOppgave.setBrukertypeKode(PERSON);
             opprettOppgave.setFagomradeKode(oppgave.getTema().getFagomradeKode());
             opprettOppgave.setAktivFra(fraDato);
             opprettOppgave.setAktivTil(tilDato);
