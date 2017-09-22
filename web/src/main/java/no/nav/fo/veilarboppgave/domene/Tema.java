@@ -7,8 +7,8 @@ public enum Tema {
     DAGPENGER("DAG"),
     ARBEIDSAVKLARING("AAP"),
     INDIVIDSTONAD("IND"),
-    ENSLIGFORSORGER("ENF"),
-    TILLEGSSTONAD("TSO");
+    ENSLIG_FORSORGER("ENF"),
+    TILLEGGSTONAD("TSO");
 
     private String fagomradeKode;
 
