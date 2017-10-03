@@ -7,6 +7,7 @@ import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,9 @@ public class LocalApplicationConfig implements ApiApplication{
 
     @Bean
     public EnhetServiceMock virksomhetEnhetService() { return new EnhetServiceMock(); }
+
+    @Bean
+    public OrganisasjonEnhetService organisasjonEnhetService() { return new OrganisasjonEnhetServiceMock(); }
 
     @Bean
     public PepClient pepClient() {
