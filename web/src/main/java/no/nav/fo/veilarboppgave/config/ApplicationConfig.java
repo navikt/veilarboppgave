@@ -11,6 +11,8 @@ import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.Arbeidsfordeli
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetServiceImpl;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
+import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonServiceImpl;
 import no.nav.sbl.dialogarena.common.abac.pep.Pep;
@@ -29,6 +31,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         ArbeidsfordelingServiceHelsesjekk.class,
         PersonServiceHelsesjekk.class,
         BehandleOppgaveServiceHelsesjekk.class,
+        OrganisasjonEnhetServiceHelsesjekk.class,
         AbacContext.class,
 })
 public class ApplicationConfig implements ApiApplication {
@@ -56,6 +59,11 @@ public class ApplicationConfig implements ApiApplication {
     @Bean
     public EnhetService enhetService() {
         return new EnhetServiceImpl(virksomhetenhetOnBehalfOfUser());
+    }
+
+    @Bean
+    public OrganisasjonEnhetService organisasjonEnhetService() {
+        return new OrganisasjonEnhetServiceImpl(organisasjonenhetOnBehalfOfUser());
     }
 
     @Bean

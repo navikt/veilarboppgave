@@ -13,6 +13,9 @@
         <junit-jupiter-engine.version>5.0.0</junit-jupiter-engine.version>
         <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.3</behandleoppgave-v1-tjenestespesifikasjon.version>
         <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
+        <organisasjonenhet-v2.tjenestespesifikasjon.versjon>1.0.5</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
+
+        <vavr.version>0.9.0</vavr.version>
     </properties>
 
     <parent>
@@ -48,6 +51,11 @@
             <!--eksterne tjenester-->
             <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
+                <version>${organisasjonenhet-v2.tjenestespesifikasjon.versjon}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
                 <artifactId>arbeidsfordeling-v1-tjenestespesifikasjon</artifactId>
                 <version>${arbeidsfordeling-v1-tjenestespesifikasjon.version}</version>
             </dependency>
@@ -65,6 +73,11 @@
                 <groupId>no.nav.fo</groupId>
                 <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
                 <version>${enhet.tjenestespesifikasjon.versjon}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>${vavr.version}</version>
             </dependency>
 
             <!--test-->

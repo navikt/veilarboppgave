@@ -3,6 +3,7 @@ package no.nav.fo.veilarboppgave.tests.unit;
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.mocks.ArbeidsfordelingServiceMock;
+import no.nav.fo.veilarboppgave.mocks.OrganisasjonEnhetServiceMock;
 import no.nav.fo.veilarboppgave.mocks.PepClientMock;
 import no.nav.fo.veilarboppgave.mocks.PersonServiceMock;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
@@ -21,7 +22,9 @@ public class EnhetRessursTest {
         enheterRessurs = new EnheterRessurs(
                 new ArbeidsfordelingServiceMock(),
                 new PersonServiceMock(),
-                new PepClientMock()
+                new PepClientMock(),
+                new OrganisasjonEnhetServiceMock() {
+                }
         );
     }
 

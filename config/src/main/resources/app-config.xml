@@ -30,6 +30,7 @@
         <webservice mapToProperty="arbeidsfordelingV1.endpoint" alias="virksomhet:Arbeidsfordeling_v1"/>
         <webservice mapToProperty="behandleoppgaveV1.endpoint" alias="behandleOppgave_v1"/>
         <webservice mapToProperty="norg.virksomhet_enhet" alias="virksomhet:Enhet_v1"/>
+        <webservice mapToProperty="organisasjonEnhetV2" alias="virksomhet:OrganisasjonEnhet_v2"/>
     </resources>
 
     <exposed-services>
