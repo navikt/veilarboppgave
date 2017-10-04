@@ -38,8 +38,7 @@ public class OppgaveRessurs {
                 .orElseThrow(RuntimeException::new);
 
         ofNullable(dto.avsenderenhetId)
-                .map(Valider::atFeltErUtfylt)
-                .map(enhetService::harTilgangTilEnhet);
+                .map(Valider::atFeltErUtfylt);
 
         Valider.fraDatoErFoerTilDato(dto);
 
