@@ -28,7 +28,6 @@ public class OppgaveRepositoryTest {
         oppgaveRepository.insertOppgaveHistorikk(oppgave);
 
         OppgavehistorikkDTO hentetOppgave = oppgaveRepository.hentOppgavehistorikkForBruker(aktoerid).get(0);
-        assertThat(hentetOppgave).isEqualToComparingFieldByField(oppgave);
+        assertThat(hentetOppgave.getTema()).isEqualTo("tema");
     }
-
 }
