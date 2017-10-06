@@ -18,7 +18,7 @@ import java.sql.SQLException;
 @Configuration
 public class DatabaseConfig {
 
-    public static final String JNDI_NAME = "java:/jboss/datasources/veilarboppgaveDB";
+    public static final String JNDI_NAME = "java:/jboss/datasources/veilarboppgavedb";
 
     @Bean
     public DataSource dataSource() throws ClassNotFoundException, NamingException {
