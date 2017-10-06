@@ -82,6 +82,12 @@
 
             <!--test-->
             <dependency>
+                <groupId>no.nav.fo</groupId>
+                <artifactId>veilarboppgave-config</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
                 <version>5.0.0</version>

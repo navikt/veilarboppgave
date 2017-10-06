@@ -98,6 +98,10 @@
         </dependency>
 
         <!--test-->
+        <dependency>
+            <groupId>no.nav.fo</groupId>
+            <artifactId>veilarboppgave-config</artifactId>
+        </dependency>
 
         <!--Denne må ligge føre test-config siden test-config inneholder en org.json-pakke i kildekoden!-->
         <dependency>
