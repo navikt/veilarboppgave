@@ -3,11 +3,18 @@ package no.nav.fo.veilarboppgave;
 
 import lombok.extern.slf4j.Slf4j;
 import no.nav.dialogarena.config.DevelopmentSecurity;
+import no.nav.dialogarena.config.fasit.FasitUtils;
+import no.nav.fo.veilarboppgave.config.DatabaseConfig;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
+import org.eclipse.jetty.plus.jndi.Resource;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import java.io.File;
 
+import static java.lang.System.getProperty;
 import static no.nav.dialogarena.config.DevelopmentSecurity.setupISSO;
+import static no.nav.fo.veilarboppgave.config.LocalJndiContextConfig.setupInMemoryDatabase;
+import static no.nav.fo.veilarboppgave.config.LocalJndiContextConfig.setupOracleDataSource;
 import static no.nav.sbl.dialogarena.common.jetty.Jetty.usingWar;
 import static no.nav.sbl.dialogarena.common.jetty.JettyStarterUtils.*;
 
@@ -20,9 +27,22 @@ public class StartJetty {
 
     public static void main(String[] args) throws Exception {
 
+        SingleConnectionDataSource dataSource;
+
+        if (Boolean.parseBoolean(getProperty("lokal.database", "true"))) {
+            dataSource = setupInMemoryDatabase();
+        } else {
+            dataSource = setupOracleDataSource(FasitUtils.getDbCredentials(APPLICATION_NAME));
+
+        }
+
+        // TODO slett når common-jetty registerer datasource fornuftig
+        new Resource(DatabaseConfig.JNDI_NAME, dataSource);
+
 
         Jetty.JettyBuilder jettyBuilder = setupISSO(usingWar()
                         .at(APPLICATION_NAME)
+                        .addDatasource(dataSource, DatabaseConfig.JNDI_NAME)
                         .loadProperties("/test.properties")
                         .port(PORT)
                 , new DevelopmentSecurity.ISSOSecurityConfig(APPLICATION_NAME));

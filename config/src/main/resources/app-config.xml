@@ -31,6 +31,11 @@
         <webservice mapToProperty="behandleoppgaveV1.endpoint" alias="behandleOppgave_v1"/>
         <webservice mapToProperty="norg.virksomhet_enhet" alias="virksomhet:Enhet_v1"/>
         <webservice mapToProperty="organisasjonEnhetV2" alias="virksomhet:OrganisasjonEnhet_v2"/>
+        <webservice alias="Aktoer_v2" mapToProperty="aktoer.endpoint"/>
+
+        <datasource alias="veilarboppgaveDB" jndi="java:/jboss/datasources/veilarboppgaveDB">
+            <pool maxPoolSize="300" minPoolSize="1"/>
+        </datasource>
     </resources>
 
     <exposed-services>

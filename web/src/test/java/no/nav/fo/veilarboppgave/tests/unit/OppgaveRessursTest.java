@@ -2,6 +2,8 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
+import no.nav.fo.veilarboppgave.db.OppgaveRepository;
+import no.nav.fo.veilarboppgave.mocks.AktoerServiceMock;
 import no.nav.fo.veilarboppgave.mocks.BehandleOppgaveServiceMock;
 import no.nav.fo.veilarboppgave.mocks.EnhetServiceMock;
 import no.nav.fo.veilarboppgave.mocks.PepClientMock;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import static no.nav.fo.veilarboppgave.TestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class OppgaveRessursTest {
 
@@ -19,7 +22,8 @@ class OppgaveRessursTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        oppgaveRessurs = new OppgaveRessurs(new BehandleOppgaveServiceMock(), new PepClientMock(), new EnhetServiceMock());
+        oppgaveRessurs = new OppgaveRessurs(new BehandleOppgaveServiceMock(), new PepClientMock(), new EnhetServiceMock(),
+                mock(OppgaveRepository.class), new AktoerServiceMock());
     }
 
     @Test
