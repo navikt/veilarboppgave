@@ -1,5 +1,6 @@
 package no.nav.fo.veilarboppgave.tests.integration;
 
+import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
 import no.nav.fo.veilarboppgave.TestData;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
 
+import static java.lang.System.setProperty;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -32,6 +34,8 @@ class OppgaveRessursIntegrationTest {
         switchOffLogging();
         jetty = startJettyUtenSikkerhet();
         client = newClient();
+        setProperty("no.nav.brukerdialog.security.context.subjectHandlerImplementationClass", InternbrukerSubjectHandler.class.getName());
+        InternbrukerSubjectHandler.setVeilederIdent("testident");
     }
 
     @AfterAll

@@ -3,8 +3,11 @@ package no.nav.fo.veilarboppgave.config;
 import no.nav.apiapp.ApiApplication;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
+import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgavehistorikkRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.security.abac.PepClientImpl;
+import no.nav.fo.veilarboppgave.ws.consumer.aktoer.AktoerService;
+import no.nav.fo.veilarboppgave.ws.consumer.aktoer.AktoerServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
@@ -28,11 +31,13 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
 @Import({
         EnheterRessurs.class,
         OppgaveRessurs.class,
+        OppgavehistorikkRessurs.class,
         ArbeidsfordelingServiceHelsesjekk.class,
         PersonServiceHelsesjekk.class,
         BehandleOppgaveServiceHelsesjekk.class,
         OrganisasjonEnhetServiceHelsesjekk.class,
         AbacContext.class,
+        DatabaseConfig.class,
 })
 public class ApplicationConfig implements ApiApplication {
 
@@ -64,6 +69,11 @@ public class ApplicationConfig implements ApiApplication {
     @Bean
     public OrganisasjonEnhetService organisasjonEnhetService() {
         return new OrganisasjonEnhetServiceImpl(organisasjonenhetOnBehalfOfUser());
+    }
+
+    @Bean
+    public AktoerService aktoerService() {
+        return new AktoerServiceImpl(aktoerV2OnBehalfOfUser());
     }
 
     @Bean
