@@ -1,5 +1,6 @@
 package no.nav.fo.veilarboppgave.db;
 
+import no.nav.fo.veilarboppgave.domene.Aktoerid;
 import no.nav.fo.veilarboppgave.util.sql.SqlUtils;
 import no.nav.fo.veilarboppgave.util.sql.where.WhereClause;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,7 +29,7 @@ public class OppgaveRepository {
                 .execute();
     }
 
-    public List<OppgavehistorikkDTO> hentOppgavehistorikkForBruker(String aktoerid) {
+    public List<OppgavehistorikkDTO> hentOppgavehistorikkForBruker(Aktoerid aktoerid) {
         return SqlUtils.select(db.getDataSource(), OPPGAVEHISTORIKK, OppgavehistorikkDTO::mapper)
                 .column("ID")
                 .column("AKTOERID")
@@ -37,7 +38,7 @@ public class OppgaveRepository {
                 .column("TYPE")
                 .column("OPPRETTET_AV_IDENT")
                 .column("OPPRETTET_TIDSPUNKT")
-                .where(WhereClause.equals("AKTOERID",aktoerid))
+                .where(WhereClause.equals("AKTOERID",aktoerid.getAktoerid()))
                 .execute();
     }
 }

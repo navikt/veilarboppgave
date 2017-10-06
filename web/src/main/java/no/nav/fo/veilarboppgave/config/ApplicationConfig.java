@@ -3,6 +3,7 @@ package no.nav.fo.veilarboppgave.config;
 import no.nav.apiapp.ApiApplication;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
+import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgavehistorikkRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.security.abac.PepClientImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.aktoer.AktoerService;
@@ -30,6 +31,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
 @Import({
         EnheterRessurs.class,
         OppgaveRessurs.class,
+        OppgavehistorikkRessurs.class,
         ArbeidsfordelingServiceHelsesjekk.class,
         PersonServiceHelsesjekk.class,
         BehandleOppgaveServiceHelsesjekk.class,

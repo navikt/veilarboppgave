@@ -5,6 +5,7 @@ import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.mocks.*;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
+import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgavehistorikkRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.aktoer.AktoerService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
@@ -22,7 +23,8 @@ import static no.nav.fo.veilarboppgave.config.LocalJndiContextConfig.setupInMemo
 @Configuration
 @Import({
         EnheterRessurs.class,
-        OppgaveRessurs.class
+        OppgaveRessurs.class,
+        OppgavehistorikkRessurs.class
 })
 public class LocalApplicationConfig implements ApiApplication{
 
