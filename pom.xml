@@ -14,6 +14,8 @@
         <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.3</behandleoppgave-v1-tjenestespesifikasjon.version>
         <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
         <organisasjonenhet-v2.tjenestespesifikasjon.versjon>1.0.5</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
+        <common-integrasjonsutils.version>0.0.11</common-integrasjonsutils.version>
+        <dial-nav-tjeneste-aktoer_v2.version>1.1</dial-nav-tjeneste-aktoer_v2.version>
 
         <vavr.version>0.9.0</vavr.version>
     </properties>
@@ -49,6 +51,11 @@
             </dependency>
 
             <!--eksterne tjenester-->
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>dial-nav-tjeneste-aktoer_v2</artifactId>
+                <version>${dial-nav-tjeneste-aktoer_v2.version}</version>
+            </dependency>
             <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
                 <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
@@ -92,6 +99,11 @@
                 <artifactId>json</artifactId>
                 <version>${json.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-integrasjonsutils</artifactId>
+                <version>${common-integrasjonsutils.version}</version>
             </dependency>
         </dependencies>
                    

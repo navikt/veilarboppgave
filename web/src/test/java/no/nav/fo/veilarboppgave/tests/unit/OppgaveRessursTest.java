@@ -2,24 +2,37 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
+import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
+import no.nav.fo.veilarboppgave.db.OppgaveRepository;
+import no.nav.fo.veilarboppgave.mocks.AktoerServiceMock;
 import no.nav.fo.veilarboppgave.mocks.BehandleOppgaveServiceMock;
 import no.nav.fo.veilarboppgave.mocks.EnhetServiceMock;
 import no.nav.fo.veilarboppgave.mocks.PepClientMock;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static java.lang.System.setProperty;
 import static no.nav.fo.veilarboppgave.TestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class OppgaveRessursTest {
 
     private OppgaveRessurs oppgaveRessurs;
 
+    @BeforeAll
+    public static void setIdent() {
+        setProperty("no.nav.brukerdialog.security.context.subjectHandlerImplementationClass", InternbrukerSubjectHandler.class.getName());
+        InternbrukerSubjectHandler.setVeilederIdent("testident");
+    }
+
     @BeforeEach
     void setUp() throws Exception {
-        oppgaveRessurs = new OppgaveRessurs(new BehandleOppgaveServiceMock(), new PepClientMock(), new EnhetServiceMock());
+        oppgaveRessurs = new OppgaveRessurs(new BehandleOppgaveServiceMock(), new PepClientMock(), new EnhetServiceMock(),
+                mock(OppgaveRepository.class), new AktoerServiceMock());
     }
 
     @Test
