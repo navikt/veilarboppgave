@@ -6,7 +6,9 @@ import no.nav.fo.veilarboppgave.util.sql.where.WhereClause;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class OppgaveRepository {
 
@@ -30,7 +32,7 @@ public class OppgaveRepository {
     }
 
     public List<OppgavehistorikkDTO> hentOppgavehistorikkForBruker(Aktoerid aktoerid) {
-        return SqlUtils.select(db.getDataSource(), OPPGAVEHISTORIKK, OppgavehistorikkDTO::mapper)
+        return Optional.ofNullable(SqlUtils.select(db.getDataSource(), OPPGAVEHISTORIKK, OppgavehistorikkDTO::mapper)
                 .column("ID")
                 .column("AKTOERID")
                 .column("GSAK_ID")
@@ -39,6 +41,7 @@ public class OppgaveRepository {
                 .column("OPPRETTET_AV_IDENT")
                 .column("OPPRETTET_TIDSPUNKT")
                 .where(WhereClause.equals("AKTOERID",aktoerid.getAktoerid()))
-                .execute();
+                .execute())
+                .orElse(Collections.emptyList());
     }
 }
