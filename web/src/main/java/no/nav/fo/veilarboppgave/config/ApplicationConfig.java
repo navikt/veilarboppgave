@@ -38,6 +38,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         OrganisasjonEnhetServiceHelsesjekk.class,
         AbacContext.class,
         DatabaseConfig.class,
+        CacheConfig.class
 })
 public class ApplicationConfig implements ApiApplication {
 
