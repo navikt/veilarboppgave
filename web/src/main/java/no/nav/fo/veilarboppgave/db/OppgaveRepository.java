@@ -1,6 +1,7 @@
 package no.nav.fo.veilarboppgave.db;
 
 import no.nav.fo.veilarboppgave.domene.Aktoerid;
+import no.nav.fo.veilarboppgave.domene.OppgaveId;
 import no.nav.fo.veilarboppgave.util.sql.SqlUtils;
 import no.nav.fo.veilarboppgave.util.sql.where.WhereClause;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,5 +44,18 @@ public class OppgaveRepository {
                 .where(WhereClause.equals("AKTOERID",aktoerid.getAktoerid()))
                 .execute())
                 .orElse(Collections.emptyList());
+    }
+
+    public OppgavehistorikkDTO hentOppgavehistorikkForGSAKID(OppgaveId gsakid) {
+        return SqlUtils.select(db.getDataSource(), OPPGAVEHISTORIKK, OppgavehistorikkDTO::mapper)
+                .column("ID")
+                .column("AKTOERID")
+                .column("GSAK_ID")
+                .column("TEMA")
+                .column("TYPE")
+                .column("OPPRETTET_AV_IDENT")
+                .column("OPPRETTET_TIDSPUNKT")
+                .where(WhereClause.equals("GSAK_ID",gsakid.getOppgaveId()))
+                .execute().get(0);
     }
 }

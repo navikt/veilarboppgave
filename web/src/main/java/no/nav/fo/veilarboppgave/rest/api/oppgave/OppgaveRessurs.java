@@ -41,8 +41,7 @@ public class OppgaveRessurs {
     }
 
     @POST
-    public OppgaveId opprettOppgave(OppgaveDTO dto) {
-
+    public OppgavehistorikkDTO opprettOppgave(OppgaveDTO dto) {
         String innloggetIdent = SubjectHandler.getSubjectHandler().getUid();
 
         Fnr fnr = ofNullable(dto.getFnr())
@@ -83,6 +82,7 @@ public class OppgaveRessurs {
                 innloggetIdent,
                 oppgaveId.getOppgaveId(),
                 aktoerid));
-        return oppgaveId;
+
+        return oppgaveRepository.hentOppgavehistorikkForGSAKID(oppgaveId);
     }
 }
