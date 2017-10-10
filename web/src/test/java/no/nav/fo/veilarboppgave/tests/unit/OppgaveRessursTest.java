@@ -4,7 +4,7 @@ import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
-import no.nav.fo.veilarboppgave.mocks.AktoerServiceMock;
+import no.nav.fo.veilarboppgave.mocks.AktorServiceMock;
 import no.nav.fo.veilarboppgave.mocks.BehandleOppgaveServiceMock;
 import no.nav.fo.veilarboppgave.mocks.EnhetServiceMock;
 import no.nav.fo.veilarboppgave.mocks.PepClientMock;
@@ -32,7 +32,7 @@ class OppgaveRessursTest {
     @BeforeEach
     void setUp() throws Exception {
         oppgaveRessurs = new OppgaveRessurs(new BehandleOppgaveServiceMock(), new PepClientMock(), new EnhetServiceMock(),
-                mock(OppgaveRepository.class), new AktoerServiceMock());
+                mock(OppgaveRepository.class), new AktorServiceMock());
     }
 
     @Test

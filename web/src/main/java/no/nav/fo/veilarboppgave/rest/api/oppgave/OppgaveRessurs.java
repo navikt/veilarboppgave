@@ -1,12 +1,12 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 import no.nav.brukerdialog.security.context.SubjectHandler;
+import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.db.OppgavehistorikkDTO;
 import no.nav.fo.veilarboppgave.domene.*;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
-import no.nav.fo.veilarboppgave.ws.consumer.aktoer.AktoerService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetService;
 
@@ -28,16 +28,16 @@ public class OppgaveRessurs {
     private final EnhetService enhetService;
     private final PepClient pepClient;
     private final OppgaveRepository oppgaveRepository;
-    private final AktoerService aktoerService;
+    private final AktorService aktorService;
 
     @Inject
     public OppgaveRessurs(BehandleOppgaveService oppgaveService, PepClient pepClient, EnhetService enhetService,
-                          OppgaveRepository oppgaveRepository, AktoerService aktoerService) {
+                          OppgaveRepository oppgaveRepository, AktorService aktorService) {
         this.oppgaveService = oppgaveService;
         this.pepClient = pepClient;
         this.enhetService = enhetService;
         this.oppgaveRepository = oppgaveRepository;
-        this.aktoerService = aktoerService;
+        this.aktorService = aktorService;
     }
 
     @POST
@@ -74,7 +74,7 @@ public class OppgaveRessurs {
         );
 
         OppgaveId oppgaveId = oppgaveService.opprettOppgave(oppgave).orElseThrow(NotFoundException::new);
-        String aktoerid = aktoerService.hentAktoeridFraFnr(oppgave.getFnr()).getOrElseThrow(() -> new RuntimeException()).getAktoerid();
+        String aktoerid = aktorService.getAktorId(oppgave.getFnr().getFnr()).orElseThrow(() -> new RuntimeException());
         oppgaveRepository.insertOppgaveHistorikk(new OppgavehistorikkDTO(
                 dto.getTema(),
                 dto.getType(),

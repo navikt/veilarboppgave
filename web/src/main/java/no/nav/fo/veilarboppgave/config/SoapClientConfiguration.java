@@ -1,7 +1,6 @@
 package no.nav.fo.veilarboppgave.config;
 
 import no.nav.sbl.dialogarena.common.cxf.CXFClient;
-import no.nav.tjeneste.virksomhet.aktoer.v2.AktoerV2;
 import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.ArbeidsfordelingV1;
 import no.nav.tjeneste.virksomhet.behandleoppgave.v1.BehandleOppgaveV1;
 import no.nav.tjeneste.virksomhet.organisasjonenhet.v2.OrganisasjonEnhetV2;
@@ -76,20 +75,6 @@ public class SoapClientConfiguration {
     public static OrganisasjonEnhetV2 organisasjonenhetOnBehalfOfUser() {
         return new CXFClient<>(OrganisasjonEnhetV2.class)
                 .address(System.getProperty("organisasjonEnhetV2.url"))
-                .configureStsForOnBehalfOfWithJWT()
-                .build();
-    }
-
-    public static AktoerV2 aktoerV2OnBehalfOfSystemUser() {
-        return new CXFClient<>(AktoerV2.class)
-                .address(System.getProperty("aktoer.endpoint.url"))
-                .configureStsForSystemUserInFSS()
-                .build();
-    }
-
-    public static AktoerV2 aktoerV2OnBehalfOfUser() {
-        return new CXFClient<>(AktoerV2.class)
-                .address(System.getProperty("aktoer.endpoint.url"))
                 .configureStsForOnBehalfOfWithJWT()
                 .build();
     }

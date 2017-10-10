@@ -1,13 +1,13 @@
 package no.nav.fo.veilarboppgave;
 
 import no.nav.apiapp.ApiApplication;
+import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.mocks.*;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgavehistorikkRessurs;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
-import no.nav.fo.veilarboppgave.ws.consumer.aktoer.AktoerService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
@@ -50,9 +50,7 @@ public class LocalApplicationConfig implements ApiApplication{
     public OrganisasjonEnhetService organisasjonEnhetService() { return new OrganisasjonEnhetServiceMock(); }
 
     @Bean
-    public AktoerService aktoerService() {
-        return new AktoerServiceMock();
-    }
+    public AktorService aktorService() { return new AktorServiceMock(); }
 
     @Bean
     public OppgaveRepository oppgaveRepository() { return new OppgaveRepository(new JdbcTemplate(setupInMemoryDatabase())); }
