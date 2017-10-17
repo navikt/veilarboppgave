@@ -5,10 +5,8 @@ import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.fo.veilarboppgave.domene.OppgaveId;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.Oppgave;
 import no.nav.tjeneste.virksomhet.behandleoppgave.v1.BehandleOppgaveV1;
-import no.nav.tjeneste.virksomhet.behandleoppgave.v1.WsSikkerhetsbegrensning;
-import no.nav.tjeneste.virksomhet.behandleoppgave.v1.meldinger.OpprettOppgaveRequest;
-import no.nav.tjeneste.virksomhet.behandleoppgave.v1.meldinger.OpprettOppgaveResponse;
-import no.nav.tjeneste.virksomhet.behandleoppgave.v1.meldinger.WSOpprettOppgave;
+import no.nav.tjeneste.virksomhet.behandleoppgave.v1.WSSikkerhetsbegrensningException;
+import no.nav.tjeneste.virksomhet.behandleoppgave.v1.meldinger.*;
 
 import javax.inject.Inject;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -20,7 +18,6 @@ import java.util.Optional;
 public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
 
     private BehandleOppgaveV1 soapClient;
-    private static final String PERSON = "PERSON";
 
     @Inject
     public BehandleOppgaveServiceImpl(BehandleOppgaveV1 soapClient) {
@@ -30,12 +27,13 @@ public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
     @Override
     public Optional<OppgaveId> opprettOppgave(Oppgave oppgave) {
         try {
-            WSOpprettOppgave opprettOppgave = new WSOpprettOppgave();
+            WSOppgave opprettOppgave = new WSOppgave();
             XMLGregorianCalendar tilDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getTilDato().toString());
             XMLGregorianCalendar fraDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getFraDato().toString());
 
-            opprettOppgave.setBrukerId(oppgave.getFnr().getFnr());
-            opprettOppgave.setBrukertypeKode(PERSON);
+            WSAktor aktor = new WSAktor().withAktorType(WSAktorType.PERSON).withIdent(oppgave.getFnr().getFnr());
+
+            opprettOppgave.setGjelderBruker(aktor);
             opprettOppgave.setFagomradeKode(oppgave.getTema().getFagomradeKode());
             opprettOppgave.setAktivFra(fraDato);
             opprettOppgave.setAktivTil(tilDato);
@@ -46,17 +44,17 @@ public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
             opprettOppgave.setOppgavetypeKode(oppgave.getType());
             opprettOppgave.setLest(false);
 
-            OpprettOppgaveRequest request = new OpprettOppgaveRequest();
+            WSOpprettOppgaveRequest request = new WSOpprettOppgaveRequest();
             request.setOpprettetAvEnhetId(Integer.parseInt(oppgave.getAvsenderenhetId()));
-            request.setWsOpprettOppgave(opprettOppgave);
+            request.setWsOppgave(opprettOppgave);
 
-            OpprettOppgaveResponse response = soapClient.opprettOppgave(request);
+            WSOpprettOppgaveResponse response = soapClient.opprettOppgave(request);
             return OppgaveId.of(response.getOppgaveId());
 
         } catch (DatatypeConfigurationException e) {
             log.warn("Feil med typekonfigurasjon ut mot GSAK-tjeneste: {}", e.getMessage());
             throw new RuntimeException(e);
-        } catch (WsSikkerhetsbegrensning e) {
+        } catch (WSSikkerhetsbegrensningException e) {
             log.warn("Kunne ikke opprette oppgave pga sikkerhetsbegrensning i GSAK: {} ", e.getFaultInfo());
             throw new IngenTilgang();
         }

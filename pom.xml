@@ -11,7 +11,7 @@
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <junit-platform-surefire-provider.version>1.0.0</junit-platform-surefire-provider.version>
         <junit-jupiter-engine.version>5.0.0</junit-jupiter-engine.version>
-        <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.3</behandleoppgave-v1-tjenestespesifikasjon.version>
+        <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.5</behandleoppgave-v1-tjenestespesifikasjon.version>
         <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
         <organisasjonenhet-v2.tjenestespesifikasjon.versjon>1.0.5</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
         <common-integrasjonsutils.version>0.0.11</common-integrasjonsutils.version>
