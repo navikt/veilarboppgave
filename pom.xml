@@ -17,6 +17,11 @@
         <common-integrasjonsutils.version>0.0.11</common-integrasjonsutils.version>
 
         <vavr.version>0.9.0</vavr.version>
+
+        <sonar.exclusions>
+            **/config/**,
+            **/mocks/**,
+        </sonar.exclusions>
     </properties>
 
     <parent>
