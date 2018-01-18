@@ -4,6 +4,7 @@ package no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet;
 import lombok.SneakyThrows;
 import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
 import no.nav.tjeneste.virksomhet.organisasjonenhet.v2.OrganisasjonEnhetV2;
+import no.nav.tjeneste.virksomhet.organisasjonenhet.v2.informasjon.WSOppgavebehandlerfilter;
 import no.nav.tjeneste.virksomhet.organisasjonenhet.v2.meldinger.WSHentFullstendigEnhetListeRequest;
 
 import javax.inject.Inject;
@@ -23,9 +24,11 @@ public class OrganisasjonEnhetServiceImpl implements OrganisasjonEnhetService {
     @Override
     @SneakyThrows
     public List<OppfolgingEnhet> hentAlleEnheter() {
-        return soapClient.hentFullstendigEnhetListe(new WSHentFullstendigEnhetListeRequest()).getEnhetListe().stream()
+        WSHentFullstendigEnhetListeRequest request = new WSHentFullstendigEnhetListeRequest()
+                .withOppgavebehandlerfilter(WSOppgavebehandlerfilter.KUN_OPPGAVEBEHANDLERE);
+
+        return soapClient.hentFullstendigEnhetListe(request).getEnhetListe().stream()
                 .map(OppfolgingEnhet::of)
                 .collect(toList());
-
     }
 }
