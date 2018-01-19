@@ -23,6 +23,7 @@ class OppgaveUtilsTest {
         List<OppfolgingEnhet> result = mergeAndDeleteDuplicate(list1, list2);
 
         assertThat(result.get(0).getEnhetId()).isEqualTo("id1");
+        assertThat(result.get(1).getEnhetId()).isEqualTo("id2");
     }
 
     @Test
@@ -38,6 +39,7 @@ class OppgaveUtilsTest {
 
         assertThat(result.size()).isEqualTo(2);
         assertThat(result.get(0).getEnhetId()).isEqualTo("id1");
+        assertThat(result.get(1).getEnhetId()).isEqualTo("id2");
     }
 
 }

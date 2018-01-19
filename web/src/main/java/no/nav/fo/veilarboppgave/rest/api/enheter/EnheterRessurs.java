@@ -1,6 +1,5 @@
 package no.nav.fo.veilarboppgave.rest.api.enheter;
 
-import io.vavr.control.Try;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
@@ -54,13 +53,9 @@ public class EnheterRessurs {
                 .hentGeografiskTilknytning(gyldigFnr)
                 .orElseThrow(UgyldigRequest::new);
 
-        Try<List<OppfolgingEnhet>> oppfolgingEnhets = Try.of(() -> arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTema));
+        List<OppfolgingEnhet> oppfolgingEnhets = arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTema);
         List<OppfolgingEnhet> alleNavEnheter = organisasjonEnhetService.hentAlleEnheter();
 
-        if(oppfolgingEnhets.isSuccess()) {
-            return mergeAndDeleteDuplicate(oppfolgingEnhets.get(), alleNavEnheter);
-        }
-
-        return alleNavEnheter;
+        return mergeAndDeleteDuplicate(oppfolgingEnhets, alleNavEnheter);
     }
 }
