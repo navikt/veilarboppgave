@@ -42,4 +42,22 @@ class OppgaveUtilsTest {
         assertThat(result.get(1).getEnhetId()).isEqualTo("id2");
     }
 
+    @Test
+    void skalBevareRekkefolge() {
+        List<OppfolgingEnhet> list1 = new ArrayList<>();
+
+        // motsatt rekkefølge for å teste at metoden en `stabil`.
+        list1.add(OppfolgingEnhet.of("id2", "navn2"));
+        list1.add(OppfolgingEnhet.of("id1", "navn1"));
+
+        List<OppfolgingEnhet> list2 = new ArrayList<>();
+        list2.add(OppfolgingEnhet.of("id1", "Navn1"));
+
+        List<OppfolgingEnhet> result = mergeAndDeleteDuplicate(list1, list2);
+
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getEnhetId()).isEqualTo("id2");
+        assertThat(result.get(1).getEnhetId()).isEqualTo("id1");
+    }
+
 }
