@@ -2,21 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
         <arbeidsfordeling-v1-tjenestespesifikasjon.version>1.1.0</arbeidsfordeling-v1-tjenestespesifikasjon.version>
         <person-v3-tjenestespesifikasjon.version>3.0.2</person-v3-tjenestespesifikasjon.version>
         <json.version>20160810</json.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <junit-platform-surefire-provider.version>1.0.0</junit-platform-surefire-provider.version>
         <junit-jupiter-engine.version>5.0.0</junit-jupiter-engine.version>
         <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.5</behandleoppgave-v1-tjenestespesifikasjon.version>
         <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
         <organisasjonenhet-v2.tjenestespesifikasjon.versjon>2.1.0</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
         <common-integrasjonsutils.version>0.0.11</common-integrasjonsutils.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <sonar.exclusions>
+            **/config/**,
+            **/mocks/**,
+        </sonar.exclusions>
     </properties>
 
     <parent>
@@ -28,7 +31,7 @@
     <groupId>no.nav.fo</groupId>
     <artifactId>veilarboppgave</artifactId>
     <version>1</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <dependencyManagement>
         <!--bom-->
@@ -40,193 +43,203 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!--eksterne tjenester-->
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
+                <version>${organisasjonenhet-v2.tjenestespesifikasjon.versjon}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>arbeidsfordeling-v1-tjenestespesifikasjon</artifactId>
+                <version>${arbeidsfordeling-v1-tjenestespesifikasjon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>person-v3-tjenestespesifikasjon</artifactId>
+                <version>${person-v3-tjenestespesifikasjon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>behandleoppgave-v1-tjenestespesifikasjon</artifactId>
+                <version>${behandleoppgave-v1-tjenestespesifikasjon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.fo</groupId>
+                <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
+                <version>${enhet.tjenestespesifikasjon.versjon}</version>
+            </dependency>
+
+            <!--test-->
+            <dependency>
+                <groupId>no.nav.fo</groupId>
+                <artifactId>veilarboppgave-config</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>5.0.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-integrasjonsutils</artifactId>
+                <version>${common-integrasjonsutils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>no.nav.sbl</groupId>
+                <artifactId>api-app</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-cxf</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-jetty</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-abac</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>no.bekk.bekkopen</groupId>
+                <artifactId>nocommons</artifactId>
+                <version>0.6</version>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.dialogarena</groupId>
+                <artifactId>oidc-security</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.dialogarena</groupId>
+                <artifactId>oidc-security</artifactId>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>common-types</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-plus</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-webapp</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+            </dependency>
+
+
+            <!--java api-er-->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.hk2.external</groupId>
+                <artifactId>javax.inject</artifactId>
+            </dependency>
+
+            <!--eksterne avhengigheter-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>aktor-klient</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>no.nav.sbl.dialogarena</groupId>
+                <artifactId>test-config</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>no.nav.sbl</groupId>
+                <artifactId>fasit</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>no.nav.sbl</groupId>
-            <artifactId>api-app</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-types</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-cxf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
-            <version>${organisasjonenhet-v2.tjenestespesifikasjon.versjon}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>arbeidsfordeling-v1-tjenestespesifikasjon</artifactId>
-            <version>${arbeidsfordeling-v1-tjenestespesifikasjon.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>person-v3-tjenestespesifikasjon</artifactId>
-            <version>${person-v3-tjenestespesifikasjon.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>behandleoppgave-v1-tjenestespesifikasjon</artifactId>
-            <version>${behandleoppgave-v1-tjenestespesifikasjon.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.fo</groupId>
-            <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
-            <version>${enhet.tjenestespesifikasjon.versjon}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>aktor-klient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.dialogarena</groupId>
-            <artifactId>oidc-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-abac</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl</groupId>
-            <artifactId>fasit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.fo</groupId>
-            <artifactId>veilarboppgave-config</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-integrasjonsutils</artifactId>
-            <version>${common-integrasjonsutils.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.dialogarena</groupId>
-            <artifactId>oidc-security</artifactId>
-            <type>test-jar</type>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-plus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.bekk.bekkopen</groupId>
-            <artifactId>nocommons</artifactId>
-            <version>0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.hk2.external</groupId>
-            <artifactId>javax.inject</artifactId>
-        </dependency>
-
-        <!-- test -->
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>test-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-test</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit-jupiter-engine.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-        </dependency>
-    </dependencies>
+    <scm>
+        <developerConnection>scm:git:http://stash.devillo.no/scm/fo/veilarboppgave.git</developerConnection>
+        <url>http://http://stash.devillo.no/projects/DIAL/fo/veilarboppgave/browse</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <build>
         <finalName>veilarboppgave</finalName>
     </build>
-
 
 </project>
