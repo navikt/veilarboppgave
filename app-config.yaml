@@ -1,0 +1,76 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: docker.adeo.no:5000/fo/veilarboppgave
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: veilarboppgave/internal/isAlive
+    initialDelay: 60
+  readiness:
+    path: veilarboppgave/internal/selftest
+    initialDelay: 60
+prometheus:
+  enabled: true
+  path: veilarboppgave/internal/metrics
+resources:
+  limits:
+    cpu: 3
+fasitResources:
+  used:
+  - alias: loadbalancer:veilarboppgave
+    resourceType: loadbalancerconfig
+  - alias: veilarboppgaveDB
+    resourceType: datasource
+  - alias: srvveilarboppgave
+    resourceType: credential
+  - alias: srvveilarboppgave
+    resourceType: applicationcertificate
+  - alias: securityTokenService
+    resourceType: baseUrl
+
+  # Webserviceendpoints
+  - alias: virksomhet:Person_v3
+    resourceType: webserviceendpoint
+  - alias: virksomHet:BehandleOppgave_v1
+    resourceType: webserviceendpoint
+  - alias: virksomhet:Arbeidsfordeling_v1
+    resourceType: webserviceendpoint
+  - alias: behandleOppgave_v1
+    resourceType: webserviceendpoint
+  - alias: virksomhet:Enhet_v1
+    resourceType: webserviceendpoint
+  - alias: virksomhet:OrganisasjonsEnhet_v2
+    resourceType: webserviceendpoint
+  - alias: Aktoer_v2
+    resourceType: webserviceentpoint
+
+  # Rest
+  - alias: veilarblogin.redirect-url
+    resourceType: restservice
+    propertyMap:
+      url: OIDC_REDIRECT_URL
+  - alias: abac.pdp.endpoint
+    resourceType: restservice
+
+  # ISSO
+  - alias: isso-host
+    resourceType: baseurl
+  - alias: isso-jwks
+    resourceType: baseurl
+  - alias: isso-issuer
+    resourceType: baseurl
+  - alias: isso.isalive
+    resourceType: baseurl
+  - alias: isso-rp-user
+    resourceType: credential
+
+  exposed:
+  - alias: veilarboppgave.api
+    resourceType: restservice
+    path: /veilarboppgave/api
+
+alertProfiles:
+  - common-java-modules
