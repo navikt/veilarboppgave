@@ -43,7 +43,7 @@ fasitResources:
   - alias: virksomhet:OrganisasjonEnhet_v2
     resourceType: webserviceendpoint
   - alias: Aktoer_v2
-    resourceType: webserviceentpoint
+    resourceType: webserviceendpoint
 
   # Rest
   - alias: veilarblogin.redirect-url
