@@ -67,6 +67,9 @@ fasitResources:
   - alias: isso-rp-user
     resourceType: credential
 
+  - alias: appdynamics
+    resourceType: applicationProperties
+
   exposed:
   - alias: veilarboppgave.api
     resourceType: restservice
@@ -74,3 +77,5 @@ fasitResources:
 
 alertProfiles:
   - common-java-modules
+
+team: oppfolging

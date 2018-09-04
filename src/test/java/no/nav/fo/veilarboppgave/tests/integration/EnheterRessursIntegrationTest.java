@@ -30,7 +30,7 @@ public class EnheterRessursIntegrationTest {
         switchOffLogging();
         jetty = startJettyUtenSikkerhet();
         client = newClient();
-        
+
     }
 
 
