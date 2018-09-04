@@ -26,8 +26,6 @@ fasitResources:
     resourceType: datasource
   - alias: srvveilarboppgave
     resourceType: credential
-  - alias: srvveilarboppgave
-    resourceType: applicationcertificate
   - alias: securityTokenService
     resourceType: baseUrl
 
