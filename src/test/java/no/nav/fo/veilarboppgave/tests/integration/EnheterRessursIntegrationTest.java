@@ -2,6 +2,7 @@ package no.nav.fo.veilarboppgave.tests.integration;
 
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,23 +17,26 @@ import static no.nav.fo.veilarboppgave.TestData.genererTilfeldigFnrUtenTilgang;
 import static no.nav.fo.veilarboppgave.Util.switchOffLogging;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Ignore("TODO: Konverter til PACT")
 public class EnheterRessursIntegrationTest {
-
+/*
     private static Client client;
     private static Jetty jetty;
     private static final String uri = String.format("http://localhost:%s/%s", PORT, APPLICATION_NAME);
 
     @BeforeAll
     static void beforeAll() {
+        /*
         switchOffLogging();
         jetty = startJettyUtenSikkerhet();
         client = newClient();
+        
     }
 
 
     @AfterAll
     static void afterAll() {
-        jetty.stop.run();
+        //jetty.stop.run();
     }
 
     @Test
@@ -75,4 +79,5 @@ public class EnheterRessursIntegrationTest {
                 .buildGet()
                 .invoke();
     }
+    */
 }

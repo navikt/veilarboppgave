@@ -4,6 +4,7 @@ import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
 import no.nav.fo.veilarboppgave.TestData;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,9 @@ import static no.nav.fo.veilarboppgave.Util.switchOffLogging;
 import static org.json.JSONObject.NULL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Ignore("TODO: Konverter til PACT")
 class OppgaveRessursIntegrationTest {
-
+/*
     private static Client client;
     private static Jetty jetty;
     private static final String uri = String.format("http://localhost:%s/%s", PORT, APPLICATION_NAME);
@@ -40,7 +42,7 @@ class OppgaveRessursIntegrationTest {
 
     @AfterAll
     static void afterAll() {
-        jetty.stop.run();
+        //jetty.stop.run();
     }
 
     @Test
@@ -51,6 +53,7 @@ class OppgaveRessursIntegrationTest {
         assertEquals(403, response.getStatus());
     }
 
+    @Ignore
     @Test
     void skal_returnere_400_bad_request_ved_ugyldig_fnr() {
         JSONObject json = TestData.json();
@@ -116,5 +119,5 @@ class OppgaveRessursIntegrationTest {
                 .buildPost(entity(json.toString(), APPLICATION_JSON))
                 .invoke();
     }
-
+*/
 }
