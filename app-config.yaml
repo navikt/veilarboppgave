@@ -40,7 +40,7 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: virksomhet:Enhet_v1
     resourceType: webserviceendpoint
-  - alias: virksomhet:OrganisasjonsEnhet_v2
+  - alias: virksomhet:Organisasjon_v2
     resourceType: webserviceendpoint
   - alias: Aktoer_v2
     resourceType: webserviceentpoint
