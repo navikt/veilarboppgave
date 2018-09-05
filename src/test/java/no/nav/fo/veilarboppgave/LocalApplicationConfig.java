@@ -26,7 +26,7 @@ import static no.nav.fo.veilarboppgave.config.LocalJndiContextConfig.setupInMemo
         OppgaveRessurs.class,
         OppgavehistorikkRessurs.class
 })
-public class LocalApplicationConfig implements ApiApplication{
+public class LocalApplicationConfig implements ApiApplication {
 
     @Bean
     public ArbeidsfordelingService arbeidsfordelingService() {

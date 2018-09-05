@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import static no.nav.apiapp.ApiApplication.Sone.FSS;
 import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
 
 @Configuration
@@ -39,7 +38,10 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         AbacContext.class,
         DatabaseConfig.class,
         CacheConfig.class,
-        AktorConfig.class
+        AktorConfig.class,
+        LdapContextProvider.class,
+        OrganisasjonEnhetV2Config.class,
+        VirksomhetEnhetEndpointConfig.class
 })
 public class ApplicationConfig implements ApiApplication.NaisApiApplication {
 
