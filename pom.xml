@@ -125,7 +125,12 @@
             <artifactId>json</artifactId>
             <scope>test</scope>
         </dependency>
-
+        
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>no.nav.sbl</groupId>
             <artifactId>api-app</artifactId>
