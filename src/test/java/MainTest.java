@@ -1,4 +1,3 @@
-import no.nav.fo.veilarboppgave.config.LdapContextProvider;
 import no.nav.fo.veilarboppgave.config.OrganisasjonEnhetV2Config;
 import no.nav.fo.veilarboppgave.config.VirksomhetEnhetEndpointConfig;
 
@@ -38,11 +37,6 @@ public class MainTest {
         setProperty(StsSecurityConstants.STS_URL_KEY, securityTokenService, PUBLIC);
         setProperty(StsSecurityConstants.SYSTEMUSER_USERNAME, srvveilarboppgave.getUsername(), PUBLIC);
         setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, srvveilarboppgave.getPassword(), SECRET);
-
-        LdapConfig ldapConfig = FasitUtils.getLdapConfig();
-        setProperty(LdapContextProvider.LDAP_URL, ldapConfig.url, PUBLIC);
-        setProperty(LdapContextProvider.LDAP_USERNAME, ldapConfig.username, PUBLIC);
-        setProperty(LdapContextProvider.LDAP_PASSWORD, ldapConfig.password, SECRET);
 
         setProperty(OrganisasjonEnhetV2Config.NORG2_ORGANISASJONENHET_V2_URL, FasitUtils.getWebServiceEndpoint("virksomhet:OrganisasjonEnhet_v2").url, PUBLIC);
         setProperty(VirksomhetEnhetEndpointConfig.NORG_VIRKSOMHET_ENHET_URL, FasitUtils.getWebServiceEndpoint("virksomhet:Enhet_v1").url, PUBLIC);
