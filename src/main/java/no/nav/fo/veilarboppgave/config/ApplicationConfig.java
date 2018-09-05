@@ -44,6 +44,8 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
 })
 public class ApplicationConfig implements ApiApplication.NaisApiApplication {
 
+    public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
+
     @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
         apiAppConfigurator
