@@ -16,6 +16,6 @@ public class OrganisasjonEnhetServiceHelsesjekk implements Helsesjekk {
     public HelsesjekkMetadata getMetadata() {
         String endepunkt = "OrganisasjonEnhet via SOAP " + System.getProperty("organisasjonEnhetV2.url");
         String beskrivelse = "Sjekker om OrganisasjonEnhet-tjenesten svarer.";
-        return new HelsesjekkMetadata(endepunkt, beskrivelse, true);
+        return new HelsesjekkMetadata("organisasjonenhet", endepunkt, beskrivelse, true);
     }
 }

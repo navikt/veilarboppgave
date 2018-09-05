@@ -1,6 +1,5 @@
 package no.nav.fo.veilarboppgave.tests.integration;
 
-import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
 import no.nav.fo.veilarboppgave.TestData;
 import no.nav.sbl.dialogarena.common.jetty.Jetty;
 import org.json.JSONObject;

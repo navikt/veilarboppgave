@@ -24,7 +24,7 @@
     <parent>
         <groupId>no.nav.sbl</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>2017.11.15.12.13</version>
+        <version>2018.09.03.14.42</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -42,7 +42,7 @@
             <dependency>
                 <groupId>no.nav.sbl</groupId>
                 <artifactId>bom</artifactId>
-                <version>2017.11.15.12.13</version>
+                <version>2018.09.03.14.42</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -98,6 +98,10 @@
             <groupId>no.nav.fo</groupId>
             <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.common</groupId>
+            <artifactId>auth</artifactId>
+        </dependency>
 
         <!--test-->
         <dependency>
@@ -144,10 +148,6 @@
             <groupId>no.bekk.bekkopen</groupId>
             <artifactId>nocommons</artifactId>
             <version>0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.dialogarena</groupId>
-            <artifactId>oidc-security</artifactId>
         </dependency>
         <dependency>
             <groupId>no.nav.dialogarena</groupId>

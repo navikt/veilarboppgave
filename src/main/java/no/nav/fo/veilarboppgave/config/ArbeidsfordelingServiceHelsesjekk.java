@@ -19,6 +19,6 @@ public class ArbeidsfordelingServiceHelsesjekk implements Helsesjekk {
     public HelsesjekkMetadata getMetadata() {
         String endepunkt = "Arbeidsfordeling via SOAP " + System.getProperty("arbeidsfordelingV1.endpoint.url");
         String beskrivelse = "Sjekker om Arbeidsfordeling-tjenesten svarer.";
-        return new HelsesjekkMetadata(endepunkt, beskrivelse, true);
+        return new HelsesjekkMetadata("arbeidsfordelingservice", endepunkt, beskrivelse, true);
     }
 }

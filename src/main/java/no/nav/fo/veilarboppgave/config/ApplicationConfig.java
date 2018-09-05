@@ -1,6 +1,7 @@
 package no.nav.fo.veilarboppgave.config;
 
 import no.nav.apiapp.ApiApplication;
+import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
@@ -40,11 +41,13 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         CacheConfig.class,
         AktorConfig.class
 })
-public class ApplicationConfig implements ApiApplication {
+public class ApplicationConfig implements ApiApplication.NaisApiApplication {
 
     @Override
-    public Sone getSone() {
-        return FSS;
+    public void configure(ApiAppConfigurator apiAppConfigurator) {
+        apiAppConfigurator
+                .sts()
+                .issoLogin();
     }
 
     @Bean

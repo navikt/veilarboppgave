@@ -17,6 +17,6 @@ public class BehandleOppgaveServiceHelsesjekk implements Helsesjekk{
     public HelsesjekkMetadata getMetadata() {
         String endepunkt = "Behandle oppgave via SOAP " + System.getProperty("behandleoppgaveV1.endpoint.url");
         String beskrivelse = "Sjekker om BehandleOppgave-tjenesten svarer.";
-        return new HelsesjekkMetadata(endepunkt, beskrivelse, true);
+        return new HelsesjekkMetadata("behandleoppgave", endepunkt, beskrivelse, true);
     }
 }

@@ -19,6 +19,6 @@ public class PersonServiceHelsesjekk implements Helsesjekk {
     public HelsesjekkMetadata getMetadata() {
         String endepunkt = "PersonService via SOAP " + System.getProperty("personV3.endpoint.url");
         String beskrivelse = "Sjekker om Person-tjenesten svarer.";
-        return new HelsesjekkMetadata(endepunkt, beskrivelse, true);
+        return new HelsesjekkMetadata("personservice", endepunkt, beskrivelse, true);
     }
 }

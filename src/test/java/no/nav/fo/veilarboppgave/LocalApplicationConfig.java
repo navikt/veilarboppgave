@@ -59,9 +59,4 @@ public class LocalApplicationConfig implements ApiApplication{
     public PepClient pepClient() {
         return new PepClientMock();
     }
-
-    @Override
-    public Sone getSone() {
-        return FSS;
-    }
 }

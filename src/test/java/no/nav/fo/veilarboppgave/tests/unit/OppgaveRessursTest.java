@@ -2,7 +2,7 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
-import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
+//import no.nav.brukerdialog.security.context.InternbrukerSubjectHandler;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.mocks.AktorServiceMock;
 import no.nav.fo.veilarboppgave.mocks.BehandleOppgaveServiceMock;
@@ -22,13 +22,13 @@ import static org.mockito.Mockito.mock;
 class OppgaveRessursTest {
 
     private OppgaveRessurs oppgaveRessurs;
-
+/*
     @BeforeAll
     public static void setIdent() {
         setProperty("no.nav.brukerdialog.security.context.subjectHandlerImplementationClass", InternbrukerSubjectHandler.class.getName());
         InternbrukerSubjectHandler.setVeilederIdent("testident");
     }
-
+*/
     @BeforeEach
     void setUp() throws Exception {
         oppgaveRessurs = new OppgaveRessurs(new BehandleOppgaveServiceMock(), new PepClientMock(), new EnhetServiceMock(),
