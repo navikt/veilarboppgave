@@ -1,8 +1,7 @@
 package no.nav.fo.veilarboppgave.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
-import no.nav.sbl.dialogarena.common.integrasjon.utils.RowMapper;
-import no.nav.sbl.dialogarena.common.integrasjon.utils.SQL;
 import no.nav.sbl.dialogarena.types.Pingable;
 import no.nav.sbl.dialogarena.types.Pingable.Ping.PingMetadata;
 import org.springframework.context.annotation.Bean;
@@ -15,14 +14,29 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import com.zaxxer.hikari.HikariConfig;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
+
 @Configuration
+@EnableTransactionManagement
 public class DatabaseConfig {
 
-    public static final String JNDI_NAME = "java:/jboss/datasources/veilarboppgavedb";
+    public static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
+    public static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
+    public static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
 
     @Bean
-    public DataSource dataSource() throws ClassNotFoundException, NamingException {
-        return new JndiTemplate().lookup(JNDI_NAME, DataSource.class);
+    public static DataSource getDataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(getRequiredProperty(VEILARBOPPGAVEDB_URL));
+        config.setUsername(getRequiredProperty(VEILARBOPPGAVEDB_USERNAME));
+        config.setPassword(getRequiredProperty(VEILARBOPPGAVEDB_PASSWORD));
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(2);
+
+        return new HikariDataSource(config);
     }
 
     @Bean
@@ -31,23 +45,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public OppgaveRepository oppgaveRepository(JdbcTemplate db) { return new OppgaveRepository(db); }
-
-    @Bean
-    public Pingable dbPinger(final DataSource ds) {
-        PingMetadata metadata = new PingMetadata(
-                "N/A",
-                "Database for veilarboppgave",
-                true
-        );
-
-        return () -> {
-            try {
-                SQL.query(ds, new RowMapper.IntMapper(), "select count(1) from dual");
-                return Pingable.Ping.lyktes(metadata);
-            } catch (Exception e) {
-                return Pingable.Ping.feilet(metadata, e);
-            }
-        };
+    public OppgaveRepository oppgaveRepository(JdbcTemplate db) {
+        return new OppgaveRepository(db);
     }
 }
