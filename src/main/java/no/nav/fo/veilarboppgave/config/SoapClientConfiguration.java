@@ -12,7 +12,6 @@ public class SoapClientConfiguration {
     public static PersonV3 personV3WithSystemUser() {
         return new CXFClient<>(PersonV3.class)
                 .address(System.getProperty("personV3.endpoint.url"))
-                .configureStsForSystemUserInFSS()
                 .build();
     }
 

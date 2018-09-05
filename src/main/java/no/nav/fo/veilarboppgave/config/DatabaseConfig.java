@@ -2,17 +2,11 @@ package no.nav.fo.veilarboppgave.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
-import no.nav.sbl.dialogarena.types.Pingable;
-import no.nav.sbl.dialogarena.types.Pingable.Ping.PingMetadata;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jndi.JndiTemplate;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.SQLException;
 
 import com.zaxxer.hikari.HikariConfig;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -40,7 +34,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) throws NamingException, SQLException, IOException {
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
