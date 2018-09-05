@@ -39,7 +39,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         DatabaseConfig.class,
         CacheConfig.class,
         AktorConfig.class,
-        LdapContextProvider.class,
+        //LdapContextProvider.class,
         OrganisasjonEnhetV2Config.class,
         VirksomhetEnhetEndpointConfig.class
 })
