@@ -10,8 +10,6 @@ import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 @Configuration
 public class ArbeidsfordelingServiceHelsesjekk implements Helsesjekk {
 
-    private static final String ARBEIDSFORDELING_V1_ENDPOINTURL = "VIRKSOMHET_ARBEIDSFORDELING_V1_ENDPOINTURL";
-
     @Override
     public void helsesjekk() throws Throwable {
         arbeidsfordelingV1WithSystemUser().ping();
@@ -19,7 +17,7 @@ public class ArbeidsfordelingServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = getRequiredProperty(ARBEIDSFORDELING_V1_ENDPOINTURL);
+        String endepunkt = "Arbeidsfordeling via SOAP " + System.getProperty("arbeidsfordelingV1.endpoint.url");
         String beskrivelse = "Sjekker om Arbeidsfordeling-tjenesten svarer.";
         return new HelsesjekkMetadata("arbeidsfordelingservice", endepunkt, beskrivelse, true);
     }

@@ -12,6 +12,7 @@ public class SoapClientConfiguration {
     public static PersonV3 personV3WithSystemUser() {
         return new CXFClient<>(PersonV3.class)
                 .address(System.getProperty("personV3.endpoint.url"))
+                .configureStsForSystemUser()
                 .build();
     }
 
@@ -32,7 +33,7 @@ public class SoapClientConfiguration {
     public static ArbeidsfordelingV1 arbeidsfordelingV1WithSystemUser() {
         return new CXFClient<>(ArbeidsfordelingV1.class)
                 .address(System.getProperty("arbeidsfordelingV1.endpoint.url"))
-                .configureStsForSystemUserInFSS()
+                .configureStsForSystemUser()
                 .build();
     }
 
@@ -46,14 +47,14 @@ public class SoapClientConfiguration {
     public static BehandleOppgaveV1 behandleOppgaveV1WithSystemUser() {
         return new CXFClient<>(BehandleOppgaveV1.class)
                 .address(System.getProperty("behandleoppgaveV1.endpoint.url"))
-                .configureStsForSystemUserInFSS()
+                .configureStsForSystemUser()
                 .build();
     }
 
     public static Enhet virksomhetenhetOnBehalfOfSystemUser() {
         return new CXFClient<>(Enhet.class)
                 .address(System.getProperty("norg.virksomhet_enhet.url"))
-                .configureStsForSystemUserInFSS()
+                .configureStsForSystemUser()
                 .build();
     }
 
@@ -67,7 +68,7 @@ public class SoapClientConfiguration {
     public static OrganisasjonEnhetV2 organisasjonenhetOnBehalfOfSystemUser() {
         return new CXFClient<>(OrganisasjonEnhetV2.class)
                 .address(System.getProperty("organisasjonEnhetV2.url"))
-                .configureStsForSystemUserInFSS()
+                .configureStsForSystemUser()
                 .build();
     }
 

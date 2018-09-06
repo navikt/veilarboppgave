@@ -5,12 +5,9 @@ import no.nav.apiapp.selftest.HelsesjekkMetadata;
 import org.springframework.context.annotation.Configuration;
 
 import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.personV3WithSystemUser;
-import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 @Configuration
 public class PersonServiceHelsesjekk implements Helsesjekk {
-
-    public static final String PERSON_V3_ENDPOINTURL = "VIRKSOMHET_PERSON_V3_ENDPOINTURL";
 
     @Override
     public void helsesjekk() {
@@ -19,7 +16,7 @@ public class PersonServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = getRequiredProperty(PERSON_V3_ENDPOINTURL);
+        String endepunkt = "PersonService via SOAP " + System.getProperty("personV3.endpoint.url");
         String beskrivelse = "Sjekker om Person-tjenesten svarer.";
         return new HelsesjekkMetadata("personservice", endepunkt, beskrivelse, true);
     }

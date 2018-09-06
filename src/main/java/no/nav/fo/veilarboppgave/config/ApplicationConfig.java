@@ -35,6 +35,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         PersonServiceHelsesjekk.class,
         BehandleOppgaveServiceHelsesjekk.class,
         OrganisasjonEnhetServiceHelsesjekk.class,
+        VirksomhetEnhetServiceHelsesjekk.class,
         AbacContext.class,
         DatabaseConfig.class,
         CacheConfig.class,
