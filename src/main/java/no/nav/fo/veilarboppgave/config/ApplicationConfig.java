@@ -38,9 +38,7 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         AbacContext.class,
         DatabaseConfig.class,
         CacheConfig.class,
-        AktorConfig.class,
-        OrganisasjonEnhetV2Config.class,
-        VirksomhetEnhetEndpointConfig.class
+        AktorConfig.class
 })
 public class ApplicationConfig implements ApiApplication.NaisApiApplication {
 

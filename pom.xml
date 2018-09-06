@@ -9,8 +9,7 @@
         <person-v3-tjenestespesifikasjon.version>3.0.2</person-v3-tjenestespesifikasjon.version>
         <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.5</behandleoppgave-v1-tjenestespesifikasjon.version>
         <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
-        <organisasjonEnhet-v2.tjenestespesifikasjon.versjon>2.1.0</organisasjonEnhet-v2.tjenestespesifikasjon.versjon>
-        <organisasjonenhet-v2.tjenestespesifikasjon.versjon>2.1.1</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
+        <organisasjonenhet-v2.tjenestespesifikasjon.versjon>2.1.0</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <hikariCP.version>2.7.3</hikariCP.version>
@@ -49,12 +48,6 @@
 
         <!--eksterne tjenester-->
             <dependency>
-                <groupId>no.nav.tjenester</groupId>
-                <artifactId>nav-organisasjonEnhet-v2-tjenestespesifikasjon</artifactId>
-                <version>${organisasjonEnhet-v2.tjenestespesifikasjon.versjon}</version>
-                <classifier>jaxws</classifier>
-            </dependency>
-            <dependency>
                 <groupId>no.nav.sbl.dialogarena</groupId>
                 <artifactId>arbeidsfordeling-v1-tjenestespesifikasjon</artifactId>
                 <version>${arbeidsfordeling-v1-tjenestespesifikasjon.version}</version>
@@ -83,12 +76,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>no.nav.tjenester</groupId>
-            <artifactId>nav-organisasjonEnhet-v2-tjenestespesifikasjon</artifactId>
-            <version>${organisasjonEnhet-v2.tjenestespesifikasjon.versjon}</version>
-            <classifier>jaxws</classifier>
-        </dependency>
         <dependency>
             <groupId>no.nav.sbl.dialogarena</groupId>
             <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
@@ -227,10 +214,6 @@
             <version>2.7.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>no.nav</groupId>
-            <artifactId>metrics</artifactId>
-        </dependency>
         <dependency>
             <groupId>no.nav.sbl</groupId>
             <artifactId>util</artifactId>

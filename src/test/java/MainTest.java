@@ -1,11 +1,7 @@
-import no.nav.fo.veilarboppgave.config.OrganisasjonEnhetV2Config;
-import no.nav.fo.veilarboppgave.config.VirksomhetEnhetEndpointConfig;
-
 import no.nav.testconfig.ApiAppTest;
 import no.nav.brukerdialog.security.Constants;
 import no.nav.brukerdialog.tools.SecurityConstants;
 import no.nav.dialogarena.config.fasit.FasitUtils;
-import no.nav.dialogarena.config.fasit.LdapConfig;
 import no.nav.dialogarena.config.fasit.ServiceUser;
 import no.nav.dialogarena.config.fasit.dto.RestService;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
@@ -21,6 +17,9 @@ public class MainTest {
 
     private static final String APPLICATION_NAME = "veilarboppgave";
     private static final String PORT = "9591";
+
+    private static final String NORG2_ORGANISASJONENHET_V2_URL = "VIRKSOMHET_ORGANISASJONENHET_V2_ENDPOINTURL";
+    private static final String NORG_VIRKSOMHET_ENHET_URL = "VIRKSOMHET_ENHET_V1_ENDPOINTURL";
 
     public static void main(String[] args) {
         ApiAppTest.setupTestContext(ApiAppTest.Config.builder()
@@ -38,8 +37,8 @@ public class MainTest {
         setProperty(StsSecurityConstants.SYSTEMUSER_USERNAME, srvveilarboppgave.getUsername(), PUBLIC);
         setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, srvveilarboppgave.getPassword(), SECRET);
 
-        setProperty(OrganisasjonEnhetV2Config.NORG2_ORGANISASJONENHET_V2_URL, FasitUtils.getWebServiceEndpoint("virksomhet:OrganisasjonEnhet_v2").url, PUBLIC);
-        setProperty(VirksomhetEnhetEndpointConfig.NORG_VIRKSOMHET_ENHET_URL, FasitUtils.getWebServiceEndpoint("virksomhet:Enhet_v1").url, PUBLIC);
+        setProperty(NORG2_ORGANISASJONENHET_V2_URL, FasitUtils.getWebServiceEndpoint("virksomhet:OrganisasjonEnhet_v2").url, PUBLIC);
+        setProperty(NORG_VIRKSOMHET_ENHET_URL, FasitUtils.getWebServiceEndpoint("virksomhet:Enhet_v1").url, PUBLIC);
 
         String issoHost = FasitUtils.getBaseUrl("isso-host");
         String issoJWS = FasitUtils.getBaseUrl("isso-jwks");

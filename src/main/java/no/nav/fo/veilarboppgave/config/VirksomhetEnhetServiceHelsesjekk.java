@@ -15,7 +15,7 @@ public class VirksomhetEnhetServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = getRequiredProperty(VirksomhetEnhetEndpointConfig.NORG_VIRKSOMHET_ENHET_URL);
+        String endepunkt = "VirksomhetEnhet via SOAP " + System.getProperty("norg.virksomhet_enhet.url");
         String beskrivelse = "Sjekker om VirksomhetEnhet-tjenesten svarer.";
         return new HelsesjekkMetadata("virksomhetenhet", endepunkt, beskrivelse, true);
     }
