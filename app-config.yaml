@@ -26,8 +26,6 @@ fasitResources:
     resourceType: datasource
   - alias: srvveilarboppgave
     resourceType: credential
-  - alias: srvveilarboppgave
-    resourceType: applicationcertificate
   - alias: securityTokenService
     resourceType: baseUrl
 
@@ -42,10 +40,10 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: virksomhet:Enhet_v1
     resourceType: webserviceendpoint
-  - alias: virksomhet:OrganisasjonsEnhet_v2
+  - alias: virksomhet:OrganisasjonEnhet_v2
     resourceType: webserviceendpoint
   - alias: Aktoer_v2
-    resourceType: webserviceentpoint
+    resourceType: webserviceendpoint
 
   # Rest
   - alias: veilarblogin.redirect-url
@@ -67,6 +65,9 @@ fasitResources:
   - alias: isso-rp-user
     resourceType: credential
 
+  - alias: appdynamics
+    resourceType: applicationProperties
+
   exposed:
   - alias: veilarboppgave.api
     resourceType: restservice
@@ -74,3 +75,5 @@ fasitResources:
 
 alertProfiles:
   - common-java-modules
+
+team: oppfolging
