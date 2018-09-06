@@ -12,8 +12,6 @@ import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingServiceImpl;
-import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetService;
-import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetServiceImpl;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
@@ -35,7 +33,6 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
         PersonServiceHelsesjekk.class,
         BehandleOppgaveServiceHelsesjekk.class,
         OrganisasjonEnhetServiceHelsesjekk.class,
-        VirksomhetEnhetServiceHelsesjekk.class,
         AbacContext.class,
         DatabaseConfig.class,
         CacheConfig.class,
@@ -65,11 +62,6 @@ public class ApplicationConfig implements ApiApplication.NaisApiApplication {
     @Bean
     public BehandleOppgaveService oppgaveService() {
         return new BehandleOppgaveServiceImpl(behandleOppgaveV1OnBehalfOfUser());
-    }
-
-    @Bean
-    public EnhetService enhetService() {
-        return new EnhetServiceImpl(virksomhetenhetOnBehalfOfUser());
     }
 
     @Bean

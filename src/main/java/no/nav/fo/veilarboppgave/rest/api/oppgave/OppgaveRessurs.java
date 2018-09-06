@@ -8,7 +8,6 @@ import no.nav.fo.veilarboppgave.domene.*;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
-import no.nav.fo.veilarboppgave.ws.consumer.norg.enhet.EnhetService;
 
 import javax.inject.Inject;
 import javax.ws.rs.NotFoundException;
@@ -25,17 +24,15 @@ import static no.nav.fo.veilarboppgave.domene.Prioritet.utledPrioritetKode;
 public class OppgaveRessurs {
 
     private final BehandleOppgaveService oppgaveService;
-    private final EnhetService enhetService;
     private final PepClient pepClient;
     private final OppgaveRepository oppgaveRepository;
     private final AktorService aktorService;
 
     @Inject
-    public OppgaveRessurs(BehandleOppgaveService oppgaveService, PepClient pepClient, EnhetService enhetService,
+    public OppgaveRessurs(BehandleOppgaveService oppgaveService, PepClient pepClient,
                           OppgaveRepository oppgaveRepository, AktorService aktorService) {
         this.oppgaveService = oppgaveService;
         this.pepClient = pepClient;
-        this.enhetService = enhetService;
         this.oppgaveRepository = oppgaveRepository;
         this.aktorService = aktorService;
     }

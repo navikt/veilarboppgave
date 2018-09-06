@@ -44,9 +44,6 @@ public class LocalApplicationConfig implements ApiApplication {
     }
 
     @Bean
-    public EnhetServiceMock virksomhetEnhetService() { return new EnhetServiceMock(); }
-
-    @Bean
     public OrganisasjonEnhetService organisasjonEnhetService() { return new OrganisasjonEnhetServiceMock(); }
 
     @Bean
