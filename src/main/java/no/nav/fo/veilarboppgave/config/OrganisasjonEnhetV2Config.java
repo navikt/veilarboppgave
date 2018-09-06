@@ -3,8 +3,6 @@ package no.nav.fo.veilarboppgave.config;
 import no.nav.sbl.dialogarena.common.cxf.CXFClient;
 import no.nav.sbl.dialogarena.types.Pingable;
 import no.nav.sbl.dialogarena.types.Pingable.Ping.PingMetadata;
-import no.nav.sbl.util.EnvironmentUtils;
-import no.nav.virksomhet.tjenester.enhet.v1.Enhet;
 import no.nav.tjeneste.virksomhet.organisasjonenhet.v2.binding.OrganisasjonEnhetV2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,29 +21,6 @@ public class OrganisasjonEnhetV2Config {
         return createTimerProxyForWebService("OrganisasjonEnhetV2", new CXFClient<>(OrganisasjonEnhetV2.class)
                 .address(resolveOrganisasjonEnhetUrl())
                 .build(), OrganisasjonEnhetV2.class);
-    }
-
-    @Bean
-    public Pingable organisasjonEnhetV2Ping() {
-        String organisasjonEnhetUrl = resolveOrganisasjonEnhetUrl();
-        OrganisasjonEnhetV2 organisasjonEnhetV2 = new CXFClient<>(OrganisasjonEnhetV2.class)
-                .address(organisasjonEnhetUrl)
-                .build();
-
-        PingMetadata metadata = new Ping.PingMetadata(
-                "NORG2 - OrganisasjonEnhetV2 via " + organisasjonEnhetUrl,
-                "Ping mot OrganisasjonenhetV2 (Norg2).",
-                true
-        );
-
-        return () -> {
-            try {
-                ((Enhet)organisasjonEnhetV2).ping();
-                return Pingable.Ping.lyktes(metadata);
-            } catch (Exception e) {
-                return Pingable.Ping.feilet(metadata, e);
-            }
-        };
     }
 
     private String resolveOrganisasjonEnhetUrl() {
