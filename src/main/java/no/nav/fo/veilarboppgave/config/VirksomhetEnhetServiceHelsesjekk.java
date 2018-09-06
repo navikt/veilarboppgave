@@ -7,6 +7,8 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.virksomhet
 
 public class VirksomhetEnhetServiceHelsesjekk implements Helsesjekk {
 
+    public static final String VIRKSOMHETENHET_V1_URL = "VIRKSOMHET_ENHET_V1_ENDPOINTURL";
+
     @Override
     public void helsesjekk() throws Throwable {
         virksomhetenhetOnBehalfOfSystemUser().ping();
@@ -14,7 +16,7 @@ public class VirksomhetEnhetServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "VirksomhetEnhet via SOAP " + System.getProperty("norg.virksomhet_enhet.url");
+        String endepunkt = "VirksomhetEnhet via SOAP " + System.getProperty(VIRKSOMHETENHET_V1_URL);
         String beskrivelse = "Sjekker om VirksomhetEnhet-tjenesten svarer.";
         return new HelsesjekkMetadata("virksomhetenhet", endepunkt, beskrivelse, true);
     }

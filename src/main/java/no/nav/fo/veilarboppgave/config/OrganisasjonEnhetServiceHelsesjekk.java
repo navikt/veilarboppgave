@@ -7,6 +7,8 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.organisasj
 
 public class OrganisasjonEnhetServiceHelsesjekk implements Helsesjekk {
 
+    public static final String ORGANISASJONENHET_V2_URL = "VIRKSOMHET_ORGANISASJONENHET_V2_ENDPOINTURL";
+
     @Override
     public void helsesjekk() throws Throwable {
         organisasjonenhetOnBehalfOfSystemUser().ping();
@@ -14,7 +16,7 @@ public class OrganisasjonEnhetServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "OrganisasjonEnhet via SOAP " + System.getProperty("organisasjonEnhetV2.url");
+        String endepunkt = "OrganisasjonEnhet via SOAP " + System.getProperty(ORGANISASJONENHET_V2_URL);
         String beskrivelse = "Sjekker om OrganisasjonEnhet-tjenesten svarer.";
         return new HelsesjekkMetadata("organisasjonenhet", endepunkt, beskrivelse, true);
     }

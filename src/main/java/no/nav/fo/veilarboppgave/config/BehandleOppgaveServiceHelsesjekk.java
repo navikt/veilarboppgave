@@ -9,6 +9,8 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.behandleOp
 @Configuration
 public class BehandleOppgaveServiceHelsesjekk implements Helsesjekk{
 
+    public static final String BEHANDLEOPPGAVE_V1_URL = "VIRKSOMHET_BEHANDLEOPPGAVE_V1_ENDPOINTURL";
+
     @Override
     public void helsesjekk() throws Throwable {
         behandleOppgaveV1WithSystemUser().ping();
@@ -16,7 +18,7 @@ public class BehandleOppgaveServiceHelsesjekk implements Helsesjekk{
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "Behandle oppgave via SOAP " + System.getProperty("behandleoppgaveV1.endpoint.url");
+        String endepunkt = "Behandle oppgave via SOAP " + System.getProperty(BEHANDLEOPPGAVE_V1_URL);
         String beskrivelse = "Sjekker om BehandleOppgave-tjenesten svarer.";
         return new HelsesjekkMetadata("behandleoppgave", endepunkt, beskrivelse, true);
     }

@@ -9,6 +9,8 @@ import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.personV3Wi
 @Configuration
 public class PersonServiceHelsesjekk implements Helsesjekk {
 
+    public static final String PERSON_V3_ENDPOINT = "VIRKSOMHET_PERSON_V3_ENDPOINTURL";
+
     @Override
     public void helsesjekk() {
         personV3WithSystemUser().ping();
@@ -16,7 +18,7 @@ public class PersonServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "PersonService via SOAP " + System.getProperty("personV3.endpoint.url");
+        String endepunkt = "PersonService via SOAP " + System.getProperty(PERSON_V3_ENDPOINT);
         String beskrivelse = "Sjekker om Person-tjenesten svarer.";
         return new HelsesjekkMetadata("personservice", endepunkt, beskrivelse, true);
     }
