@@ -10,7 +10,7 @@ import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 @Configuration
 public class ArbeidsfordelingServiceHelsesjekk implements Helsesjekk {
 
-    private static final String ARBEIDSFORDELING_V1_ENDPOINTURL = "VIRKSOMHET_ARBEIDSFORDELING_1_ENDPOINTURL";
+    private static final String ARBEIDSFORDELING_V1_ENDPOINTURL = "VIRKSOMHET_ARBEIDSFORDELING_V1_ENDPOINTURL";
 
     @Override
     public void helsesjekk() throws Throwable {
