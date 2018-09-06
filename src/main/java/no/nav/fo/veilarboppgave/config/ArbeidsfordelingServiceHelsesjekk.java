@@ -19,7 +19,7 @@ public class ArbeidsfordelingServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "Arbeidsfordeling via SOAP " + System.getProperty(ARBEIDSFORDELING_V1_URL);
+        String endepunkt = "Arbeidsfordeling via SOAP " + getRequiredProperty(ARBEIDSFORDELING_V1_URL);
         String beskrivelse = "Sjekker om Arbeidsfordeling-tjenesten svarer.";
         return new HelsesjekkMetadata("arbeidsfordelingservice", endepunkt, beskrivelse, true);
     }

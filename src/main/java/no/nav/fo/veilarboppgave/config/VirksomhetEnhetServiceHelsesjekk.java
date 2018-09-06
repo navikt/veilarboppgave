@@ -4,6 +4,7 @@ import no.nav.apiapp.selftest.Helsesjekk;
 import no.nav.apiapp.selftest.HelsesjekkMetadata;
 
 import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.virksomhetenhetOnBehalfOfSystemUser;
+import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 public class VirksomhetEnhetServiceHelsesjekk implements Helsesjekk {
 
@@ -16,7 +17,7 @@ public class VirksomhetEnhetServiceHelsesjekk implements Helsesjekk {
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "VirksomhetEnhet via SOAP " + System.getProperty(VIRKSOMHETENHET_V1_URL);
+        String endepunkt = "VirksomhetEnhet via SOAP " + getRequiredProperty(VIRKSOMHETENHET_V1_URL);
         String beskrivelse = "Sjekker om VirksomhetEnhet-tjenesten svarer.";
         return new HelsesjekkMetadata("virksomhetenhet", endepunkt, beskrivelse, true);
     }

@@ -5,6 +5,7 @@ import no.nav.apiapp.selftest.HelsesjekkMetadata;
 import org.springframework.context.annotation.Configuration;
 
 import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.behandleOppgaveV1WithSystemUser;
+import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 @Configuration
 public class BehandleOppgaveServiceHelsesjekk implements Helsesjekk{
@@ -18,7 +19,7 @@ public class BehandleOppgaveServiceHelsesjekk implements Helsesjekk{
 
     @Override
     public HelsesjekkMetadata getMetadata() {
-        String endepunkt = "Behandle oppgave via SOAP " + System.getProperty(BEHANDLEOPPGAVE_V1_URL);
+        String endepunkt = "Behandle oppgave via SOAP " + getRequiredProperty(BEHANDLEOPPGAVE_V1_URL);
         String beskrivelse = "Sjekker om BehandleOppgave-tjenesten svarer.";
         return new HelsesjekkMetadata("behandleoppgave", endepunkt, beskrivelse, true);
     }
