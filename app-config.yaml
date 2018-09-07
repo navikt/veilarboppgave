@@ -32,7 +32,7 @@ fasitResources:
   # Webserviceendpoints
   - alias: virksomhet:Person_v3
     resourceType: webserviceendpoint
-  - alias: virksomHet:BehandleOppgave_v1
+  - alias: virksomhet:BehandleOppgave_v1
     resourceType: webserviceendpoint
   - alias: virksomhet:Arbeidsfordeling_v1
     resourceType: webserviceendpoint
