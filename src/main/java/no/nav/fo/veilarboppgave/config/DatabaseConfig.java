@@ -1,6 +1,7 @@
 package no.nav.fo.veilarboppgave.config;
 
 import no.nav.sbl.jdbc.Database;
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-
-import com.zaxxer.hikari.HikariConfig;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -30,8 +29,8 @@ public class DatabaseConfig {
         config.setJdbcUrl(getRequiredProperty(VEILARBOPPGAVEDB_URL));
         config.setUsername(getRequiredProperty(VEILARBOPPGAVEDB_USERNAME));
         config.setPassword(getRequiredProperty(VEILARBOPPGAVEDB_PASSWORD));
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(2);
+        config.setMaximumPoolSize(300);
+        config.setMinimumIdle(1);
 
         return new HikariDataSource(config);
     }
