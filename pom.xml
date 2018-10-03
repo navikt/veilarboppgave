@@ -105,7 +105,6 @@
         <dependency>
             <groupId>no.nav.sbl</groupId>
             <artifactId>jdbc</artifactId>
-            <version>2018.09.03.14.42</version>
         </dependency>
 
         <!--test-->
