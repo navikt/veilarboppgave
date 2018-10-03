@@ -1,17 +1,15 @@
 package no.nav.fo.veilarboppgave.config;
 
 import no.nav.sbl.jdbc.Database;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import no.nav.sbl.jdbc.DataSourceFactory;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-
-import javax.sql.DataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import javax.sql.DataSource;
 
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
@@ -25,14 +23,13 @@ public class DatabaseConfig {
 
     @Bean
     public static DataSource getDataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(getRequiredProperty(VEILARBOPPGAVEDB_URL));
-        config.setUsername(getRequiredProperty(VEILARBOPPGAVEDB_USERNAME));
-        config.setPassword(getRequiredProperty(VEILARBOPPGAVEDB_PASSWORD));
-        config.setMaximumPoolSize(300);
-        config.setMinimumIdle(1);
-
-        return new HikariDataSource(config);
+        return DataSourceFactory.dataSource()
+                .url(getRequiredProperty(VEILARBOPPGAVEDB_URL))
+                .username(getRequiredProperty(VEILARBOPPGAVEDB_USERNAME))
+                .password(getRequiredProperty(VEILARBOPPGAVEDB_PASSWORD))
+                .maxPoolSize(300)
+                .minimumIdle(1)
+                .build();
     }
 
     @Bean(name = "transactionManager")
