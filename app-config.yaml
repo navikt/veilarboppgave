@@ -10,7 +10,7 @@ healthcheck:
     path: veilarboppgave/internal/isAlive
     initialDelay: 60
   readiness:
-    path: veilarboppgave/internal/selftest
+    path: veilarboppgave/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
