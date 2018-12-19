@@ -18,9 +18,9 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 @EnableTransactionManagement
 public class DatabaseConfig {
 
-    private static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
-    private static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
-    private static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
+    public static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
+    public static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
+    public static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
 
     @Bean
     public static DataSource getDataSource() {
