@@ -2,6 +2,7 @@ package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 
 import no.nav.dialogarena.aktor.AktorService;
+import no.nav.fo.veilarboppgave.config.LocalJndiContextConfig;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.db.OppgavehistorikkDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,22 +13,21 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
-import static no.nav.fo.veilarboppgave.config.LocalJndiContextConfig.setupInMemoryDatabase;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 class OppgavehistorikkRessursTest {
 
-    AktorService aktorService = mock(AktorService.class);
+    private AktorService aktorService = mock(AktorService.class);
 
-    OppgaveRepository oppgaveRepository;
-    OppgavehistorikkRessurs oppgavehistorikkRessurs;
+    private OppgaveRepository oppgaveRepository;
+    private OppgavehistorikkRessurs oppgavehistorikkRessurs;
 
 
     @BeforeEach
     public void resetMocks() {
         reset(aktorService);
-        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(setupInMemoryDatabase()));
+        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(LocalJndiContextConfig.setupInMemoryDatabase()));
         oppgavehistorikkRessurs = new OppgavehistorikkRessurs(aktorService, oppgaveRepository);
     }
 
