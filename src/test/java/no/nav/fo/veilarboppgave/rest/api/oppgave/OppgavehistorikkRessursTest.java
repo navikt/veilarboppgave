@@ -2,7 +2,7 @@ package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 
 import no.nav.dialogarena.aktor.AktorService;
-import no.nav.fo.veilarboppgave.config.LocalJndiContextConfig;
+import no.nav.fo.veilarboppgave.config.InMemDatabaseConfig;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.db.OppgavehistorikkDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ class OppgavehistorikkRessursTest {
     @BeforeEach
     public void resetMocks() {
         reset(aktorService);
-        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(LocalJndiContextConfig.setupInMemoryDatabase()));
+        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(InMemDatabaseConfig.setupInMemoryDatabase()));
         oppgavehistorikkRessurs = new OppgavehistorikkRessurs(aktorService, oppgaveRepository);
     }
 

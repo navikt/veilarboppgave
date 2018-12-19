@@ -1,6 +1,6 @@
 package no.nav.fo.veilarboppgave.db;
 
-import no.nav.fo.veilarboppgave.config.LocalJndiContextConfig;
+import no.nav.fo.veilarboppgave.config.InMemDatabaseConfig;
 import no.nav.fo.veilarboppgave.domene.Aktoerid;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ public class OppgaveRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(LocalJndiContextConfig.setupInMemoryDatabase()));
+        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(InMemDatabaseConfig.setupInMemoryDatabase()));
     }
 
     @Test

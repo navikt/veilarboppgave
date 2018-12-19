@@ -5,7 +5,7 @@ import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-public class LocalJndiContextConfig {
+public class InMemDatabaseConfig {
 
     public static DataSource setupInMemoryDatabase() {
         SingleConnectionDataSource ds = new SingleConnectionDataSource();
