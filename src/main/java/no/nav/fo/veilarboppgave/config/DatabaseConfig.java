@@ -12,21 +12,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
+import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 
 @Configuration
 @EnableTransactionManagement
 public class DatabaseConfig {
 
-    private static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
-    private static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
-    private static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
+    public static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
+    public static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
+    public static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
 
     @Bean
     public static DataSource getDataSource() {
         return DataSourceFactory.dataSource()
                 .url(getRequiredProperty(VEILARBOPPGAVEDB_URL))
                 .username(getRequiredProperty(VEILARBOPPGAVEDB_USERNAME))
-                .password(getRequiredProperty(VEILARBOPPGAVEDB_PASSWORD))
+                .password(getOptionalProperty(VEILARBOPPGAVEDB_PASSWORD).orElse(""))
                 .maxPoolSize(300)
                 .minimumIdle(1)
                 .build();

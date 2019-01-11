@@ -2,6 +2,7 @@ package no.nav.fo.veilarboppgave;
 
 import no.nav.apiapp.ApiApplication;
 import no.nav.dialogarena.aktor.AktorService;
+import no.nav.fo.veilarboppgave.config.InMemDatabaseConfig;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.mocks.*;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
@@ -16,9 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import static no.nav.apiapp.ApiApplication.Sone.FSS;
-import static no.nav.fo.veilarboppgave.config.LocalJndiContextConfig.setupInMemoryDatabase;
 
 @Configuration
 @Import({
@@ -50,7 +48,7 @@ public class LocalApplicationConfig implements ApiApplication {
     public AktorService aktorService() { return new AktorServiceMock(); }
 
     @Bean
-    public OppgaveRepository oppgaveRepository() { return new OppgaveRepository(new JdbcTemplate(setupInMemoryDatabase())); }
+    public OppgaveRepository oppgaveRepository() { return new OppgaveRepository(new JdbcTemplate(InMemDatabaseConfig.setupInMemoryDatabase())); }
 
     @Bean
     public PepClient pepClient() {
