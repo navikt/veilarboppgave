@@ -1,5 +1,5 @@
-import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
-import static no.nav.dialogarena.config.fasit.FasitUtils.Zone.FSS;
+import static no.nav.fasit.FasitUtils.Zone.FSS;
+import static no.nav.fasit.FasitUtils.getDefaultEnvironment;
 import static no.nav.fo.veilarboppgave.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
 import static no.nav.sbl.util.EnvironmentUtils.resolveSrvUserPropertyName;
 import static no.nav.sbl.util.EnvironmentUtils.resolverSrvPasswordPropertyName;
@@ -9,9 +9,10 @@ import static no.nav.sbl.util.EnvironmentUtils.Type.SECRET;
 
 import no.nav.brukerdialog.security.Constants;
 import no.nav.brukerdialog.tools.SecurityConstants;
-import no.nav.dialogarena.config.fasit.FasitUtils;
-import no.nav.dialogarena.config.fasit.ServiceUser;
-import no.nav.dialogarena.config.fasit.dto.RestService;
+
+import no.nav.fasit.FasitUtils;
+import no.nav.fasit.ServiceUser;
+import no.nav.fasit.dto.RestService;
 import no.nav.fo.veilarboppgave.config.DatabaseConfig;
 import no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;

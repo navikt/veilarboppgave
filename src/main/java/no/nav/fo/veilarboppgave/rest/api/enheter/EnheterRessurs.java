@@ -1,12 +1,15 @@
 package no.nav.fo.veilarboppgave.rest.api.enheter;
 
+import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
+import no.nav.apiapp.security.veilarbabac.Bruker;
+import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
+import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
 import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
 import no.nav.fo.veilarboppgave.domene.Tema;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
-import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
@@ -25,25 +28,31 @@ public class EnheterRessurs {
 
     private final ArbeidsfordelingService arbeidsfordelingService;
     private final PersonService personService;
-    private final PepClient pepClient;
+    private final VeilarbAbacPepClient pepClient;
     private final OrganisasjonEnhetService organisasjonEnhetService;
+    private final AktorService aktorService;
 
     @Inject
     public EnheterRessurs(ArbeidsfordelingService arbeidsfordelingService, PersonService personService,
-                          PepClient pepClient, OrganisasjonEnhetService organisasjonEnhetService) {
+                          VeilarbAbacPepClient pepClient, OrganisasjonEnhetService organisasjonEnhetService, AktorService aktorService) {
 
         this.arbeidsfordelingService = arbeidsfordelingService;
         this.personService = personService;
         this.pepClient = pepClient;
         this.organisasjonEnhetService = organisasjonEnhetService;
+        this.aktorService = aktorService;
     }
 
     @GET
     public List<OppfolgingEnhet> hentEnheter(@QueryParam("fnr") String fnr, @QueryParam("tema") String tema) {
         Fnr gyldigFnr = ofNullable(fnr)
                 .map(Valider::fnr)
-                .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(UgyldigRequest::new);
+
+        Bruker bruker = Bruker.fraFnr(fnr)
+                .medAktoerIdSupplier(()->aktorService.getAktorId(fnr).orElseThrow(IngenTilgang::new));
+
+        pepClient.sjekkLesetilgangTilBruker(bruker);
 
         Tema gyldigTema = ofNullable(tema)
                 .map(Valider::tema)

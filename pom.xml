@@ -5,11 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
+        <tjenestespesifikasjoner.version>1.2019.04.05-09.36-fbdf6a084578</tjenestespesifikasjoner.version>
         <arbeidsfordeling-v1-tjenestespesifikasjon.version>1.1.0</arbeidsfordeling-v1-tjenestespesifikasjon.version>
         <person-v3-tjenestespesifikasjon.version>3.0.2</person-v3-tjenestespesifikasjon.version>
-        <behandleoppgave-v1-tjenestespesifikasjon.version>1.0.5</behandleoppgave-v1-tjenestespesifikasjon.version>
-        <enhet.tjenestespesifikasjon.versjon>1.0.0</enhet.tjenestespesifikasjon.versjon>
-        <organisasjonenhet-v2.tjenestespesifikasjon.versjon>2.1.0</organisasjonenhet-v2.tjenestespesifikasjon.versjon>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <hikariCP.version>2.7.3</hikariCP.version>
@@ -23,7 +21,7 @@
     <parent>
         <groupId>no.nav.common</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>2018.11.12.17.26</version>
+        <version>1.2019.04.30-17.04-3d8bebacf430</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -41,7 +39,7 @@
             <dependency>
                 <groupId>no.nav.common</groupId>
                 <artifactId>bom</artifactId>
-                <version>2018.11.12.17.26</version>
+                <version>${parent.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -58,28 +56,33 @@
                 <version>${person-v3-tjenestespesifikasjon.version}</version>
             </dependency>
             <dependency>
-                <groupId>no.nav.sbl.dialogarena</groupId>
+                <groupId>no.nav.tjenestespesifikasjoner</groupId>
                 <artifactId>behandleoppgave-v1-tjenestespesifikasjon</artifactId>
-                <version>${behandleoppgave-v1-tjenestespesifikasjon.version}</version>
+                <version>${tjenestespesifikasjoner.version}</version>
             </dependency>
             <dependency>
-                <groupId>no.nav.fo</groupId>
+                <groupId>no.nav.tjenestespesifikasjoner</groupId>
                 <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
-                <version>${enhet.tjenestespesifikasjon.versjon}</version>
+                <version>${tjenestespesifikasjoner.version}</version>
             </dependency>
             <dependency>
-                <groupId>no.nav.sbl.dialogarena</groupId>
+                <groupId>no.nav.tjenestespesifikasjoner</groupId>
                 <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
-                <version>${organisasjonenhet-v2.tjenestespesifikasjon.versjon}</version>
+                <version>${tjenestespesifikasjoner.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics</artifactId>
+            <version>0.11.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>no.nav.tjenestespesifikasjoner</groupId>
             <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
-            <version>${organisasjonenhet-v2.tjenestespesifikasjon.versjon}</version>
         </dependency>
         <dependency>
             <groupId>no.nav.sbl.dialogarena</groupId>
@@ -90,11 +93,11 @@
             <artifactId>person-v3-tjenestespesifikasjon</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
+            <groupId>no.nav.tjenestespesifikasjoner</groupId>
             <artifactId>behandleoppgave-v1-tjenestespesifikasjon</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.fo</groupId>
+            <groupId>no.nav.tjenestespesifikasjoner</groupId>
             <artifactId>enhet-v1-tjenestespesifikasjon</artifactId>
         </dependency>
         <dependency>
@@ -106,14 +109,23 @@
             <groupId>no.nav.common</groupId>
             <artifactId>jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>no.nav.common</groupId>
+            <artifactId>feature-toggle</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.finn.unleash</groupId>
+            <artifactId>unleash-client-java</artifactId>
+        </dependency>
+
 
         <!--test-->
-        <dependency>
+        <!--dependency>
             <groupId>no.nav.fo</groupId>
             <artifactId>veilarboppgave-config</artifactId>
             <version>133.20180902.1819</version>
             <scope>test</scope>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
