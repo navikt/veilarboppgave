@@ -1,12 +1,14 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
+import no.nav.apiapp.feil.IngenTilgang;
+import no.nav.apiapp.security.veilarbabac.Bruker;
+import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
 import no.nav.brukerdialog.security.context.SubjectHandler;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.db.OppgavehistorikkDTO;
 import no.nav.fo.veilarboppgave.domene.*;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
-import no.nav.fo.veilarboppgave.security.abac.PepClient;
 import no.nav.fo.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
 
 import javax.inject.Inject;
@@ -24,12 +26,12 @@ import static no.nav.fo.veilarboppgave.domene.Prioritet.utledPrioritetKode;
 public class OppgaveRessurs {
 
     private final BehandleOppgaveService oppgaveService;
-    private final PepClient pepClient;
+    private final VeilarbAbacPepClient pepClient;
     private final OppgaveRepository oppgaveRepository;
     private final AktorService aktorService;
 
     @Inject
-    public OppgaveRessurs(BehandleOppgaveService oppgaveService, PepClient pepClient,
+    public OppgaveRessurs(BehandleOppgaveService oppgaveService, VeilarbAbacPepClient pepClient,
                           OppgaveRepository oppgaveRepository, AktorService aktorService) {
         this.oppgaveService = oppgaveService;
         this.pepClient = pepClient;
@@ -43,8 +45,13 @@ public class OppgaveRessurs {
 
         Fnr fnr = ofNullable(dto.getFnr())
                 .map(Valider::fnr)
-                .map(pepClient::sjekkTilgangTilFnr)
                 .orElseThrow(RuntimeException::new);
+
+        Bruker bruker = Bruker
+                .fraFnr(dto.getFnr())
+                .medAktoerIdSupplier(()->aktorService.getAktorId(dto.getFnr()).orElseThrow(IngenTilgang::new));
+
+        pepClient.sjekkLesetilgangTilBruker(bruker);
 
         ofNullable(dto.avsenderenhetId)
                 .map(Valider::atFeltErUtfylt);
