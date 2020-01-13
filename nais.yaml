@@ -16,7 +16,6 @@ spec:
   ingresses:
     - https://veilarboppgave.nais.adeo.no
     - https://app.adeo.no/veilarboppgave
-  webproxy: true
   vault:
     enabled: true
     paths:
