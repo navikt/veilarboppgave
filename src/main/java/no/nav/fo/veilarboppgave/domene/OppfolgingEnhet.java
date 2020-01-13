@@ -11,7 +11,7 @@ public class OppfolgingEnhet {
     String enhetId;
     String navn;
 
-    public static OppfolgingEnhet of(no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.WSOrganisasjonsenhet wsOrganisasjonsenhet) {
+    public static OppfolgingEnhet of(no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.Organisasjonsenhet wsOrganisasjonsenhet) {
         return new OppfolgingEnhet(wsOrganisasjonsenhet.getEnhetId(), wsOrganisasjonsenhet.getEnhetNavn());
     }
 

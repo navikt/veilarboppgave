@@ -2,14 +2,14 @@ package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
 import lombok.Value;
 import no.nav.fo.veilarboppgave.domene.Fnr;
-import no.nav.fo.veilarboppgave.domene.Tema;
+import no.nav.fo.veilarboppgave.domene.TemaDTO;
 
 import java.time.LocalDate;
 
 @Value
 public class Oppgave {
     Fnr fnr;
-    Tema tema;
+    TemaDTO temaDTO;
     String type;
     String prioritet;
     String beskrivelse;

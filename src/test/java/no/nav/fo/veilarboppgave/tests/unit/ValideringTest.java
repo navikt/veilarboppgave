@@ -3,7 +3,7 @@ package no.nav.fo.veilarboppgave.tests.unit;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.fo.veilarboppgave.TestData;
 import no.nav.fo.veilarboppgave.domene.Fnr;
-import no.nav.fo.veilarboppgave.domene.Tema;
+import no.nav.fo.veilarboppgave.domene.TemaDTO;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 import org.junit.Assert;
@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ValideringTest {
 
     @ParameterizedTest
-    @EnumSource(Tema.class)
-    void skal_validere_alle_gyldige_input_for_tema(Tema tema) throws Exception {
-        assertNotNull(Valider.tema(tema.name()));
+    @EnumSource(TemaDTO.class)
+    void skal_validere_alle_gyldige_input_for_tema(TemaDTO temaDTO) throws Exception {
+        assertNotNull(Valider.tema(temaDTO.name()));
     }
 
     @Test

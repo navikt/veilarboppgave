@@ -1,0 +1,50 @@
+# ref https://raw.githubusercontent.com/nais/naiserator/master/examples/nais-max.yaml
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: veilarboppgave
+  namespace: default
+  labels:
+    team: pto
+spec:
+  image: docker.pkg.github.com/navikt/veilarboppgave/veilarboppgave:{{version}}
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  port: 8080
+  ingresses:
+    - https://veilarboppgave.nais.adeo.no
+    - https://app.adeo.no/veilarboppgave
+  webproxy: true
+  vault:
+    enabled: true
+    paths:
+      - kvPath: /serviceuser/data/prod/srvveilarboppgave
+        mountPath: /var/run/secrets/nais.io/service_user
+      - kvPath: /oracle/data/prod/creds/veilarboppgave-user
+        mountPath: /var/run/secrets/nais.io/oracle_creds
+      - kvPath: /kv/prod/fss/veilarboppgave/default
+        mountPath: /var/run/secrets/nais.io/vault
+  envFrom:
+    - configmap: pto-config
+  leaderElection: true
+  healthcheck:
+    liveness:
+      path: veilarboppgave/internal/isAlive
+      initialDelay: 60
+      timeout: 10
+    readiness:
+      path: veilarboppgave/internal/isReady
+      initialDelay: 60
+      timeout: 10
+  prometheus:
+    enabled: true
+    path: veilarboppgave/internal/metrics
+  resources:
+    limits:
+      cpu: 3000m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 512Mi

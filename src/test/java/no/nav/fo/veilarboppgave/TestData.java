@@ -3,7 +3,7 @@ package no.nav.fo.veilarboppgave;
 import no.bekk.bekkopen.person.Fodselsnummer;
 import no.bekk.bekkopen.person.KJONN;
 import no.nav.fo.veilarboppgave.domene.Fnr;
-import no.nav.fo.veilarboppgave.domene.Tema;
+import no.nav.fo.veilarboppgave.domene.TemaDTO;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 import org.json.JSONObject;
 
@@ -69,7 +69,7 @@ public class TestData {
     public static JSONObject json() {
         return new JSONObject()
                 .put(FNR, genererTilfeldigFnrMedTilgang().getFnr())
-                .put(TEMA, Tema.OPPFOLGING.name().toLowerCase())
+                .put(TEMA, TemaDTO.OPPFOLGING.name().toLowerCase())
                 .put(TYPE, "VURDER_KONSEKVENS_FOR_YTELSE")
                 .put(PRIORITET, "lav")
                 .put(BESKRIVELSE, "Dette er en testbeskrivelse")

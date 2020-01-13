@@ -2,7 +2,7 @@ package no.nav.fo.veilarboppgave.domene;
 
 import java.util.Arrays;
 
-public enum Tema {
+public enum TemaDTO {
     OPPFOLGING("OPP"),
     DAGPENGER("DAG"),
     ARBEIDSAVKLARING("AAP"),
@@ -12,7 +12,7 @@ public enum Tema {
 
     private String fagomradeKode;
 
-    Tema(String fagomradeKode) {
+    TemaDTO(String fagomradeKode) {
         this.fagomradeKode = fagomradeKode;
     }
 
@@ -22,7 +22,7 @@ public enum Tema {
 
     public static boolean contains(String value) {
         return Arrays
-                .stream(Tema.values())
+                .stream(TemaDTO.values())
                 .anyMatch(v -> v.name().equals(value));
     }
 }

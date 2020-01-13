@@ -8,7 +8,7 @@ import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
 import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
-import no.nav.fo.veilarboppgave.domene.Tema;
+import no.nav.fo.veilarboppgave.domene.TemaDTO;
 import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
@@ -54,7 +54,7 @@ public class EnheterRessurs {
 
         pepClient.sjekkLesetilgangTilBruker(bruker);
 
-        Tema gyldigTema = ofNullable(tema)
+        TemaDTO gyldigTemaDTO = ofNullable(tema)
                 .map(Valider::tema)
                 .orElseThrow(UgyldigRequest::new);
 
@@ -62,7 +62,7 @@ public class EnheterRessurs {
                 .hentGeografiskTilknytning(gyldigFnr)
                 .orElseThrow(UgyldigRequest::new);
 
-        List<OppfolgingEnhet> oppfolgingEnhets = arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTema);
+        List<OppfolgingEnhet> oppfolgingEnhets = arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTemaDTO);
         List<OppfolgingEnhet> alleNavEnheter = organisasjonEnhetService.hentAlleEnheter();
 
         return mergeAndDeleteDuplicate(oppfolgingEnhets, alleNavEnheter);

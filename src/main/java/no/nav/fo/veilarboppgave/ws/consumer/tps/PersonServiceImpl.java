@@ -4,12 +4,12 @@ package no.nav.fo.veilarboppgave.ws.consumer.tps;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
-import no.nav.tjeneste.virksomhet.person.v3.HentGeografiskTilknytningPersonIkkeFunnet;
-import no.nav.tjeneste.virksomhet.person.v3.HentGeografiskTilknytningSikkerhetsbegrensing;
-import no.nav.tjeneste.virksomhet.person.v3.PersonV3;
-import no.nav.tjeneste.virksomhet.person.v3.informasjon.WSNorskIdent;
-import no.nav.tjeneste.virksomhet.person.v3.informasjon.WSPersonIdent;
-import no.nav.tjeneste.virksomhet.person.v3.meldinger.WSHentGeografiskTilknytningRequest;
+import no.nav.tjeneste.virksomhet.person.v3.binding.HentGeografiskTilknytningPersonIkkeFunnet;
+import no.nav.tjeneste.virksomhet.person.v3.binding.HentGeografiskTilknytningSikkerhetsbegrensing;
+import no.nav.tjeneste.virksomhet.person.v3.binding.PersonV3;
+import no.nav.tjeneste.virksomhet.person.v3.informasjon.NorskIdent;
+import no.nav.tjeneste.virksomhet.person.v3.informasjon.PersonIdent;
+import no.nav.tjeneste.virksomhet.person.v3.meldinger.HentGeografiskTilknytningRequest;
 
 import javax.ws.rs.NotFoundException;
 import java.util.Optional;
@@ -28,12 +28,12 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Optional<GeografiskTilknytning> hentGeografiskTilknytning(Fnr fnr) {
 
-        WSNorskIdent norskIdent = new WSNorskIdent();
+        NorskIdent norskIdent = new NorskIdent();
         norskIdent.setIdent(fnr.getFnr());
-        WSPersonIdent personIdent = new WSPersonIdent();
+        PersonIdent personIdent = new PersonIdent();
         personIdent.setIdent(norskIdent);
 
-        WSHentGeografiskTilknytningRequest request = new WSHentGeografiskTilknytningRequest();
+        HentGeografiskTilknytningRequest request = new HentGeografiskTilknytningRequest();
         request.setAktoer(personIdent);
 
         Optional<GeografiskTilknytning> maybeResponse = Optional.empty();
