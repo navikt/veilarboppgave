@@ -31,10 +31,10 @@ public class Main {
         //OIDC
         System.setProperty(SecurityConstants.SYSTEMUSER_USERNAME, serviceUser.username);
         System.setProperty(SecurityConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
-
-        NaisUtils.Credentials oracleCreds = getCredentials("oracle_creds");
-        System.setProperty(VEILARBOPPGAVEDB_USERNAME, oracleCreds.username);
-        System.setProperty(VEILARBOPPGAVEDB_PASSWORD, oracleCreds.password);
+//
+//        NaisUtils.Credentials oracleCreds = getCredentials("oracle_creds");
+//        System.setProperty(VEILARBOPPGAVEDB_USERNAME, oracleCreds.username);
+//        System.setProperty(VEILARBOPPGAVEDB_PASSWORD, oracleCreds.password);
 
         System.setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
         setProperty(UNLEASH_API_URL_PROPERTY_NAME, "https://unleash.nais.adeo.no/api/");
