@@ -113,12 +113,6 @@
 
 
         <!--test-->
-        <!--dependency>
-            <groupId>no.nav.fo</groupId>
-            <artifactId>veilarboppgave-config</artifactId>
-            <version>133.20180902.1819</version>
-            <scope>test</scope>
-        </dependency-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
@@ -262,7 +256,4 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
     </dependencies>
-
-
-
 </project>
