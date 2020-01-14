@@ -21,7 +21,7 @@ spec:
     paths:
       - kvPath: /serviceuser/data/prod/srvveilarboppgave
         mountPath: /var/run/secrets/nais.io/service_user
-      - kvPath: /oracle/data/prod/creds/veilarboppgave-user
+      - kvPath: /oracle/data/prod/creds/veilarboppgave_p-user
         mountPath: /var/run/secrets/nais.io/oracle_creds
       - kvPath: /kv/prod/fss/veilarboppgave/default
         mountPath: /var/run/secrets/nais.io/vault
