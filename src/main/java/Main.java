@@ -20,17 +20,17 @@ public class Main {
 
         NaisUtils.Credentials serviceUser = NaisUtils.getCredentials("service_user");
 
-        //ABAC
-        System.setProperty(CredentialConstants.SYSTEMUSER_USERNAME, serviceUser.username);
-        System.setProperty(CredentialConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
-
-        //CXF
-        System.setProperty(StsSecurityConstants.SYSTEMUSER_USERNAME, serviceUser.username);
-        System.setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
-
-        //OIDC
-        System.setProperty(SecurityConstants.SYSTEMUSER_USERNAME, serviceUser.username);
-        System.setProperty(SecurityConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
+//        //ABAC
+//        System.setProperty(CredentialConstants.SYSTEMUSER_USERNAME, serviceUser.username);
+//        System.setProperty(CredentialConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
+//
+//        //CXF
+//        System.setProperty(StsSecurityConstants.SYSTEMUSER_USERNAME, serviceUser.username);
+//        System.setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
+//
+//        //OIDC
+//        System.setProperty(SecurityConstants.SYSTEMUSER_USERNAME, serviceUser.username);
+//        System.setProperty(SecurityConstants.SYSTEMUSER_PASSWORD, serviceUser.password);
 //
 //        NaisUtils.Credentials oracleCreds = getCredentials("oracle_creds");
 //        System.setProperty(VEILARBOPPGAVEDB_USERNAME, oracleCreds.username);
