@@ -18,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        NaisUtils.Credentials serviceUser = NaisUtils.getCredentials("service_user");
+//        NaisUtils.Credentials serviceUser = NaisUtils.getCredentials("service_user");
 
 //        //ABAC
 //        System.setProperty(CredentialConstants.SYSTEMUSER_USERNAME, serviceUser.username);
