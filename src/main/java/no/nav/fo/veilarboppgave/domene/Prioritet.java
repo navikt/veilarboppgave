@@ -13,8 +13,8 @@ public enum  Prioritet {
                 .anyMatch(v -> v.name().equals(value));
     }
 
-    public static String utledPrioritetKode(Tema tema, Prioritet prioritet) {
-        return prioritet.name() + "_" + tema.getFagomradeKode();
+    public static String utledPrioritetKode(TemaDTO temaDTO, Prioritet prioritet) {
+        return prioritet.name() + "_" + temaDTO.getFagomradeKode();
     }
 
 }

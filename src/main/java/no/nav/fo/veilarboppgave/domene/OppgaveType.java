@@ -22,7 +22,7 @@ public enum OppgaveType {
                 .anyMatch(v -> v.name().equals(value));
     }
 
-    public static String utledOppgaveTypeKode(Tema tema, OppgaveType oppgaveType) {
-        return oppgaveType.getKode() + "_" + tema.getFagomradeKode();
+    public static String utledOppgaveTypeKode(TemaDTO temaDTO, OppgaveType oppgaveType) {
+        return oppgaveType.getKode() + "_" + temaDTO.getFagomradeKode();
     }
 }

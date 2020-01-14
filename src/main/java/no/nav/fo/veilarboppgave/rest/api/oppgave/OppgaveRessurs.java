@@ -58,11 +58,11 @@ public class OppgaveRessurs {
 
         Valider.fraDatoErFoerTilDato(dto);
 
-        Tema tema = Valider.tema(dto.getTema());
+        TemaDTO temaDTO = Valider.tema(dto.getTema());
         OppgaveType oppgaveType = Valider.oppgavetype(dto.getType());
         Prioritet prioritet = Valider.prioritet(dto.getPrioritet());
-        String prioritetKode = utledPrioritetKode(tema, prioritet);
-        String oppgaveTypeKode = utledOppgaveTypeKode(tema, oppgaveType);
+        String prioritetKode = utledPrioritetKode(temaDTO, prioritet);
+        String oppgaveTypeKode = utledOppgaveTypeKode(temaDTO, oppgaveType);
 
         Oppgave oppgave = new Oppgave(
                 fnr,

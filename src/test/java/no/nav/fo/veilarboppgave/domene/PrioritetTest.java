@@ -8,10 +8,10 @@ class PrioritetTest {
 
     @Test
     void skal_utlede_korrekt_prioritetkode_basert_paa_tema_og_prioritet() {
-        Tema tema = Tema.OPPFOLGING;
+        TemaDTO temaDTO = TemaDTO.OPPFOLGING;
         Prioritet pri = Prioritet.NORM;
 
-        String kode = Prioritet.utledPrioritetKode(tema, pri);
+        String kode = Prioritet.utledPrioritetKode(temaDTO, pri);
         assertEquals("NORM_OPP", kode);
     }
 }

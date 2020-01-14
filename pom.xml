@@ -6,22 +6,15 @@
 
     <properties>
         <tjenestespesifikasjoner.version>1.2019.04.05-09.36-fbdf6a084578</tjenestespesifikasjoner.version>
-        <arbeidsfordeling-v1-tjenestespesifikasjon.version>1.1.0</arbeidsfordeling-v1-tjenestespesifikasjon.version>
-        <person-v3-tjenestespesifikasjon.version>3.0.2</person-v3-tjenestespesifikasjon.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <hikariCP.version>2.7.3</hikariCP.version>
-        <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
-        <sonar.coverage.exclusions>
-            **/java/Main.java,
-            **/config/ApplicationConfig.java
-        </sonar.coverage.exclusions>
     </properties>
 
     <parent>
         <groupId>no.nav.common</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>1.2019.11.28-16.07-69bf339eebe8</version>
+        <version>1.2020.01.07-12.25-79f6cda3b780</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -46,14 +39,14 @@
 
         <!--eksterne tjenester-->
             <dependency>
-                <groupId>no.nav.sbl.dialogarena</groupId>
+                <groupId>no.nav.tjenestespesifikasjoner</groupId>
                 <artifactId>arbeidsfordeling-v1-tjenestespesifikasjon</artifactId>
-                <version>${arbeidsfordeling-v1-tjenestespesifikasjon.version}</version>
+                <version>${tjenestespesifikasjoner.version}</version>
             </dependency>
             <dependency>
-                <groupId>no.nav.sbl.dialogarena</groupId>
+                <groupId>no.nav.tjenestespesifikasjoner</groupId>
                 <artifactId>person-v3-tjenestespesifikasjon</artifactId>
-                <version>${person-v3-tjenestespesifikasjon.version}</version>
+                <version>${tjenestespesifikasjoner.version}</version>
             </dependency>
             <dependency>
                 <groupId>no.nav.tjenestespesifikasjoner</groupId>
@@ -85,11 +78,11 @@
             <artifactId>organisasjonenhet-v2-tjenestespesifikasjon</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
+            <groupId>no.nav.tjenestespesifikasjoner</groupId>
             <artifactId>arbeidsfordeling-v1-tjenestespesifikasjon</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
+            <groupId>no.nav.tjenestespesifikasjoner</groupId>
             <artifactId>person-v3-tjenestespesifikasjon</artifactId>
         </dependency>
         <dependency>
@@ -120,12 +113,6 @@
 
 
         <!--test-->
-        <!--dependency>
-            <groupId>no.nav.fo</groupId>
-            <artifactId>veilarboppgave-config</artifactId>
-            <version>133.20180902.1819</version>
-            <scope>test</scope>
-        </dependency-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
@@ -138,9 +125,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>19.3.0.0</version>
         </dependency>
         <dependency>
             <groupId>no.nav.common</groupId>
@@ -269,7 +256,4 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
     </dependencies>
-
-
-
 </project>

@@ -5,7 +5,7 @@ import no.nav.apiapp.util.StringUtils;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.OppgaveType;
 import no.nav.fo.veilarboppgave.domene.Prioritet;
-import no.nav.fo.veilarboppgave.domene.Tema;
+import no.nav.fo.veilarboppgave.domene.TemaDTO;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveDTO;
 
 import java.time.LocalDate;
@@ -23,12 +23,12 @@ public class Valider {
         throw new UgyldigRequest();
     }
 
-    public static Tema tema(String tema) {
+    public static TemaDTO tema(String tema) {
         return ofNullable(tema)
                 .map(Valider::atFeltErUtfylt)
                 .map(String::toUpperCase)
-                .filter(Tema::contains)
-                .map(Tema::valueOf)
+                .filter(TemaDTO::contains)
+                .map(TemaDTO::valueOf)
                 .orElseThrow(UgyldigRequest::new);
     }
 

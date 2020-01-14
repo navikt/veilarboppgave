@@ -34,7 +34,7 @@ public class BehandleOppgaveServiceImpl implements BehandleOppgaveService {
             WSAktor aktor = new WSAktor().withAktorType(WSAktorType.PERSON).withIdent(oppgave.getFnr().getFnr());
 
             opprettOppgave.setGjelderBruker(aktor);
-            opprettOppgave.setFagomradeKode(oppgave.getTema().getFagomradeKode());
+            opprettOppgave.setFagomradeKode(oppgave.getTemaDTO().getFagomradeKode());
             opprettOppgave.setAktivFra(fraDato);
             opprettOppgave.setAktivTil(tilDato);
             opprettOppgave.setBeskrivelse(oppgave.getBeskrivelse());

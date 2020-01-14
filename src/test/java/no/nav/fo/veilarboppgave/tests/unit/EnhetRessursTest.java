@@ -9,12 +9,10 @@ import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static java.util.Optional.of;
 import static no.nav.fo.veilarboppgave.TestData.*;
-import static no.nav.fo.veilarboppgave.domene.Tema.OPPFOLGING;
+import static no.nav.fo.veilarboppgave.domene.TemaDTO.OPPFOLGING;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 public class EnhetRessursTest {
