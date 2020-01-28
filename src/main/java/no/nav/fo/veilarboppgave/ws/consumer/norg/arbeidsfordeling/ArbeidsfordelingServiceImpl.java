@@ -78,9 +78,14 @@ public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
                 .request()
                 .post(json(kriterier));
 
-        List<ArbeidsfordelingEnhet> arbeidsfordelingEnheter = response.readEntity(new GenericType<List<ArbeidsfordelingEnhet>>() {
-        });
+        if (response.getStatus() != 200) {
+            log.error("Kunne ikke hente enheter fra arbeidsfordeling. Response status = " + response.getStatus());
+            return emptyList();
+        } else {
+            List<ArbeidsfordelingEnhet> arbeidsfordelingEnheter = response.readEntity(new GenericType<List<ArbeidsfordelingEnhet>>() {
+            });
+            return arbeidsfordelingEnheter.stream().map(OppfolgingEnhet::of).collect(toList());
+        }
 
-        return arbeidsfordelingEnheter.stream().map(OppfolgingEnhet::of).collect(toList());
     }
 }
