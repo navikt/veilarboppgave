@@ -12,17 +12,28 @@ import no.nav.tjeneste.virksomhet.person.v3.informasjon.PersonIdent;
 import no.nav.tjeneste.virksomhet.person.v3.meldinger.HentGeografiskTilknytningRequest;
 
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.client.Client;
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
+import static no.nav.apiapp.util.UrlUtils.clusterUrlForApplication;
+import static no.nav.apiapp.util.UrlUtils.joinPaths;
+import static no.nav.fo.veilarboppgave.config.ApplicationConfig.VEILARBPERSON_API_URL_PROPERTY;
+import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 
 @Slf4j
 public class PersonServiceImpl implements PersonService {
 
     private final PersonV3 personSoapService;
+    private final Client restClient;
+    private final String host;
 
-    public PersonServiceImpl(PersonV3 personSoapService) {
+    public PersonServiceImpl(PersonV3 personSoapService, Client restClient) {
         this.personSoapService = personSoapService;
+        this.restClient = restClient;
+        host = getOptionalProperty(VEILARBPERSON_API_URL_PROPERTY)
+                .orElseGet(() ->
+                        joinPaths(clusterUrlForApplication("veilarbperson"), "/veilarbperson/api"));
     }
 
     @Override
@@ -57,4 +68,18 @@ public class PersonServiceImpl implements PersonService {
 
         return maybeResponse;
     }
+
+    @Override
+    public boolean hentEgenAnsatt(Fnr fnr) {
+        PersonResponse response = restClient
+                .target(joinPaths(host, "person", fnr.getFnr()))
+                .request()
+                .get(PersonResponse.class);
+
+        return response.egenAnsatt;
+    }
+}
+
+class PersonResponse {
+    boolean egenAnsatt;
 }

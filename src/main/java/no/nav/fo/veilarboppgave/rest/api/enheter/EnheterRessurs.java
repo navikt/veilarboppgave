@@ -13,6 +13,7 @@ import no.nav.fo.veilarboppgave.rest.api.Valider;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
 import no.nav.fo.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
 import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonService;
+import no.nav.sbl.featuretoggle.unleash.UnleashService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -31,16 +32,22 @@ public class EnheterRessurs {
     private final VeilarbAbacPepClient pepClient;
     private final OrganisasjonEnhetService organisasjonEnhetService;
     private final AktorService aktorService;
+    private final UnleashService unleashService;
 
     @Inject
-    public EnheterRessurs(ArbeidsfordelingService arbeidsfordelingService, PersonService personService,
-                          VeilarbAbacPepClient pepClient, OrganisasjonEnhetService organisasjonEnhetService, AktorService aktorService) {
+    public EnheterRessurs(ArbeidsfordelingService arbeidsfordelingService,
+                          PersonService personService,
+                          VeilarbAbacPepClient pepClient,
+                          OrganisasjonEnhetService organisasjonEnhetService,
+                          AktorService aktorService,
+                          UnleashService unleashService) {
 
         this.arbeidsfordelingService = arbeidsfordelingService;
         this.personService = personService;
         this.pepClient = pepClient;
         this.organisasjonEnhetService = organisasjonEnhetService;
         this.aktorService = aktorService;
+        this.unleashService = unleashService;
     }
 
     @GET
@@ -50,7 +57,7 @@ public class EnheterRessurs {
                 .orElseThrow(UgyldigRequest::new);
 
         Bruker bruker = Bruker.fraFnr(fnr)
-                .medAktoerIdSupplier(()->aktorService.getAktorId(fnr).orElseThrow(IngenTilgang::new));
+                .medAktoerIdSupplier(() -> aktorService.getAktorId(fnr).orElseThrow(IngenTilgang::new));
 
         pepClient.sjekkLesetilgangTilBruker(bruker);
 
@@ -62,9 +69,16 @@ public class EnheterRessurs {
                 .hentGeografiskTilknytning(gyldigFnr)
                 .orElseThrow(UgyldigRequest::new);
 
-        List<OppfolgingEnhet> oppfolgingEnhets = arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTemaDTO);
+
+        List<OppfolgingEnhet> arbeidsfordelingEnheter;
+        if (unleashService.isEnabled("veilarboppgave.arbeidsfordeling.norg2.rest")) {
+            boolean egenAnsatt = personService.hentEgenAnsatt(gyldigFnr);
+            arbeidsfordelingEnheter = arbeidsfordelingService.hentBestMatchEnheter(tilknytning, gyldigTemaDTO, egenAnsatt);
+        } else {
+            arbeidsfordelingEnheter = arbeidsfordelingService.hentBehandlendeEnheter(tilknytning, gyldigTemaDTO);
+        }
         List<OppfolgingEnhet> alleNavEnheter = organisasjonEnhetService.hentAlleEnheter();
 
-        return mergeAndDeleteDuplicate(oppfolgingEnhets, alleNavEnheter);
+        return mergeAndDeleteDuplicate(arbeidsfordelingEnheter, alleNavEnheter);
     }
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface PersonService {
     Optional<GeografiskTilknytning> hentGeografiskTilknytning(Fnr fnr);
+    boolean hentEgenAnsatt(Fnr fnr);
 }
