@@ -4,6 +4,8 @@ import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
 import no.nav.brukerdialog.security.oidc.SystemUserTokenProvider;
+import no.nav.common.auth.Subject;
+import no.nav.common.auth.SubjectHandler;
 import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
 import no.nav.fo.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
@@ -19,9 +21,14 @@ import no.nav.fo.veilarboppgave.ws.consumer.tps.PersonServiceImpl;
 import no.nav.sbl.dialogarena.common.abac.pep.Pep;
 import no.nav.sbl.dialogarena.common.abac.pep.context.AbacContext;
 import no.nav.sbl.featuretoggle.unleash.UnleashService;
+import no.nav.sbl.rest.RestUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
 
 import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
 import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.resolveFromEnvironment;
@@ -44,7 +51,8 @@ public class ApplicationConfig implements ApiApplication {
 
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
     private SystemUserTokenProvider systemUserTokenProvider = new SystemUserTokenProvider();
-
+    public static final String VEILARBPERSON_API_URL_PROPERTY = "VEILARBPERSON_API_URL";
+    public static final String NORG2_API_URL_PROPERTY = "NORG2_API_URL";
 
     @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
@@ -60,12 +68,25 @@ public class ApplicationConfig implements ApiApplication {
 
     @Bean
     public ArbeidsfordelingService arbeidsfordelingService() {
-        return new ArbeidsfordelingServiceImpl(arbeidsfordelingV1OnBehalfOfUser());
+        Client client = RestUtils.createClient();
+        return new ArbeidsfordelingServiceImpl(arbeidsfordelingV1OnBehalfOfUser(), client);
     }
 
     @Bean
     public PersonService personService() {
-        return new PersonServiceImpl(personV3OnBehalfOfUser());
+        Client client = RestUtils.createClient();
+        client.register(new SubjectOidcTokenFilter());
+        return new PersonServiceImpl(personV3OnBehalfOfUser(), client);
+    }
+
+    private static class SubjectOidcTokenFilter implements ClientRequestFilter {
+        @Override
+        public void filter(ClientRequestContext requestContext) {
+            SubjectHandler.getSubject()
+                    .map(Subject::getSsoToken)
+                    .ifPresent(ssoToken ->
+                            requestContext.getHeaders().putSingle("Authorization", "Bearer " + ssoToken.getToken()));
+        }
     }
 
     @Bean

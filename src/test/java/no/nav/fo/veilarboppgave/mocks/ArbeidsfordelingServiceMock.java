@@ -17,4 +17,13 @@ public class ArbeidsfordelingServiceMock implements ArbeidsfordelingService {
                 OppfolgingEnhet.of("0122", "NAV Trøgstad")
         );
     }
+
+    @Override
+    public List<OppfolgingEnhet> hentBestMatchEnheter(GeografiskTilknytning geografiskTilknytning, TemaDTO tema, boolean egenAnsatt) {
+        return Arrays.asList(
+                OppfolgingEnhet.of("0104", "NAV Moss"),
+                OppfolgingEnhet.of("0106", "NAV Fredrikstad"),
+                OppfolgingEnhet.of("0122", "NAV Trøgstad")
+        );
+    }
 }

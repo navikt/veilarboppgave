@@ -11,4 +11,9 @@ public class PersonServiceMock implements PersonService {
     public Optional<GeografiskTilknytning> hentGeografiskTilknytning(Fnr fnr) {
         return Optional.of(GeografiskTilknytning.of("Trøgstad"));
     }
+
+    @Override
+    public boolean hentEgenAnsatt(Fnr fnr) {
+        return false;
+    }
 }
