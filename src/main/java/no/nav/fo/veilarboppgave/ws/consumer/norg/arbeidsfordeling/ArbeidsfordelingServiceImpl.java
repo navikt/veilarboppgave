@@ -4,13 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
 import no.nav.fo.veilarboppgave.domene.OppfolgingEnhet;
 import no.nav.fo.veilarboppgave.domene.TemaDTO;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.binding.ArbeidsfordelingV1;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.binding.FinnBehandlendeEnhetListeUgyldigInput;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.Geografi;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.Organisasjonsenhet;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.Tema;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.FinnBehandlendeEnhetListeRequest;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.meldinger.FinnBehandlendeEnhetListeResponse;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.GenericType;
@@ -27,43 +20,12 @@ import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 @Slf4j
 public class ArbeidsfordelingServiceImpl implements ArbeidsfordelingService {
 
-    private final ArbeidsfordelingV1 arbeidsfordelingSoapTjeneste;
     private final Client restClient;
     private final String host;
 
-    public ArbeidsfordelingServiceImpl(ArbeidsfordelingV1 arbeidsfordelingV1, Client restClient) {
-        this.arbeidsfordelingSoapTjeneste = arbeidsfordelingV1;
+    public ArbeidsfordelingServiceImpl(Client restClient) {
         this.restClient = restClient;
         this.host = getRequiredProperty(NORG2_API_URL_PROPERTY);
-    }
-
-    @Override
-    public List<OppfolgingEnhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, TemaDTO temaDTO) {
-        try {
-            Geografi geografi = new Geografi();
-            geografi.setKodeverksRef(geografiskTilknytning.getGeofrafiskTilknytning());
-
-            no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.ArbeidsfordelingKriterier arbeidsfordelingKriterier =
-                    new no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.ArbeidsfordelingKriterier();
-            arbeidsfordelingKriterier.setGeografiskTilknytning(geografi);
-
-            Tema tema = new Tema();
-            tema.setKodeverksRef(temaDTO.getFagomradeKode());
-            arbeidsfordelingKriterier.setTema(tema);
-
-            FinnBehandlendeEnhetListeRequest request = new FinnBehandlendeEnhetListeRequest();
-            request.setArbeidsfordelingKriterier(arbeidsfordelingKriterier);
-
-            FinnBehandlendeEnhetListeResponse response = arbeidsfordelingSoapTjeneste.finnBehandlendeEnhetListe(request);
-
-            List<Organisasjonsenhet> behandlendeEnhetListe = response.getBehandlendeEnhetListe();
-
-            return behandlendeEnhetListe.stream().map(OppfolgingEnhet::of).collect(toList());
-
-        } catch (FinnBehandlendeEnhetListeUgyldigInput e) {
-            log.warn("Kunne ikke finne behandlende enheter for geografisk tilknytning og tema ", e);
-            return emptyList();
-        }
     }
 
     @Override

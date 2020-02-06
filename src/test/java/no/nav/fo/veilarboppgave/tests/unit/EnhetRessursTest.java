@@ -6,7 +6,6 @@ import no.nav.apiapp.security.veilarbabac.Bruker;
 import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
 import no.nav.fo.veilarboppgave.mocks.*;
 import no.nav.fo.veilarboppgave.rest.api.enheter.EnheterRessurs;
-import no.nav.sbl.featuretoggle.unleash.UnleashService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,13 +17,11 @@ import static org.mockito.Mockito.*;
 public class EnhetRessursTest {
     private EnheterRessurs enheterRessurs;
     private VeilarbAbacPepClient pepClientMock;
-    private UnleashService unleashService;
 
     @BeforeEach
     public void setUp() {
 
         pepClientMock = mock(VeilarbAbacPepClient.class);
-        unleashService = mock(UnleashService.class);
 
         enheterRessurs = new EnheterRessurs(
                 new ArbeidsfordelingServiceMock(),
@@ -32,8 +29,7 @@ public class EnhetRessursTest {
                 pepClientMock,
                 new OrganisasjonEnhetServiceMock() {
                 },
-                new AktorServiceMock(),
-                unleashService
+                new AktorServiceMock()
         );
     }
 
