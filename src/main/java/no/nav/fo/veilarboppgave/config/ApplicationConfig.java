@@ -38,7 +38,6 @@ import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.resolveFromE
         EnheterRessurs.class,
         OppgaveRessurs.class,
         OppgavehistorikkRessurs.class,
-        ArbeidsfordelingServiceHelsesjekk.class,
         PersonServiceHelsesjekk.class,
         BehandleOppgaveServiceHelsesjekk.class,
         OrganisasjonEnhetServiceHelsesjekk.class,
@@ -69,7 +68,7 @@ public class ApplicationConfig implements ApiApplication {
     @Bean
     public ArbeidsfordelingService arbeidsfordelingService() {
         Client client = RestUtils.createClient();
-        return new ArbeidsfordelingServiceImpl(arbeidsfordelingV1OnBehalfOfUser(), client);
+        return new ArbeidsfordelingServiceImpl(client);
     }
 
     @Bean

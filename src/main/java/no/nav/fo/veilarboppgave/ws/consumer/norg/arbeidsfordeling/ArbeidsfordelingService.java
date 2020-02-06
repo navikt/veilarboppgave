@@ -7,6 +7,5 @@ import no.nav.fo.veilarboppgave.domene.TemaDTO;
 import java.util.List;
 
 public interface ArbeidsfordelingService {
-    List<OppfolgingEnhet> hentBehandlendeEnheter(GeografiskTilknytning geografiskTilknytning, TemaDTO gyldigTemaDTO);
     List<OppfolgingEnhet> hentBestMatchEnheter(GeografiskTilknytning geografiskTilknytning, TemaDTO tema, boolean egenAnsatt);
 }
