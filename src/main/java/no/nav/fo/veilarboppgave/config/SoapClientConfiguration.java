@@ -1,7 +1,6 @@
 package no.nav.fo.veilarboppgave.config;
 
 import no.nav.sbl.dialogarena.common.cxf.CXFClient;
-import no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.binding.ArbeidsfordelingV1;
 import no.nav.tjeneste.virksomhet.behandleoppgave.v1.BehandleOppgaveV1;
 import no.nav.tjeneste.virksomhet.organisasjonenhet.v2.OrganisasjonEnhetV2;
 import no.nav.tjeneste.virksomhet.person.v3.binding.PersonV3;
@@ -22,20 +21,6 @@ public class SoapClientConfiguration {
         return new CXFClient<>(PersonV3.class)
                 .address(getRequiredProperty(PersonServiceHelsesjekk.PERSON_V3_ENDPOINT))
                 .configureStsForOnBehalfOfWithJWT()
-                .build();
-    }
-
-    public static ArbeidsfordelingV1 arbeidsfordelingV1OnBehalfOfUser() {
-        return new CXFClient<>(ArbeidsfordelingV1.class)
-                .address(getRequiredProperty(ArbeidsfordelingServiceHelsesjekk.ARBEIDSFORDELING_V1_URL))
-                .configureStsForOnBehalfOfWithJWT()
-                .build();
-    }
-
-    public static ArbeidsfordelingV1 arbeidsfordelingV1WithSystemUser() {
-        return new CXFClient<>(ArbeidsfordelingV1.class)
-                .address(getRequiredProperty(ArbeidsfordelingServiceHelsesjekk.ARBEIDSFORDELING_V1_URL))
-                .configureStsForSystemUser()
                 .build();
     }
 

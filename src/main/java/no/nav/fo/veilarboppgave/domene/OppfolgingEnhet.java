@@ -12,10 +12,6 @@ public class OppfolgingEnhet {
     String enhetId;
     String navn;
 
-    public static OppfolgingEnhet of(no.nav.tjeneste.virksomhet.arbeidsfordeling.v1.informasjon.Organisasjonsenhet wsOrganisasjonsenhet) {
-        return new OppfolgingEnhet(wsOrganisasjonsenhet.getEnhetId(), wsOrganisasjonsenhet.getEnhetNavn());
-    }
-
     public static OppfolgingEnhet of(Enhet enhet) {
         return new OppfolgingEnhet(enhet.getEnhetId(), enhet.getNavn());
     }
