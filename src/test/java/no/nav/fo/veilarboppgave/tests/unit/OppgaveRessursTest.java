@@ -2,8 +2,7 @@ package no.nav.fo.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
-import no.nav.apiapp.security.veilarbabac.Bruker;
-import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
+import no.nav.apiapp.security.PepClient;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
 import no.nav.fo.veilarboppgave.mocks.AktorServiceMock;
 import no.nav.fo.veilarboppgave.mocks.BehandleOppgaveServiceMock;
@@ -20,12 +19,12 @@ import static org.mockito.Mockito.mock;
 class OppgaveRessursTest {
 
     private OppgaveRessurs oppgaveRessurs;
-    private VeilarbAbacPepClient pepClientMock;
+    private PepClient pepClientMock;
 
     @BeforeEach
     void setUp() {
 
-        pepClientMock = mock(VeilarbAbacPepClient.class);
+        pepClientMock = mock(PepClient.class);
 
         oppgaveRessurs = new OppgaveRessurs(
                 new BehandleOppgaveServiceMock(),
@@ -38,7 +37,7 @@ class OppgaveRessursTest {
     void skal_nekte_tilgang_til_fnr() {
         OppgaveDTO testData = oppgaveDTO(genererTilfeldigFnrUtenTilgang());
 
-        doThrow(new IngenTilgang()).when(pepClientMock).sjekkLesetilgangTilBruker(Bruker.fraFnr(testData.getFnr()).medAktoerIdSupplier(()->""));
+        doThrow(new IngenTilgang()).when(pepClientMock).sjekkLesetilgangTilAktorId("testaktoerid");
 
         assertThrows(IngenTilgang.class, () -> oppgaveRessurs.opprettOppgave(testData));
     }
