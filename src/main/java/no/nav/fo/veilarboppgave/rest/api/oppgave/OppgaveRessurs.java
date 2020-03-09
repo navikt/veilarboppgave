@@ -1,8 +1,6 @@
 package no.nav.fo.veilarboppgave.rest.api.oppgave;
 
-import no.nav.apiapp.feil.IngenTilgang;
-import no.nav.apiapp.security.veilarbabac.Bruker;
-import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
+import no.nav.apiapp.security.PepClient;
 import no.nav.brukerdialog.security.context.SubjectHandler;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
@@ -26,12 +24,12 @@ import static no.nav.fo.veilarboppgave.domene.Prioritet.utledPrioritetKode;
 public class OppgaveRessurs {
 
     private final BehandleOppgaveService oppgaveService;
-    private final VeilarbAbacPepClient pepClient;
+    private final PepClient pepClient;
     private final OppgaveRepository oppgaveRepository;
     private final AktorService aktorService;
 
     @Inject
-    public OppgaveRessurs(BehandleOppgaveService oppgaveService, VeilarbAbacPepClient pepClient,
+    public OppgaveRessurs(BehandleOppgaveService oppgaveService, PepClient pepClient,
                           OppgaveRepository oppgaveRepository, AktorService aktorService) {
         this.oppgaveService = oppgaveService;
         this.pepClient = pepClient;
@@ -47,11 +45,9 @@ public class OppgaveRessurs {
                 .map(Valider::fnr)
                 .orElseThrow(RuntimeException::new);
 
-        Bruker bruker = Bruker
-                .fraFnr(dto.getFnr())
-                .medAktoerIdSupplier(()->aktorService.getAktorId(dto.getFnr()).orElseThrow(IngenTilgang::new));
+        String aktorid = aktorService.getAktorId(fnr.getFnr()).orElseThrow(RuntimeException::new);
 
-        pepClient.sjekkLesetilgangTilBruker(bruker);
+        pepClient.sjekkLesetilgangTilAktorId(aktorid);
 
         ofNullable(dto.avsenderenhetId)
                 .map(Valider::atFeltErUtfylt);
@@ -78,14 +74,13 @@ public class OppgaveRessurs {
         );
 
         OppgaveId oppgaveId = oppgaveService.opprettOppgave(oppgave).orElseThrow(NotFoundException::new);
-        String aktoerid = aktorService.getAktorId(oppgave.getFnr().getFnr()).orElseThrow(RuntimeException::new);
         oppgaveRepository.insertOppgaveHistorikk(new OppgavehistorikkDTO(
                 dto.getTema(),
                 dto.getType(),
                 new Timestamp(Instant.now().toEpochMilli()),
                 innloggetIdent,
                 oppgaveId.getOppgaveId(),
-                aktoerid));
+                aktorid));
 
         return oppgaveRepository.hentOppgavehistorikkForGSAKID(oppgaveId);
     }

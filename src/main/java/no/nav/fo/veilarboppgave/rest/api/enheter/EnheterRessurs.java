@@ -1,9 +1,7 @@
 package no.nav.fo.veilarboppgave.rest.api.enheter;
 
-import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
-import no.nav.apiapp.security.veilarbabac.Bruker;
-import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
+import no.nav.apiapp.security.PepClient;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.domene.Fnr;
 import no.nav.fo.veilarboppgave.domene.GeografiskTilknytning;
@@ -28,14 +26,14 @@ public class EnheterRessurs {
 
     private final ArbeidsfordelingService arbeidsfordelingService;
     private final PersonService personService;
-    private final VeilarbAbacPepClient pepClient;
+    private final PepClient pepClient;
     private final OrganisasjonEnhetService organisasjonEnhetService;
     private final AktorService aktorService;
 
     @Inject
     public EnheterRessurs(ArbeidsfordelingService arbeidsfordelingService,
                           PersonService personService,
-                          VeilarbAbacPepClient pepClient,
+                          PepClient pepClient,
                           OrganisasjonEnhetService organisasjonEnhetService,
                           AktorService aktorService) {
 
@@ -52,10 +50,9 @@ public class EnheterRessurs {
                 .map(Valider::fnr)
                 .orElseThrow(UgyldigRequest::new);
 
-        Bruker bruker = Bruker.fraFnr(fnr)
-                .medAktoerIdSupplier(() -> aktorService.getAktorId(fnr).orElseThrow(IngenTilgang::new));
+        String aktorid = aktorService.getAktorId(gyldigFnr.getFnr()).orElseThrow(RuntimeException::new);
 
-        pepClient.sjekkLesetilgangTilBruker(bruker);
+        pepClient.sjekkLesetilgangTilAktorId(aktorid);
 
         TemaDTO gyldigTemaDTO = ofNullable(tema)
                 .map(Valider::tema)
