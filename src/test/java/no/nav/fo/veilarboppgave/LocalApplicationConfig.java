@@ -2,7 +2,7 @@ package no.nav.fo.veilarboppgave;
 
 import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
-import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
+import no.nav.apiapp.security.PepClient;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarboppgave.config.InMemDatabaseConfig;
 import no.nav.fo.veilarboppgave.db.OppgaveRepository;
@@ -54,8 +54,8 @@ public class LocalApplicationConfig implements ApiApplication {
     public OppgaveRepository oppgaveRepository() { return new OppgaveRepository(new JdbcTemplate(InMemDatabaseConfig.setupInMemoryDatabase())); }
 
     @Bean
-    public VeilarbAbacPepClient pepClient() {
-        return mock(VeilarbAbacPepClient.class);
+    public PepClient pepClient() {
+        return mock(PepClient.class);
     }
 
     @Override

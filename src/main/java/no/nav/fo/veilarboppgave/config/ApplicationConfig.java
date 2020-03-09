@@ -2,7 +2,7 @@ package no.nav.fo.veilarboppgave.config;
 
 import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
-import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
+import no.nav.apiapp.security.PepClient;
 import no.nav.brukerdialog.security.oidc.SystemUserTokenProvider;
 import no.nav.common.auth.Subject;
 import no.nav.common.auth.SubjectHandler;
@@ -31,6 +31,7 @@ import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 
 import static no.nav.fo.veilarboppgave.config.SoapClientConfiguration.*;
+import static no.nav.sbl.dialogarena.common.abac.pep.domain.ResourceType.VeilArbPerson;
 import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.resolveFromEnvironment;
 
 @Configuration
@@ -49,7 +50,6 @@ import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.resolveFromE
 public class ApplicationConfig implements ApiApplication {
 
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
-    private SystemUserTokenProvider systemUserTokenProvider = new SystemUserTokenProvider();
     public static final String VEILARBPERSON_API_URL_PROPERTY = "VEILARBPERSON_API_URL";
     public static final String NORG2_API_URL_PROPERTY = "NORG2_API_URL";
 
@@ -99,13 +99,7 @@ public class ApplicationConfig implements ApiApplication {
     }
 
     @Bean
-    public VeilarbAbacPepClient pepClient(Pep pep, UnleashService unleashService) {
-        return VeilarbAbacPepClient.ny()
-                .medPep(pep)
-                .medSystemUserTokenProvider(()->systemUserTokenProvider.getToken())
-                .brukAktoerId(()->unleashService.isEnabled("veilarboppgave.veilarbabac.aktor"))
-                .sammenlikneTilgang(()->unleashService.isEnabled("veilarboppgave.veilarbabac.sammenlikn"))
-                .foretrekkVeilarbAbacResultat(()->unleashService.isEnabled("veilarboppgave.veilarbabac.foretrekk_veilarbabac"))
-                .bygg();
+    public PepClient pepClient(Pep pep) {
+        return new PepClient(pep, "veilarb", VeilArbPerson);
     }
 }
