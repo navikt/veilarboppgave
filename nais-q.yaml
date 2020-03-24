@@ -28,15 +28,14 @@ spec:
   envFrom:
     - configmap: pto-config
   leaderElection: true
-  healthcheck:
-    liveness:
-      path: veilarboppgave/internal/isAlive
-      initialDelay: 60
-      timeout: 10
-    readiness:
-      path: veilarboppgave/internal/isReady
-      initialDelay: 60
-      timeout: 10
+  liveness:
+    path: veilarboppgave/internal/isAlive
+    initialDelay: 60
+    timeout: 10
+  readiness:
+    path: veilarboppgave/internal/isReady
+    initialDelay: 60
+    timeout: 10
   prometheus:
     enabled: true
     path: veilarboppgave/internal/metrics
