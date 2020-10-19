@@ -1,8 +1,7 @@
 package no.nav.veilarboppgave.domain;
 
 import lombok.Value;
-import no.nav.veilarboppgave.domain.Fnr;
-import no.nav.veilarboppgave.domain.TemaDTO;
+import no.nav.common.types.identer.Fnr;
 
 import java.time.LocalDate;
 

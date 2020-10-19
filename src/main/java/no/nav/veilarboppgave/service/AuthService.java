@@ -32,14 +32,14 @@ public class AuthService {
 
     private final AktorregisterClient aktorregisterClient;
 
-    public void sjekkLesetilgangMedAktorId(String aktorId) {
-        if (!veilarbPep.harTilgangTilPerson(getInnloggetBrukerToken(), ActionId.READ, AktorId.of(aktorId))) {
+    public void sjekkLesetilgangMedAktorId(AktorId aktorId) {
+        if (!veilarbPep.harTilgangTilPerson(getInnloggetBrukerToken(), ActionId.READ, aktorId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
 
-    public String getAktorIdOrThrow(String fnr) {
-        return aktorregisterClient.hentAktorId(Fnr.of(fnr)).get();
+    public AktorId getAktorIdOrThrow(Fnr fnr) {
+        return aktorregisterClient.hentAktorId(fnr);
     }
 
     public String getInnloggetBrukerToken() {

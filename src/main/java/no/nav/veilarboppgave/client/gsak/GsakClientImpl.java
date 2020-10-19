@@ -43,7 +43,7 @@ public class GsakClientImpl implements GsakClient {
             XMLGregorianCalendar tilDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getTilDato().toString());
             XMLGregorianCalendar fraDato = DatatypeFactory.newInstance().newXMLGregorianCalendar(oppgave.getFraDato().toString());
 
-            WSAktor aktor = new WSAktor().withAktorType(WSAktorType.PERSON).withIdent(oppgave.getFnr().getFnr());
+            WSAktor aktor = new WSAktor().withAktorType(WSAktorType.PERSON).withIdent(oppgave.getFnr().get());
 
             opprettOppgave.setGjelderBruker(aktor);
             opprettOppgave.setFagomradeKode(oppgave.getTemaDTO().getFagomradeKode());

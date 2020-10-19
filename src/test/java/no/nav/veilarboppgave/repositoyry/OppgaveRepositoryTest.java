@@ -1,9 +1,8 @@
 package no.nav.veilarboppgave.repositoyry;
 
-import no.nav.veilarboppgave.config.InMemDatabaseConfig;
-import no.nav.veilarboppgave.domain.Aktoerid;
-
+import no.nav.common.types.identer.AktorId;
 import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
+import no.nav.veilarboppgave.utils.LocalH2Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,31 +19,35 @@ public class OppgaveRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        oppgaveRepository = new OppgaveRepository(new JdbcTemplate(InMemDatabaseConfig.setupInMemoryDatabase()));
+        oppgaveRepository = new OppgaveRepository(LocalH2Database.getDb());
     }
 
     @Test
     public void skalInsertOppgavehistorikk() {
-        Aktoerid aktoerid = Aktoerid.of("aktoerid");
+        AktorId aktorId = AktorId.of("aktoerid");
         Timestamp opprettet = new Timestamp(0);
         OppgavehistorikkDTO oppgave = new OppgavehistorikkDTO("tema", "type", opprettet,"Z000000",
-                "gsakid",aktoerid.getAktoerid(), 1L);
+                "gsakid",aktorId.get(), 1L);
         oppgaveRepository.insertOppgaveHistorikk(oppgave);
 
-        OppgavehistorikkDTO hentetOppgave = oppgaveRepository.hentOppgavehistorikkForBruker(aktoerid).get(0);
+        OppgavehistorikkDTO hentetOppgave = oppgaveRepository.hentOppgavehistorikkForBruker(aktorId).get(0);
         assertThat(hentetOppgave.getTema()).isEqualTo("tema");
     }
 
     @Test
     public void skalHenteListeMedOppgavehistorikk() {
-        Aktoerid aktoerid = Aktoerid.of("aktoerid");
+        AktorId aktoerid = AktorId.of("aktoerid");
         Timestamp opprettet = new Timestamp(0);
+
         OppgavehistorikkDTO oppgave1 = new OppgavehistorikkDTO("tema", "type", opprettet,"Z000000",
-                "gsakid",aktoerid.getAktoerid());
+                "gsakid",aktoerid.get());
+
         OppgavehistorikkDTO oppgave2 = new OppgavehistorikkDTO("tema", "type", opprettet,"Z000000",
-                "gsakid",aktoerid.getAktoerid());
+                "gsakid",aktoerid.get());
+
         oppgaveRepository.insertOppgaveHistorikk(oppgave1);
         oppgaveRepository.insertOppgaveHistorikk(oppgave2);
+
         List<OppgavehistorikkDTO> hentetOppgaver = oppgaveRepository.hentOppgavehistorikkForBruker(aktoerid);
         assertThat(hentetOppgaver.size()).isEqualTo(2);
 

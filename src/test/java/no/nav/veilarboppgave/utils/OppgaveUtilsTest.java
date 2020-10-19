@@ -1,16 +1,25 @@
-package no.nav.veilarboppgave.rest.api.oppgave;
+package no.nav.veilarboppgave.utils;
 
 import no.nav.veilarboppgave.domain.OppfolgingEnhet;
+import no.nav.veilarboppgave.domain.TemaDTO;
 import no.nav.veilarboppgave.util.OppgaveUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class OppgaveUtilsTest {
 
+    @ParameterizedTest
+    @EnumSource(TemaDTO.class)
+    void skal_validere_alle_gyldige_input_for_tema(TemaDTO temaDTO) throws Exception {
+        assertNotNull(OppgaveUtils.tilTemaDto(temaDTO.name()));
+    }
 
     @Test
     void skalReturnerLIste1Forst() {

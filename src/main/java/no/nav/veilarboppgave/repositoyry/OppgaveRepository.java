@@ -1,7 +1,7 @@
 package no.nav.veilarboppgave.repositoyry;
 
 import lombok.RequiredArgsConstructor;
-import no.nav.veilarboppgave.domain.Aktoerid;
+import no.nav.common.types.identer.AktorId;
 import no.nav.veilarboppgave.domain.OppgaveId;
 import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
 import no.nav.veilarboppgave.util.sql.SqlUtils;
@@ -32,7 +32,7 @@ public class OppgaveRepository {
                 .execute();
     }
 
-    public List<OppgavehistorikkDTO> hentOppgavehistorikkForBruker(Aktoerid aktoerid) {
+    public List<OppgavehistorikkDTO> hentOppgavehistorikkForBruker(AktorId aktorId) {
         return Optional.ofNullable(SqlUtils.select(db.getDataSource(), OPPGAVEHISTORIKK, OppgavehistorikkDTO::mapper)
                 .column("ID")
                 .column("AKTOERID")
@@ -41,7 +41,7 @@ public class OppgaveRepository {
                 .column("TYPE")
                 .column("OPPRETTET_AV_IDENT")
                 .column("OPPRETTET_TIDSPUNKT")
-                .where(WhereClause.equals("AKTOERID",aktoerid.getAktoerid()))
+                .where(WhereClause.equals("AKTOERID", aktorId.get()))
                 .execute())
                 .orElse(Collections.emptyList());
     }

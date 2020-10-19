@@ -1,7 +1,6 @@
 package no.nav.veilarboppgave.util;
 
 import no.nav.common.utils.StringUtils;
-import no.nav.veilarboppgave.domain.Fnr;
 import no.nav.veilarboppgave.domain.OppgaveType;
 import no.nav.veilarboppgave.domain.Prioritet;
 import no.nav.veilarboppgave.domain.TemaDTO;
@@ -10,65 +9,64 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 import static java.util.Optional.ofNullable;
 
 public class Valider {
 
-    public static TemaDTO tema(String tema) {
-        return ofNullable(tema)
-                .map(Valider::atFeltErUtfylt)
+    public static void validerOppgaveDto(OppgaveDTO oppgaveDto) {
+        validerAtFeltErUtfylt(oppgaveDto.getAvsenderenhetId());
+        validerAtFeltErUtfylt(oppgaveDto.getEnhetId());
+
+        validerTema(oppgaveDto.getTema());
+        validerPrioritet(oppgaveDto.getPrioritet());
+
+        validerFraDatoErForTilDato(oppgaveDto.getFraDato(), oppgaveDto.getTilDato());
+
+        validerOppgaveType(oppgaveDto.getType());
+        validerBeskrivelse(oppgaveDto.getBeskrivelse());
+    }
+
+    public static void validerTema(String tema) {
+        ofNullable(tema)
+                .map(Valider::validerAtFeltErUtfylt)
                 .map(String::toUpperCase)
                 .filter(TemaDTO::contains)
-                .map(TemaDTO::valueOf)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tema er ugyldig"));
     }
 
-    public static Prioritet prioritet(String prioritet) {
-        return ofNullable(prioritet)
-                .map(Valider::atFeltErUtfylt)
+    private static void validerPrioritet(String prioritet) {
+        ofNullable(prioritet)
+                .map(Valider::validerAtFeltErUtfylt)
                 .map(String::toUpperCase)
                 .filter(Prioritet::contains)
-                .map(Prioritet::valueOf)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Prioritet er ugyldig"));
     }
 
-    public static OppgaveType oppgavetype(String oppgaveType) {
-        return ofNullable(oppgaveType)
-                .map(Valider::atFeltErUtfylt)
+    public static void validerOppgaveType(String oppgaveType) {
+         ofNullable(oppgaveType)
+                .map(Valider::validerAtFeltErUtfylt)
                 .map(String::toUpperCase)
                 .filter(OppgaveType::contains)
-                .map(OppgaveType::valueOf)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oppgavetype er ugyldig"));
     }
 
-    public static OppgaveDTO fraDatoErFoerTilDato(OppgaveDTO oppgaveDTO) {
-        LocalDate fra = Valider.dato(oppgaveDTO.getFraDato());
-        LocalDate til = Valider.dato(oppgaveDTO.getTilDato());
+    public static void validerFraDatoErForTilDato(String fraDato, String tilDato) {
+        LocalDate fra = DateUtils.tilDato(fraDato);
+        LocalDate til = DateUtils.tilDato(tilDato);
 
-        if (fra.isBefore(til.plusDays(1))) {
-            return oppgaveDTO;
-        } else {
+        if (fra.isAfter(til.plusDays(1))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oppgave dato er ugyldig");
         }
     }
 
-    public static LocalDate dato(String fraDato) {
-        try {
-            return LocalDate.parse(fraDato);
-        } catch (DateTimeParseException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dato er ugyldig");
-        }
+    public static String validerAtFeltErUtfylt(String felt) {
+        return StringUtils.of(felt).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Felt er ikke utfylt"));
     }
 
-    public static String atFeltErUtfylt(String enhet) {
-        return StringUtils.of(enhet).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Enhet mangler"));
-    }
-
-    public static String beskrivelse(String beskrivelse) {
-        return ofNullable(beskrivelse)
-                .map(Valider::atFeltErUtfylt)
+    public static void validerBeskrivelse(String beskrivelse) {
+        ofNullable(beskrivelse)
+                .map(Valider::validerAtFeltErUtfylt)
                 .map(Valider::erIkkeOver250Tegn)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Beskrivelse er ugyldig"));
     }

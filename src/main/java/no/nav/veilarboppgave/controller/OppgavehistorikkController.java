@@ -1,7 +1,8 @@
 package no.nav.veilarboppgave.controller;
 
 import lombok.RequiredArgsConstructor;
-import no.nav.veilarboppgave.domain.Aktoerid;
+import no.nav.common.types.identer.AktorId;
+import no.nav.common.types.identer.Fnr;
 import no.nav.veilarboppgave.domain.Oppgavehistorikk;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.OppgavehistorikkService;
@@ -21,11 +22,11 @@ public class OppgavehistorikkController {
     private final OppgavehistorikkService oppgavehistorikkService;
 
     @GetMapping
-    public List<Oppgavehistorikk> getOppgavehistorikk(@RequestParam("fnr") String fnr) {
-        String aktorId = authService.getAktorIdOrThrow(fnr);
+    public List<Oppgavehistorikk> getOppgavehistorikk(@RequestParam("fnr") Fnr fnr) {
+        AktorId aktorId = authService.getAktorIdOrThrow(fnr);
 
         authService.sjekkLesetilgangMedAktorId(aktorId);
 
-        return oppgavehistorikkService.hentOppgavehistorikk(Aktoerid.of(aktorId));
+        return oppgavehistorikkService.hentOppgavehistorikk(aktorId);
     }
 }

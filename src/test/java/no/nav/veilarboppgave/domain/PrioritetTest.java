@@ -1,7 +1,5 @@
-package no.nav.veilarboppgave.domene;
+package no.nav.veilarboppgave.domain;
 
-import no.nav.veilarboppgave.domain.Prioritet;
-import no.nav.veilarboppgave.domain.TemaDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

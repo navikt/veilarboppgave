@@ -1,8 +1,8 @@
-package no.nav.veilarboppgave;
+package no.nav.veilarboppgave.utils;
 
 import no.bekk.bekkopen.person.Fodselsnummer;
 import no.bekk.bekkopen.person.KJONN;
-import no.nav.veilarboppgave.domain.Fnr;
+import no.nav.common.types.identer.Fnr;
 import no.nav.veilarboppgave.domain.TemaDTO;
 import no.nav.veilarboppgave.domain.OppgaveDTO;
 import org.json.JSONObject;
@@ -15,7 +15,7 @@ import static no.bekk.bekkopen.person.FodselsnummerCalculator.getFodselsnummerFo
 import static no.bekk.bekkopen.person.FodselsnummerCalculator.getFodselsnummerForDateAndGender;
 import static no.bekk.bekkopen.person.KJONN.KVINNE;
 import static no.bekk.bekkopen.person.KJONN.MANN;
-import static no.nav.veilarboppgave.TestData.FeltNavn.*;
+import static no.nav.veilarboppgave.utils.TestData.FeltNavn.*;
 
 public class TestData {
 
@@ -36,7 +36,7 @@ public class TestData {
 
     public static OppgaveDTO oppgaveDTO(Fnr fnr) {
         return new OppgaveDTO(
-                fnr.getFnr(),
+                fnr.get(),
                 "",
                 "",
                 "",
@@ -52,7 +52,7 @@ public class TestData {
 
     public static OppgaveDTO oppgaveDTO(String fraDato, String tilDato) {
         return new OppgaveDTO(
-                genererTilfeldigFnrMedTilgang().getFnr(),
+                genererTilfeldigFnrMedTilgang().get(),
                 "",
                 "",
                 "",
@@ -68,7 +68,7 @@ public class TestData {
 
     public static JSONObject json() {
         return new JSONObject()
-                .put(FNR, genererTilfeldigFnrMedTilgang().getFnr())
+                .put(FNR, genererTilfeldigFnrMedTilgang().get())
                 .put(TEMA, TemaDTO.OPPFOLGING.name().toLowerCase())
                 .put(TYPE, "VURDER_KONSEKVENS_FOR_YTELSE")
                 .put(PRIORITET, "lav")

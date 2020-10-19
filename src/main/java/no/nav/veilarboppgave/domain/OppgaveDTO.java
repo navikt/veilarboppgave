@@ -14,7 +14,7 @@ public class OppgaveDTO {
     String type;
     String prioritet;
     String beskrivelse;
-    String fraDato;
+    String  fraDato;
     String tilDato;
     String enhetId;
     String veilederId;

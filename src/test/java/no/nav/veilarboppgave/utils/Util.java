@@ -1,4 +1,4 @@
-package no.nav.veilarboppgave;
+package no.nav.veilarboppgave.utils;
 
 import ch.qos.logback.classic.Level;
 import org.slf4j.LoggerFactory;

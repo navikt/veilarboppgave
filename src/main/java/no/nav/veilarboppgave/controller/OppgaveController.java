@@ -1,25 +1,20 @@
 package no.nav.veilarboppgave.controller;
 
 import lombok.RequiredArgsConstructor;
-import no.nav.veilarboppgave.repositoyry.OppgaveRepository;
-import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
+import no.nav.common.types.identer.AktorId;
+import no.nav.common.types.identer.Fnr;
 import no.nav.veilarboppgave.domain.*;
-import no.nav.veilarboppgave.domain.Oppgave;
-import no.nav.veilarboppgave.domain.OppgaveDTO;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.OppgaveService;
 import no.nav.veilarboppgave.util.Valider;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.ws.rs.NotFoundException;
-import java.sql.Timestamp;
-import java.time.Instant;
+import org.springframework.web.server.ResponseStatusException;
 
 import static java.util.Optional.ofNullable;
-import static no.nav.veilarboppgave.domain.OppgaveType.utledOppgaveTypeKode;
-import static no.nav.veilarboppgave.domain.Prioritet.utledPrioritetKode;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,54 +22,21 @@ import static no.nav.veilarboppgave.domain.Prioritet.utledPrioritetKode;
 public class OppgaveController {
 
     private final OppgaveService oppgaveService;
-    private final OppgaveRepository oppgaveRepository;
     private final AuthService authService;
 
     @PostMapping
-    public OppgavehistorikkDTO opprettOppgave(OppgaveDTO dto) {
-        String innloggetIdent = authService.getInnloggetBrukerIdent();
-
-        Fnr fnr = ofNullable(dto.getFnr())
+    public OppgavehistorikkDTO opprettOppgave(@RequestBody OppgaveDTO oppgaveDto) {
+        Fnr fnr = ofNullable(oppgaveDto.getFnr())
                 .map(Fnr::of)
-                .orElseThrow();
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fnr mangler"));
 
-        String aktorid = authService.getAktorIdOrThrow(dto.getFnr());
+        AktorId aktorid = authService.getAktorIdOrThrow(fnr);
 
         authService.sjekkLesetilgangMedAktorId(aktorid);
 
-        ofNullable(dto.getAvsenderenhetId())
-                .map(Valider::atFeltErUtfylt);
+        Valider.validerOppgaveDto(oppgaveDto);
 
-        Valider.fraDatoErFoerTilDato(dto);
-
-        TemaDTO temaDTO = Valider.tema(dto.getTema());
-        OppgaveType oppgaveType = Valider.oppgavetype(dto.getType());
-        Prioritet prioritet = Valider.prioritet(dto.getPrioritet());
-        String prioritetKode = utledPrioritetKode(temaDTO, prioritet);
-        String oppgaveTypeKode = utledOppgaveTypeKode(temaDTO, oppgaveType);
-
-        Oppgave oppgave = new Oppgave(
-                fnr,
-                Valider.tema(dto.getTema()),
-                oppgaveTypeKode,
-                prioritetKode,
-                Valider.beskrivelse(dto.getBeskrivelse()),
-                Valider.dato(dto.getFraDato()),
-                Valider.dato(dto.getTilDato()),
-                Valider.atFeltErUtfylt(dto.getEnhetId()),
-                dto.getVeilederId(),
-                dto.getAvsenderenhetId()
-        );
-
-        OppgaveId oppgaveId = oppgaveService.opprettOppgave(oppgave).orElseThrow(NotFoundException::new);
-        oppgaveRepository.insertOppgaveHistorikk(new OppgavehistorikkDTO(
-                dto.getTema(),
-                dto.getType(),
-                new Timestamp(Instant.now().toEpochMilli()),
-                innloggetIdent,
-                oppgaveId.getOppgaveId(),
-                aktorid));
-
-        return oppgaveRepository.hentOppgavehistorikkForGSAKID(oppgaveId);
+        return oppgaveService.opprettOppgave(aktorid, oppgaveDto);
     }
+
 }
