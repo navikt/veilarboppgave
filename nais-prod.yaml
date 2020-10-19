@@ -11,8 +11,9 @@ spec:
   replicas:
     min: 2
     max: 4
-    cpuThresholdPercentage: 50
+    cpuThresholdPercentage: 75
   port: 8080
+  webproxy: true
   ingresses:
     - https://veilarboppgave.nais.adeo.no
     - https://app.adeo.no/veilarboppgave
@@ -27,22 +28,19 @@ spec:
         mountPath: /var/run/secrets/nais.io/vault
   envFrom:
     - configmap: pto-config
-  leaderElection: true
   liveness:
     path: veilarboppgave/internal/isAlive
-    initialDelay: 60
-    timeout: 10
+    initialDelay: 30
   readiness:
     path: veilarboppgave/internal/isReady
-    initialDelay: 60
-    timeout: 10
+    initialDelay: 30
   prometheus:
     enabled: true
     path: veilarboppgave/internal/metrics
   resources:
     limits:
-      cpu: 3000m
+      cpu: "2"
       memory: 1Gi
     requests:
-      cpu: 200m
+      cpu: 500m
       memory: 512Mi
