@@ -1,6 +1,5 @@
 import static no.nav.fasit.FasitUtils.Zone.FSS;
 import static no.nav.fasit.FasitUtils.getDefaultEnvironment;
-import static no.nav.fo.veilarboppgave.config.ApplicationConfig.*;
 import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME;
 import static no.nav.sbl.util.EnvironmentUtils.*;
 import static no.nav.sbl.util.EnvironmentUtils.Type.PUBLIC;
@@ -13,8 +12,8 @@ import no.nav.brukerdialog.tools.SecurityConstants;
 import no.nav.fasit.FasitUtils;
 import no.nav.fasit.ServiceUser;
 import no.nav.fasit.dto.RestService;
-import no.nav.fo.veilarboppgave.config.ApplicationConfig;
-import no.nav.fo.veilarboppgave.config.DatabaseConfig;
+import no.nav.veilarboppgave.config.ApplicationConfig;
+import no.nav.veilarboppgave.config.DatabaseConfig;
 import no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 import no.nav.testconfig.ApiAppTest;

@@ -1,16 +1,16 @@
 import no.nav.apiapp.ApiApp;
 import no.nav.brukerdialog.tools.SecurityConstants;
 import no.nav.common.utils.NaisUtils;
-import no.nav.fo.veilarboppgave.config.ApplicationConfig;
+import no.nav.veilarboppgave.config.ApplicationConfig;
 import no.nav.sbl.dialogarena.common.abac.pep.CredentialConstants;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 
 import static java.lang.System.setProperty;
 import static no.nav.common.utils.NaisUtils.getCredentials;
 import static no.nav.dialogarena.aktor.AktorConfig.AKTOER_ENDPOINT_URL;
-import static no.nav.fo.veilarboppgave.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
-import static no.nav.fo.veilarboppgave.config.DatabaseConfig.VEILARBOPPGAVEDB_PASSWORD;
-import static no.nav.fo.veilarboppgave.config.DatabaseConfig.VEILARBOPPGAVEDB_USERNAME;
+import static no.nav.veilarboppgave.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
+import static no.nav.veilarboppgave.config.DatabaseConfig.VEILARBOPPGAVEDB_PASSWORD;
+import static no.nav.veilarboppgave.config.DatabaseConfig.VEILARBOPPGAVEDB_USERNAME;
 import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.UNLEASH_API_URL_PROPERTY_NAME;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 

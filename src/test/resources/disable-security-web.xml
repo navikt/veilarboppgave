@@ -8,7 +8,7 @@
     <!--CONFIG FOR API-APP-->
     <context-param>
         <param-name>springContekstKlasse</param-name>
-        <param-value>no.nav.fo.veilarboppgave.LocalApplicationConfig</param-value>
+        <param-value>no.nav.veilarboppgave.LocalApplicationConfig</param-value>
     </context-param>
 
     <security-constraint>
