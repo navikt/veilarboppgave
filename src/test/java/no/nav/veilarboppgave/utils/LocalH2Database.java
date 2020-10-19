@@ -11,15 +11,15 @@ public class LocalH2Database {
     public static JdbcTemplate getDb() {
         if (db == null) {
             JdbcDataSource dataSource = new JdbcDataSource();
-            dataSource.setURL("jdbc:h2:mem:veilarboppgave-local;DB_CLOSE_DELAY=-1;MODE=Oracle;TRACE_LEVEL_SYSTEM_OUT=3");
+            dataSource.setURL("jdbc:h2:mem:veilarboppgave-local;DB_CLOSE_DELAY=-1;MODE=Oracle;TRACE_LEVEL_SYSTEM_OUT=1");
 
             db = new JdbcTemplate(dataSource);
 
-            Flyway flyway = new Flyway();
-            flyway.setDataSource(dataSource);
-            flyway.migrate();
+            Flyway.configure()
+                    .dataSource(dataSource)
+                    .load()
+                    .migrate();
         }
-
 
         return db;
     }

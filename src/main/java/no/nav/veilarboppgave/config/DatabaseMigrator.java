@@ -22,9 +22,11 @@ public class DatabaseMigrator {
     @PostConstruct
     public void migrateDb() {
         log.info("Starting database migration...");
-        Flyway flyway = new Flyway();
-        flyway.setDataSource(dataSource);
-        flyway.migrate();
+
+        Flyway.configure()
+                .dataSource(dataSource)
+                .load()
+                .migrate();
     }
 
 }
