@@ -3,11 +3,11 @@ package no.nav.veilarboppgave.tests.unit;
 import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.apiapp.security.PepClient;
-import no.nav.veilarboppgave.db.OppgaveRepository;
+import no.nav.veilarboppgave.repositoyry.OppgaveRepository;
 import no.nav.veilarboppgave.mocks.AktorServiceMock;
 import no.nav.veilarboppgave.mocks.BehandleOppgaveServiceMock;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgaveDTO;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
+import no.nav.veilarboppgave.domain.OppgaveDTO;
+import no.nav.veilarboppgave.controller.OppgaveController;
 import no.nav.veilarboppgave.TestData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 
 class OppgaveRessursTest {
 
-    private OppgaveRessurs oppgaveRessurs;
+    private OppgaveController oppgaveRessurs;
     private PepClient pepClientMock;
 
     @BeforeEach
@@ -26,7 +26,7 @@ class OppgaveRessursTest {
 
         pepClientMock = mock(PepClient.class);
 
-        oppgaveRessurs = new OppgaveRessurs(
+        oppgaveRessurs = new OppgaveController(
                 new BehandleOppgaveServiceMock(),
                 pepClientMock,
                 mock(OppgaveRepository.class),

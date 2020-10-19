@@ -1,8 +1,8 @@
 package no.nav.veilarboppgave.mocks;
 
-import no.nav.veilarboppgave.domene.Fnr;
-import no.nav.veilarboppgave.domene.GeografiskTilknytning;
-import no.nav.veilarboppgave.ws.consumer.tps.PersonService;
+import no.nav.veilarboppgave.domain.Fnr;
+import no.nav.veilarboppgave.domain.GeografiskTilknytning;
+import no.nav.veilarboppgave.client.tps.PersonService;
 
 import java.util.Optional;
 

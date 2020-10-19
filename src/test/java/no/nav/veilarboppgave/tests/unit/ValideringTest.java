@@ -2,10 +2,10 @@ package no.nav.veilarboppgave.tests.unit;
 
 import no.nav.apiapp.feil.UgyldigRequest;
 import no.nav.veilarboppgave.TestData;
-import no.nav.veilarboppgave.domene.Fnr;
-import no.nav.veilarboppgave.domene.TemaDTO;
-import no.nav.veilarboppgave.rest.api.Valider;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgaveDTO;
+import no.nav.veilarboppgave.domain.Fnr;
+import no.nav.veilarboppgave.domain.TemaDTO;
+import no.nav.veilarboppgave.util.Valider;
+import no.nav.veilarboppgave.domain.OppgaveDTO;
 import no.nav.veilarboppgave.Util;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

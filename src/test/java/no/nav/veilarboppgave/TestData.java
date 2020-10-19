@@ -2,9 +2,9 @@ package no.nav.veilarboppgave;
 
 import no.bekk.bekkopen.person.Fodselsnummer;
 import no.bekk.bekkopen.person.KJONN;
-import no.nav.veilarboppgave.domene.Fnr;
-import no.nav.veilarboppgave.domene.TemaDTO;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgaveDTO;
+import no.nav.veilarboppgave.domain.Fnr;
+import no.nav.veilarboppgave.domain.TemaDTO;
+import no.nav.veilarboppgave.domain.OppgaveDTO;
 import org.json.JSONObject;
 
 import java.time.LocalDate;

@@ -1,6 +1,7 @@
 package no.nav.veilarboppgave.rest.api.oppgave;
 
-import no.nav.veilarboppgave.domene.OppfolgingEnhet;
+import no.nav.veilarboppgave.domain.OppfolgingEnhet;
+import no.nav.veilarboppgave.util.OppgaveUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

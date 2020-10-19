@@ -5,16 +5,16 @@ import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.apiapp.security.PepClient;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.veilarboppgave.config.InMemDatabaseConfig;
-import no.nav.veilarboppgave.db.OppgaveRepository;
+import no.nav.veilarboppgave.repositoyry.OppgaveRepository;
 import no.nav.fo.veilarboppgave.mocks.*;
 import no.nav.veilarboppgave.mocks.*;
-import no.nav.veilarboppgave.rest.api.enheter.EnheterRessurs;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgavehistorikkRessurs;
-import no.nav.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
-import no.nav.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
-import no.nav.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
-import no.nav.veilarboppgave.ws.consumer.tps.PersonService;
+import no.nav.veilarboppgave.controller.EnheterController;
+import no.nav.veilarboppgave.controller.OppgaveController;
+import no.nav.veilarboppgave.controller.OppgavehistorikkController;
+import no.nav.veilarboppgave.client.gsak.BehandleOppgaveService;
+import no.nav.veilarboppgave.client.norg.arbeidsfordeling.ArbeidsfordelingService;
+import no.nav.veilarboppgave.client.norg.organisasjonenhet.OrganisasjonEnhetService;
+import no.nav.veilarboppgave.client.tps.PersonService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -24,9 +24,9 @@ import static org.mockito.Mockito.mock;
 
 @Configuration
 @Import({
-        EnheterRessurs.class,
-        OppgaveRessurs.class,
-        OppgavehistorikkRessurs.class
+        EnheterController.class,
+        OppgaveController.class,
+        OppgavehistorikkController.class
 })
 public class LocalApplicationConfig implements ApiApplication {
 

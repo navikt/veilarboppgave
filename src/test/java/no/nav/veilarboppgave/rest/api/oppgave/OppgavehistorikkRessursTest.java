@@ -3,8 +3,10 @@ package no.nav.veilarboppgave.rest.api.oppgave;
 
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.veilarboppgave.config.InMemDatabaseConfig;
-import no.nav.veilarboppgave.db.OppgaveRepository;
-import no.nav.veilarboppgave.db.OppgavehistorikkDTO;
+import no.nav.veilarboppgave.controller.OppgavehistorikkController;
+import no.nav.veilarboppgave.domain.Oppgavehistorikk;
+import no.nav.veilarboppgave.repositoyry.OppgaveRepository;
+import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,14 +23,14 @@ class OppgavehistorikkRessursTest {
     private AktorService aktorService = mock(AktorService.class);
 
     private OppgaveRepository oppgaveRepository;
-    private OppgavehistorikkRessurs oppgavehistorikkRessurs;
+    private OppgavehistorikkController oppgavehistorikkController;
 
 
     @BeforeEach
     public void resetMocks() {
         reset(aktorService);
         oppgaveRepository = new OppgaveRepository(new JdbcTemplate(InMemDatabaseConfig.setupInMemoryDatabase()));
-        oppgavehistorikkRessurs = new OppgavehistorikkRessurs(aktorService, oppgaveRepository);
+        oppgavehistorikkController = new OppgavehistorikkController(aktorService, oppgaveRepository);
     }
 
     @Test
@@ -42,7 +44,7 @@ class OppgavehistorikkRessursTest {
         oppgaveRepository.insertOppgaveHistorikk(getOppgaveHitorikk(aktoerid));
         oppgaveRepository.insertOppgaveHistorikk(getOppgaveHitorikk(aktoerid));
 
-        List<Oppgavehistorikk> oppgavehistorikkDTOS = oppgavehistorikkRessurs.getOppgavehistorikk(fnr);
+        List<Oppgavehistorikk> oppgavehistorikkDTOS = oppgavehistorikkController.getOppgavehistorikk(fnr);
         assertThat(oppgavehistorikkDTOS.size()).isEqualTo(2);
     }
 

@@ -1,36 +1,45 @@
 package no.nav.veilarboppgave.config;
 
-import no.nav.sbl.jdbc.Database;
-import no.nav.sbl.jdbc.DataSourceFactory;
-import no.nav.veilarboppgave.db.OppgaveRepository;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
+import no.nav.common.utils.Credentials;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.sql.DataSource;
 
-import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
-import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
+import static no.nav.common.utils.NaisUtils.getCredentials;
 
+@Slf4j
 @Configuration
-@EnableTransactionManagement
 public class DatabaseConfig {
 
     public static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
     public static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
     public static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
 
+    private final EnvironmentProperties environmentProperties;
+
+    private final Credentials oracleCredentials;
+
+    public DatabaseConfig(EnvironmentProperties environmentProperties) {
+        this.environmentProperties = environmentProperties;
+        oracleCredentials = getCredentials("oracle_creds");
+    }
+
     @Bean
-    public static DataSource getDataSource() {
-        return DataSourceFactory.dataSource()
-                .url(getRequiredProperty(VEILARBOPPGAVEDB_URL))
-                .username(getRequiredProperty(VEILARBOPPGAVEDB_USERNAME))
-                .password(getOptionalProperty(VEILARBOPPGAVEDB_PASSWORD).orElse(""))
-                .maxPoolSize(300)
-                .minimumIdle(1)
-                .build();
+    public DataSource dataSource() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(environmentProperties.getDbUrl());
+        config.setUsername(oracleCredentials.username);
+        config.setPassword(oracleCredentials.password);
+        config.setMaximumPoolSize(5);
+
+        return new HikariDataSource(config);
     }
 
     @Bean(name = "transactionManager")
@@ -39,17 +48,8 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    public JdbcTemplate db(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
-    @Bean
-    public Database database(JdbcTemplate jdbcTemplate) {
-        return new Database(jdbcTemplate);
-    }
-
-    @Bean
-    public OppgaveRepository oppgaveRepository(JdbcTemplate db) {
-        return new OppgaveRepository(db);
-    }
 }

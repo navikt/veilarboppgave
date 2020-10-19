@@ -13,7 +13,6 @@ import no.nav.fasit.FasitUtils;
 import no.nav.fasit.ServiceUser;
 import no.nav.fasit.dto.RestService;
 import no.nav.veilarboppgave.config.ApplicationConfig;
-import no.nav.veilarboppgave.config.DatabaseConfig;
 import no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 import no.nav.testconfig.ApiAppTest;

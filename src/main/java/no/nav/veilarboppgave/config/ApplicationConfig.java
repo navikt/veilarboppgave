@@ -1,104 +1,80 @@
 package no.nav.veilarboppgave.config;
 
-import no.nav.apiapp.ApiApplication;
-import no.nav.apiapp.config.ApiAppConfigurator;
-import no.nav.apiapp.security.PepClient;
-import no.nav.brukerdialog.security.oidc.SystemUserTokenProvider;
-import no.nav.common.auth.Subject;
-import no.nav.common.auth.SubjectHandler;
-import no.nav.dialogarena.aktor.AktorConfig;
-import no.nav.veilarboppgave.rest.api.enheter.EnheterRessurs;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgaveRessurs;
-import no.nav.veilarboppgave.rest.api.oppgave.OppgavehistorikkRessurs;
-import no.nav.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
-import no.nav.veilarboppgave.ws.consumer.gsak.BehandleOppgaveServiceImpl;
-import no.nav.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
-import no.nav.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingServiceImpl;
-import no.nav.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetService;
-import no.nav.veilarboppgave.ws.consumer.norg.organisasjonenhet.OrganisasjonEnhetServiceImpl;
-import no.nav.veilarboppgave.ws.consumer.tps.PersonService;
-import no.nav.veilarboppgave.ws.consumer.tps.PersonServiceImpl;
-import no.nav.sbl.dialogarena.common.abac.pep.Pep;
-import no.nav.sbl.dialogarena.common.abac.pep.context.AbacContext;
-import no.nav.sbl.featuretoggle.unleash.UnleashService;
-import no.nav.sbl.rest.RestUtils;
+import no.nav.common.abac.Pep;
+import no.nav.common.abac.VeilarbPep;
+import no.nav.common.abac.audit.SpringAuditRequestInfoSupplier;
+import no.nav.common.cxf.StsConfig;
+import no.nav.common.metrics.InfluxClient;
+import no.nav.common.metrics.MetricsClient;
+import no.nav.common.metrics.SensuConfig;
+import no.nav.common.sts.NaisSystemUserTokenProvider;
+import no.nav.common.sts.OpenAmSystemUserTokenProvider;
+import no.nav.common.sts.SystemUserTokenProvider;
+import no.nav.common.utils.Credentials;
+import no.nav.common.utils.NaisUtils;
+import no.nav.veilarboppgave.client.norg.arbeidsfordeling.ArbeidsfordelingService;
+import no.nav.veilarboppgave.client.norg.arbeidsfordeling.ArbeidsfordelingServiceImpl;
+import no.nav.veilarboppgave.client.norg.organisasjonenhet.OrganisasjonEnhetService;
+import no.nav.veilarboppgave.client.norg.organisasjonenhet.OrganisasjonEnhetServiceImpl;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 
-import static no.nav.sbl.dialogarena.common.abac.pep.domain.ResourceType.VeilArbPerson;
-import static no.nav.sbl.featuretoggle.unleash.UnleashServiceConfig.resolveFromEnvironment;
+import static no.nav.common.utils.NaisUtils.getCredentials;
 
+@EnableConfigurationProperties({EnvironmentProperties.class})
 @Configuration
-@Import({
-        EnheterRessurs.class,
-        OppgaveRessurs.class,
-        OppgavehistorikkRessurs.class,
-        PersonServiceHelsesjekk.class,
-        BehandleOppgaveServiceHelsesjekk.class,
-        OrganisasjonEnhetServiceHelsesjekk.class,
-        AbacContext.class,
-        DatabaseConfig.class,
-        CacheConfig.class,
-        AktorConfig.class
-})
-public class ApplicationConfig implements ApiApplication {
+public class ApplicationConfig {
 
+    public static final String APPLICATION_NAME = "veilarboppgave";
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
     public static final String VEILARBPERSON_API_URL_PROPERTY = "VEILARBPERSON_API_URL";
     public static final String NORG2_API_URL_PROPERTY = "NORG2_API_URL";
 
-    @Override
-    public void configure(ApiAppConfigurator apiAppConfigurator) {
-        apiAppConfigurator
-                .sts()
-                .issoLogin();
+    @Bean
+    public Credentials serviceUserCredentials() {
+        return getCredentials("service_user");
     }
 
     @Bean
-    public UnleashService unleashService() {
-        return new UnleashService(resolveFromEnvironment());
+    public MetricsClient metricsClient() {
+        return new InfluxClient(SensuConfig.defaultConfig());
+    }
+
+    // TODO: Brukes kun av feedene, skal snart fjernes.
+    @Bean
+    public OpenAmSystemUserTokenProvider openAmSystemUserTokenProvider(EnvironmentProperties properties, Credentials serviceUserCredentials) {
+        return new OpenAmSystemUserTokenProvider(
+                properties.getOpenAmDiscoveryUrl(), properties.getOpenAmRedirectUrl(),
+                new Credentials(properties.getOpenAmIssoRpUsername(), properties.getOpenAmIssoRpPassword()), serviceUserCredentials
+        );
     }
 
     @Bean
-    public ArbeidsfordelingService arbeidsfordelingService() {
-        Client client = RestUtils.createClient();
-        return new ArbeidsfordelingServiceImpl(client);
+    public SystemUserTokenProvider systemUserTokenProvider(EnvironmentProperties properties, Credentials serviceUserCredentials) {
+        return new NaisSystemUserTokenProvider(properties.getNaisStsDiscoveryUrl(), serviceUserCredentials.username, serviceUserCredentials.password);
     }
 
     @Bean
-    public PersonService personService() {
-        Client client = RestUtils.createClient();
-        client.register(new SubjectOidcTokenFilter());
-        return new PersonServiceImpl(SoapClientConfiguration.personV3OnBehalfOfUser(), client);
-    }
-
-    private static class SubjectOidcTokenFilter implements ClientRequestFilter {
-        @Override
-        public void filter(ClientRequestContext requestContext) {
-            SubjectHandler.getSubject()
-                    .map(Subject::getSsoToken)
-                    .ifPresent(ssoToken ->
-                            requestContext.getHeaders().putSingle("Authorization", "Bearer " + ssoToken.getToken()));
-        }
+    public static StsConfig stsConfig(EnvironmentProperties properties, Credentials serviceUserCredentials) {
+        return StsConfig.builder()
+                .url(properties.getSoapStsUrl())
+                .username(serviceUserCredentials.username)
+                .password(serviceUserCredentials.password)
+                .build();
     }
 
     @Bean
-    public BehandleOppgaveService oppgaveService() {
-        return new BehandleOppgaveServiceImpl(SoapClientConfiguration.behandleOppgaveV1OnBehalfOfUser());
+    public Pep veilarbPep(EnvironmentProperties properties) {
+        Credentials serviceUserCredentials = NaisUtils.getCredentials("service_user");
+        return new VeilarbPep(
+                properties.getAbacUrl(), serviceUserCredentials.username,
+                serviceUserCredentials.password, new SpringAuditRequestInfoSupplier()
+        );
     }
 
-    @Bean
-    public OrganisasjonEnhetService organisasjonEnhetService() {
-        return new OrganisasjonEnhetServiceImpl(SoapClientConfiguration.organisasjonenhetOnBehalfOfUser());
-    }
-
-    @Bean
-    public PepClient pepClient(Pep pep) {
-        return new PepClient(pep, "veilarb", VeilArbPerson);
-    }
 }

@@ -1,9 +1,9 @@
 package no.nav.veilarboppgave.mocks;
 
-import no.nav.veilarboppgave.domene.GeografiskTilknytning;
-import no.nav.veilarboppgave.domene.OppfolgingEnhet;
-import no.nav.veilarboppgave.domene.TemaDTO;
-import no.nav.veilarboppgave.ws.consumer.norg.arbeidsfordeling.ArbeidsfordelingService;
+import no.nav.veilarboppgave.domain.GeografiskTilknytning;
+import no.nav.veilarboppgave.domain.OppfolgingEnhet;
+import no.nav.veilarboppgave.domain.TemaDTO;
+import no.nav.veilarboppgave.client.norg.arbeidsfordeling.ArbeidsfordelingService;
 
 import java.util.Arrays;
 import java.util.List;

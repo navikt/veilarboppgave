@@ -1,8 +1,8 @@
 package no.nav.veilarboppgave.mocks;
 
-import no.nav.veilarboppgave.domene.OppgaveId;
-import no.nav.veilarboppgave.rest.api.oppgave.Oppgave;
-import no.nav.veilarboppgave.ws.consumer.gsak.BehandleOppgaveService;
+import no.nav.veilarboppgave.domain.OppgaveId;
+import no.nav.veilarboppgave.domain.Oppgave;
+import no.nav.veilarboppgave.client.gsak.BehandleOppgaveService;
 
 import java.util.Optional;
 

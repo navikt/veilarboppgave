@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarboppgave
-  namespace: q1
+  namespace: pto
   labels:
     team: pto
 spec:
@@ -27,17 +27,15 @@ spec:
         mountPath: /var/run/secrets/nais.io/vault
   envFrom:
     - configmap: pto-config
-  liveness:
-    path: veilarboppgave/internal/isAlive
-    initialDelay: 60
-    timeout: 10
-  readiness:
-    path: veilarboppgave/internal/isReady
-    initialDelay: 60
-    timeout: 10
   prometheus:
     enabled: true
-    path: veilarboppgave/internal/metrics
+    path: veilarboppgave/internal/prometheus
+  readiness:
+    path: veilarboppgave/internal/health/readiness
+    initialDelay: 30
+  liveness:
+    path: veilarboppgave/internal/health/liveness
+    initialDelay: 30
   resources:
     limits:
       cpu: "2"
