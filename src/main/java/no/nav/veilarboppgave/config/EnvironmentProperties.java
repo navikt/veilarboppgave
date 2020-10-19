@@ -15,21 +15,10 @@ public class EnvironmentProperties {
 
     private String openAmRefreshUrl;
 
-    private String openAmRedirectUrl;
-
-    private String openAmIssoRpUsername;
-
-    private String openAmIssoRpPassword;
-
 
     private String aadDiscoveryUrl;
 
     private String veilarbloginAadClientId;
-
-
-    private String aadB2cDiscoveryUrl;
-
-    private String aadB2cClientId;
 
 
     private String naisStsDiscoveryUrl;
@@ -47,16 +36,6 @@ public class EnvironmentProperties {
 
     private String dbUrl;
 
-    private String arbeidsrettetDialogUrl;
-
-    private String kafkaBrokersUrl;
-
-    // SOAP Endpoints
-
-    private String ytelseskontraktV3Endpoint;
-
-    private String varselOppgaveV1Endpoint;
-
-    private String behandleArbeidssoekerV1Endpoint;
+    private String behandleOppgaveV1Endpoint;
 
 }

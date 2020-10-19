@@ -18,10 +18,6 @@ import static no.nav.common.utils.NaisUtils.getCredentials;
 @Configuration
 public class DatabaseConfig {
 
-    public static final String VEILARBOPPGAVEDB_URL = "VEILARBOPPGAVEDB_URL";
-    public static final String VEILARBOPPGAVEDB_USERNAME = "VEILARBOPPGAVEDB_USERNAME";
-    public static final String VEILARBOPPGAVEDB_PASSWORD = "VEILARBOPPGAVEDB_PASSWORD";
-
     private final EnvironmentProperties environmentProperties;
 
     private final Credentials oracleCredentials;

@@ -35,8 +35,8 @@ public class OppgaveController {
         String innloggetIdent = authService.getInnloggetBrukerIdent();
 
         Fnr fnr = ofNullable(dto.getFnr())
-                .map(Valider::fnr)
-                .orElseThrow(RuntimeException::new);
+                .map(Fnr::of)
+                .orElseThrow();
 
         String aktorid = authService.getAktorIdOrThrow(dto.getFnr());
 

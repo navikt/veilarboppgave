@@ -1,4 +1,4 @@
-package no.nav.veilarboppgave.client.norg.arbeidsfordeling;
+package no.nav.veilarboppgave.client.norg2;
 
 import lombok.Setter;
 
