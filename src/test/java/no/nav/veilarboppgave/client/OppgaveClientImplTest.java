@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static no.nav.veilarboppgave.domain.OppgaveType.utledOppgaveTypeKode;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -45,8 +44,8 @@ public class OppgaveClientImplTest {
         Oppgave oppgave = new Oppgave()
                 .setAktorId(AktorId.of("11223344"))
                 .setTemaDTO(TemaDTO.DAGPENGER)
-                .setType(OppgaveType.VURDER_HENVENDELSE.getKode())
-                .setPrioritet(Prioritet.NORM.name())
+                .setType(OppgaveType.VURDER_HENVENDELSE)
+                .setPrioritet(Prioritet.NORM)
                 .setBeskrivelse("Beskrivelse av oppgave")
                 .setFraDato(LocalDate.of(2020, 10, 20))
                 .setTilDato(LocalDate.of(2020, 10, 22))

@@ -11,8 +11,8 @@ import java.time.LocalDate;
 public class Oppgave {
     AktorId aktorId;
     TemaDTO temaDTO;
-    String type;
-    String prioritet;
+    OppgaveType type;
+    Prioritet prioritet;
     String beskrivelse;
     LocalDate fraDato;
     LocalDate tilDato;
