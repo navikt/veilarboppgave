@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static no.nav.common.utils.UrlUtils.joinPaths;
+import static no.nav.veilarboppgave.util.RestUtils.bearerTokenFromSupplier;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -50,7 +51,7 @@ public class Norg2ArbeidsfordelingClientImpl implements Norg2ArbeidsfordelingCli
         Request request = new Request.Builder()
                 .url(joinPaths(norg2Url, "api/v1/arbeidsfordeling/enheter/bestmatch"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, "Bearer " + userTokenSupplier)
+                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .post(RestUtils.toJsonRequestBody(kriterier))
                 .build();
 
