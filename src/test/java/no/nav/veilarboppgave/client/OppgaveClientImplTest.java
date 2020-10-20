@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static no.nav.veilarboppgave.domain.OppgaveType.utledOppgaveTypeKode;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -41,18 +42,20 @@ public class OppgaveClientImplTest {
 
         MDC.put(MDCConstants.MDC_CALL_ID, "call-id");
 
-        Oppgave oppgave = new Oppgave(
-                AktorId.of("11223344"),
-                TemaDTO.DAGPENGER,
-                OppgaveType.VURDER_HENVENDELSE.getKode(),
-                Prioritet.NORM.toString(),
-                "Beskrivelse av oppgave",
-                LocalDate.of(2020, 10, 20),
-                LocalDate.of(2020, 10, 22),
-                "1234",
-                "Z1234",
-                "5678"
-        );
+        TemaDTO tema = TemaDTO.DAGPENGER;
+        String oppgaveTypeKode = utledOppgaveTypeKode(tema, OppgaveType.VURDER_HENVENDELSE);
+
+        Oppgave oppgave = new Oppgave()
+                .setAktorId(AktorId.of("11223344"))
+                .setTemaDTO(tema)
+                .setType(oppgaveTypeKode)
+                .setPrioritet(Prioritet.NORM.name())
+                .setBeskrivelse("Beskrivelse av oppgave")
+                .setFraDato(LocalDate.of(2020, 10, 20))
+                .setTilDato(LocalDate.of(2020, 10, 22))
+                .setEnhetId("1234")
+                .setAvsenderenhetId("5678")
+                .setVeilederId("Z1234");
 
         Optional<OppgaveId> maybeOppgaveId = oppgaveClient.opprettOppgave(oppgave);
 

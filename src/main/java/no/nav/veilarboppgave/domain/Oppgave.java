@@ -1,12 +1,13 @@
 package no.nav.veilarboppgave.domain;
 
-import lombok.Value;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import no.nav.common.types.identer.AktorId;
-import no.nav.common.types.identer.Fnr;
 
 import java.time.LocalDate;
 
-@Value
+@Data
+@Accessors(chain = true)
 public class Oppgave {
     AktorId aktorId;
     TemaDTO temaDTO;

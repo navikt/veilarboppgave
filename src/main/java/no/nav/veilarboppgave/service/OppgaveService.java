@@ -32,21 +32,19 @@ public class OppgaveService {
         TemaDTO temaDTO = OppgaveUtils.tilTemaDto(oppgaveDto.getTema());
         OppgaveType oppgaveType = OppgaveUtils.tilOppgaveType(oppgaveDto.getType());
         Prioritet prioritet = OppgaveUtils.tilPrioritet(oppgaveDto.getPrioritet());
-        String prioritetKode = utledPrioritetKode(temaDTO, prioritet);
         String oppgaveTypeKode = utledOppgaveTypeKode(temaDTO, oppgaveType);
 
-        Oppgave oppgave = new Oppgave(
-                aktorId,
-                temaDTO,
-                oppgaveTypeKode,
-                prioritetKode,
-                oppgaveDto.getBeskrivelse(),
-                tilDato(oppgaveDto.getFraDato()),
-                tilDato(oppgaveDto.getTilDato()),
-                oppgaveDto.getEnhetId(),
-                oppgaveDto.getVeilederId(),
-                oppgaveDto.getAvsenderenhetId()
-        );
+        Oppgave oppgave = new Oppgave()
+                .setAktorId(aktorId)
+                .setTemaDTO(temaDTO)
+                .setType(oppgaveTypeKode)
+                .setPrioritet(prioritet.name())
+                .setBeskrivelse(oppgaveDto.getBeskrivelse())
+                .setTilDato(tilDato(oppgaveDto.getTilDato()))
+                .setFraDato(tilDato(oppgaveDto.getFraDato()))
+                .setEnhetId(oppgaveDto.getEnhetId())
+                .setVeilederId(oppgaveDto.getVeilederId())
+                .setAvsenderenhetId(oppgaveDto.getAvsenderenhetId());
 
         OppgaveId oppgaveId = oppgaveClient.opprettOppgave(oppgave)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Klarte ikke å opprette oppgave"));

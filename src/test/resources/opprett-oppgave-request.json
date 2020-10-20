@@ -1,7 +1,7 @@
 {
   "aktoerId": "11223344",
   "tema": "DAG",
-  "oppgavetype": "VURD_HENV",
+  "oppgavetype": "VURD_HENV_DAG",
   "prioritet": "NORM",
   "tildeltEnhetsnr": "1234",
   "opprettetAvEnhetsnr": "5678",
