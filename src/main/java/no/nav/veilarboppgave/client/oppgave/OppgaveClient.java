@@ -1,4 +1,4 @@
-package no.nav.veilarboppgave.client.gsak;
+package no.nav.veilarboppgave.client.oppgave;
 
 import no.nav.common.health.HealthCheck;
 import no.nav.veilarboppgave.domain.Oppgave;
@@ -6,7 +6,7 @@ import no.nav.veilarboppgave.domain.OppgaveId;
 
 import java.util.Optional;
 
-public interface GsakClient extends HealthCheck {
+public interface OppgaveClient extends HealthCheck {
 
     Optional<OppgaveId> opprettOppgave(Oppgave oppgave);
 

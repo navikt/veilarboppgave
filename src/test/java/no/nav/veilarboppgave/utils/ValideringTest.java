@@ -22,8 +22,8 @@ class ValideringTest {
 
     @Test
     void skal_ikke_godta_beskrivelse_over_250_tegn() {
-        String akkuratForLangBeskrivelse = Util.lagStringAvLengde(251);
-        String akkuratPasseLangBeskrivelse = Util.lagStringAvLengde(250);
+        String akkuratForLangBeskrivelse = TestUtils.lagStringAvLengde(251);
+        String akkuratPasseLangBeskrivelse = TestUtils.lagStringAvLengde(250);
         assertThrows(ResponseStatusException.class, () -> Valider.validerBeskrivelse(akkuratForLangBeskrivelse));
         assertDoesNotThrow(() -> Valider.validerBeskrivelse(akkuratPasseLangBeskrivelse));
     }

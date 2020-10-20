@@ -6,13 +6,12 @@ import no.nav.common.client.aktorregister.CachedAktorregisterClient;
 import no.nav.common.client.norg2.CachedNorg2Client;
 import no.nav.common.client.norg2.Norg2Client;
 import no.nav.common.client.norg2.NorgHttp2Client;
-import no.nav.common.cxf.StsConfig;
 import no.nav.common.sts.SystemUserTokenProvider;
 import no.nav.common.utils.EnvironmentUtils;
-import no.nav.veilarboppgave.client.gsak.GsakClient;
-import no.nav.veilarboppgave.client.gsak.GsakClientImpl;
+import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClient;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClientImpl;
+import no.nav.veilarboppgave.client.oppgave.OppgaveClientImpl;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClientImpl;
 import no.nav.veilarboppgave.service.AuthService;
@@ -45,8 +44,12 @@ public class ClientConfig {
     }
 
     @Bean
-    public GsakClient gsakClient(EnvironmentProperties properties, StsConfig stsConfig) {
-        return new GsakClientImpl(properties.getBehandleOppgaveV1Endpoint(), stsConfig);
+    public OppgaveClient oppgaveClient(AuthService authService) {
+        String url = EnvironmentUtils.isDevelopment().orElse(false)
+                ? "https://oppgave.nais.preprod.local"
+                : createNaisAdeoIngressUrl("oppgave", false);
+
+        return new OppgaveClientImpl(url, authService::getInnloggetBrukerToken);
     }
 
     @Bean
@@ -55,7 +58,7 @@ public class ClientConfig {
     }
 
     private static String naisPreprodOrNaisAdeoIngress(String appName, boolean withAppContextPath) {
-        return  EnvironmentUtils.isDevelopment().orElse(false)
+        return EnvironmentUtils.isDevelopment().orElse(false)
                 ? createNaisPreprodIngressUrl(appName, "q1", withAppContextPath)
                 : createNaisAdeoIngressUrl(appName, withAppContextPath);
     }

@@ -1,0 +1,12 @@
+{
+  "id": "1",
+  "tema": "DAG",
+  "oppgavetype": "VURD_HENV",
+  "prioritet": "NORM",
+  "tildeltEnhetsnr": "1234",
+  "opprettetAvEnhetsnr": "5678",
+  "beskrivelse": "Beskrivelse av oppgave",
+  "tilordnetRessurs": "Z1234",
+  "aktivDato": "2020-10-20",
+  "fristFerdigstillelse": "2020-10-22"
+}

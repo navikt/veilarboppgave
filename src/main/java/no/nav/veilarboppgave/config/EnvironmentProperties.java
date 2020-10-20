@@ -36,6 +36,4 @@ public class EnvironmentProperties {
 
     private String dbUrl;
 
-    private String behandleOppgaveV1Endpoint;
-
 }
