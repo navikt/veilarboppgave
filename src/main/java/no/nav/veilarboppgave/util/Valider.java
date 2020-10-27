@@ -55,7 +55,8 @@ public class Valider {
         LocalDate fra = DateUtils.tilDato(fraDato);
         LocalDate til = DateUtils.tilDato(tilDato);
 
-        if (fra.isAfter(til.plusDays(1))) {
+        // "til"-dato må være lik eller større "fra"-dato
+        if (til.isBefore(fra)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oppgave dato er ugyldig");
         }
     }
