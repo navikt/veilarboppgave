@@ -52,10 +52,10 @@ public class Valider {
     }
 
     public static void validerFraDatoErForTilDato(String fraDato, String tilDato) {
-        LocalDate fra = DateUtils.tilDato(fraDato);
         LocalDate til = DateUtils.tilDato(tilDato);
+        LocalDate fra = DateUtils.tilDato(fraDato);
 
-        if (fra.isAfter(til.plusDays(1))) {
+        if (til.isBefore(fra)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Oppgave dato er ugyldig");
         }
     }
