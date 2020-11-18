@@ -25,6 +25,8 @@ spec:
         mountPath: /var/run/secrets/nais.io/oracle_creds
       - kvPath: /kv/prod/fss/veilarboppgave/default
         mountPath: /var/run/secrets/nais.io/vault
+      - kvPath: /oracle/data/prod/config/veilarboppgave_p
+        mountPath: /var/run/secrets/nais.io/oracle_config
   envFrom:
     - configmap: pto-config
   prometheus:
