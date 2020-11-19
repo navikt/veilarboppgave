@@ -13,24 +13,25 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 import static no.nav.common.utils.NaisUtils.getCredentials;
+import static no.nav.common.utils.NaisUtils.getFileContent;
 
 @Slf4j
 @Configuration
 public class DatabaseConfig {
 
-    private final EnvironmentProperties environmentProperties;
 
     private final Credentials oracleCredentials;
+    private final String oracleUrl;
 
-    public DatabaseConfig(EnvironmentProperties environmentProperties) {
-        this.environmentProperties = environmentProperties;
+    public DatabaseConfig() {
         oracleCredentials = getCredentials("oracle_creds");
+        oracleUrl = getFileContent("/var/run/secrets/nais.io/oracle_config/jdbc_url");
     }
 
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(environmentProperties.getDbUrl());
+        config.setJdbcUrl(oracleUrl);
         config.setUsername(oracleCredentials.username);
         config.setPassword(oracleCredentials.password);
         config.setMaximumPoolSize(5);
