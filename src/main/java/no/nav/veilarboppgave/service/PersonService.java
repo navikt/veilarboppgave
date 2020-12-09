@@ -2,6 +2,7 @@ package no.nav.veilarboppgave.service;
 
 import lombok.RequiredArgsConstructor;
 import no.nav.common.types.identer.Fnr;
+import no.nav.veilarboppgave.client.veilarbperson.Personalia;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ public class PersonService {
         return veilarbpersonClient.hentGeografiskTilknytning(fnr);
     }
 
-    public boolean erEgenAnsatt(Fnr fnr) {
-        return veilarbpersonClient.erEgenAnsatt(fnr);
+    public Personalia hentPersonalia(Fnr fnr) {
+        return veilarbpersonClient.hentPersonalia(fnr);
     }
 
 }

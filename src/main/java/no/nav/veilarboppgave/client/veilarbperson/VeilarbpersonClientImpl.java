@@ -11,8 +11,6 @@ import no.nav.common.types.identer.Fnr;
 import no.nav.common.utils.UrlUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -40,7 +38,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
 
     @SneakyThrows
     @Override
-    public boolean erEgenAnsatt(Fnr fnr) {
+    public Personalia hentPersonalia(Fnr fnr) {
         Request request = new Request.Builder()
                 .url(joinPaths(veilarbpersonUrl, "api/person", fnr.get()))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
@@ -49,7 +47,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
             RestUtils.throwIfNotSuccessful(response);
-            return RestUtils.parseJsonResponseOrThrow(response, PersonResponse.class).egenAnsatt;
+            return RestUtils.parseJsonResponseOrThrow(response, Personalia.class);
         }
     }
 
@@ -74,11 +72,6 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
     @Override
     public HealthCheckResult checkHealth() {
         return HealthCheckUtils.pingUrl(UrlUtils.joinPaths(this.veilarbpersonUrl, "/internal/isAlive"), this.client);
-    }
-
-    @Data
-    private static class PersonResponse {
-        boolean egenAnsatt;
     }
 
     @Data
