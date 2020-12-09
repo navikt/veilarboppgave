@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface VeilarbpersonClient extends HealthCheck {
 
-    boolean erEgenAnsatt(Fnr fnr);
+    Personalia hentPersonalia(Fnr fnr);
 
     Optional<String> hentGeografiskTilknytning(Fnr fnr);
 

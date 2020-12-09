@@ -71,11 +71,6 @@
             <artifactId>okhttp</artifactId>
             <version>3.14.7</version>
         </dependency>
-        <dependency>
-            <groupId>no.bekk.bekkopen</groupId>
-            <artifactId>nocommons</artifactId>
-            <version>0.6</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -159,6 +154,12 @@
         </dependency>
 
         <!-- test -->
+        <dependency>
+            <groupId>no.bekk.bekkopen</groupId>
+            <artifactId>nocommons</artifactId>
+            <version>0.6</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>no.nav.common</groupId>
             <artifactId>test</artifactId>
