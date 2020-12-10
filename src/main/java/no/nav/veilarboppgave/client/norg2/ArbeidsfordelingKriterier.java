@@ -1,8 +1,8 @@
 package no.nav.veilarboppgave.client.norg2;
 
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
+@Data
 public class ArbeidsfordelingKriterier {
     String behandlingstema;
     String behandlingstype;
