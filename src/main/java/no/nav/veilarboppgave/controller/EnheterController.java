@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
+import static no.nav.veilarboppgave.util.OppgaveUtils.tilTemaDto;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,11 +37,7 @@ public class EnheterController {
 
         Valider.validerTema(tema);
 
-        TemaDTO gyldigTemaDTO = ofNullable(tema)
-                .map(OppgaveUtils::tilTemaDto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-
-        return enheterService.hentEnheter(fnr, gyldigTemaDTO);
+        return enheterService.hentEnheter(fnr, tilTemaDto(tema));
     }
 
 }
