@@ -17,7 +17,7 @@ import static no.nav.common.utils.NaisUtils.getCredentials;
 @Configuration
 public class ApplicationConfig {
 
-    static final String APPLICATION_NAME = "veilarboppgave";
+    public static final String APPLICATION_NAME = "veilarboppgave";
 
     @Bean
     public Credentials serviceUserCredentials() {
