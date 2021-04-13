@@ -1,10 +1,8 @@
 package no.nav.veilarboppgave.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.veilarboppgave.util.DbUtils;
 import org.flywaydb.core.Flyway;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -12,16 +10,11 @@ import javax.sql.DataSource;
 
 
 @Slf4j
+@RequiredArgsConstructor
 @Configuration
-public class DatabaseConfig {
+public class DatabaseMigrationConfig {
 
-    @Autowired
-    DataSource dataSource;
-
-    @Bean
-    public DataSource dataSource(EnvironmentProperties properties) {
-        return DbUtils.createDataSource(properties.getDbUrl());
-    }
+    private final DataSource dataSource;
 
     @PostConstruct
     public void migrateDb() {
