@@ -2,10 +2,9 @@ package no.nav.veilarboppgave.service;
 
 import lombok.RequiredArgsConstructor;
 import no.nav.common.types.identer.AktorId;
-import no.nav.common.types.identer.Fnr;
 import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.domain.*;
-import no.nav.veilarboppgave.repositoyry.OppgaveRepository;
+import no.nav.veilarboppgave.repositoyry.OppgavehistorikkRepository;
 import no.nav.veilarboppgave.util.OppgaveUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-import static no.nav.veilarboppgave.domain.OppgaveType.utledOppgaveTypeKode;
-import static no.nav.veilarboppgave.domain.Prioritet.utledPrioritetKode;
 import static no.nav.veilarboppgave.util.DateUtils.tilDato;
 
 @RequiredArgsConstructor
@@ -24,7 +21,7 @@ public class OppgaveService {
 
     private final OppgaveClient oppgaveClient;
 
-    private final OppgaveRepository oppgaveRepository;
+    private final OppgavehistorikkRepository oppgavehistorikkRepository;
 
     private final AuthService authService;
 
@@ -48,7 +45,7 @@ public class OppgaveService {
         OppgaveId oppgaveId = oppgaveClient.opprettOppgave(oppgave)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Klarte ikke å opprette oppgave"));
 
-        oppgaveRepository.insertOppgaveHistorikk(new OppgavehistorikkDTO(
+        oppgavehistorikkRepository.insertOppgaveHistorikk(new OppgavehistorikkDTO(
                 oppgaveDto.getTema(),
                 oppgaveDto.getType(),
                 new Timestamp(Instant.now().toEpochMilli()),
@@ -56,7 +53,7 @@ public class OppgaveService {
                 oppgaveId.getOppgaveId(),
                 aktorId.get()));
 
-        return oppgaveRepository.hentOppgavehistorikkForGSAKID(oppgaveId);
+        return oppgavehistorikkRepository.hentOppgavehistorikkForGsakId(oppgaveId);
     }
 
 }

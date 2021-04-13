@@ -1,11 +1,10 @@
 package no.nav.veilarboppgave.controller;
 
-import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
+import no.nav.veilarboppgave.domain.TemaDTO;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.EnheterService;
 import no.nav.veilarboppgave.utils.TestData;
-import no.nav.veilarboppgave.domain.TemaDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
