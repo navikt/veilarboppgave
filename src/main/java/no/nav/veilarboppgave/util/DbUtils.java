@@ -26,7 +26,7 @@ public class DbUtils {
 
     @SneakyThrows
     private static DataSource createVaultRefreshDataSource(HikariConfig config) {
-        String environment = isProduction().orElse(false) ? "p" : "q1";
+        String environment = isProduction().orElse(false) ? "prod" : "dev";
         String role = String.join("-", APPLICATION_NAME, environment, "admin");
 
         return HikariCPVaultUtil.createHikariDataSourceWithVaultIntegration(config, getMountPath(), role);
