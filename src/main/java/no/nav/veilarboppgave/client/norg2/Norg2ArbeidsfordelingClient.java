@@ -7,5 +7,5 @@ import no.nav.veilarboppgave.domain.TemaDTO;
 import java.util.List;
 
 public interface Norg2ArbeidsfordelingClient extends HealthCheck {
-    List<OppfolgingEnhet> hentBestMatchEnheter(String geografiskTilknytning, TemaDTO tema, boolean egenAnsatt);
+    List<OppfolgingEnhet> hentBestMatchEnheter(ArbeidsfordelingKriterier kriterier);
 }

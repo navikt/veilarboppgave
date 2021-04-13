@@ -15,6 +15,8 @@ spec:
   webproxy: true
   ingresses:
     - https://veilarboppgave-q1.nais.preprod.local
+    - https://app.dev.adeo.no/veilarboppgave
+    - https://app-q1.dev.adeo.no/veilarboppgave
     - https://app-q1.adeo.no/veilarboppgave
   vault:
     enabled: true

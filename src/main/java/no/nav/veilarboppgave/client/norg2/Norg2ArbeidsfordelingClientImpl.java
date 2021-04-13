@@ -12,8 +12,6 @@ import no.nav.veilarboppgave.domain.TemaDTO;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -42,12 +40,7 @@ public class Norg2ArbeidsfordelingClientImpl implements Norg2ArbeidsfordelingCli
 
     @SneakyThrows
     @Override
-    public List<OppfolgingEnhet> hentBestMatchEnheter(String geografiskTilknytning, TemaDTO tema, boolean egenAnsatt) {
-        ArbeidsfordelingKriterier kriterier = new ArbeidsfordelingKriterier();
-        kriterier.skjermet = egenAnsatt;
-        kriterier.tema = tema.getFagomradeKode();
-        kriterier.geografiskOmraade = geografiskTilknytning;
-
+    public List<OppfolgingEnhet> hentBestMatchEnheter(ArbeidsfordelingKriterier kriterier) {
         Request request = new Request.Builder()
                 .url(joinPaths(norg2Url, "api/v1/arbeidsfordeling/enheter/bestmatch"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
