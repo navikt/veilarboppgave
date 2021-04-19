@@ -2,24 +2,32 @@ package no.nav.veilarboppgave.repositoyry;
 
 import no.nav.common.types.identer.AktorId;
 import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
-import no.nav.veilarboppgave.utils.LocalH2Database;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import no.nav.veilarboppgave.utils.LocalPostgresDatabase;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static no.nav.veilarboppgave.utils.LocalPostgresDatabase.createPostgresJdbcTemplate;
+import static org.junit.Assert.assertEquals;
 
 
 public class OppgaveRepositoryTest {
 
-    private OppgaveRepository oppgaveRepository;
+    @Rule
+    public PostgreSQLContainer<?> postgresContainer = LocalPostgresDatabase.createPostgresContainer();
 
-    @BeforeEach
+    private OppgavehistorikkRepository oppgavehistorikkRepository;
+
+    @Before
     public void setUp() {
-        oppgaveRepository = new OppgaveRepository(LocalH2Database.getDb());
+        JdbcTemplate jdbcTemplate = createPostgresJdbcTemplate(postgresContainer);
+        LocalPostgresDatabase.cleanAndMigrate(jdbcTemplate.getDataSource());
+        oppgavehistorikkRepository = new OppgavehistorikkRepository(jdbcTemplate);
     }
 
     @Test
@@ -28,10 +36,10 @@ public class OppgaveRepositoryTest {
         Timestamp opprettet = new Timestamp(0);
         OppgavehistorikkDTO oppgave = new OppgavehistorikkDTO("tema", "type", opprettet,"Z000000",
                 "gsakid",aktorId.get(), 1L);
-        oppgaveRepository.insertOppgaveHistorikk(oppgave);
+        oppgavehistorikkRepository.insertOppgaveHistorikk(oppgave);
 
-        OppgavehistorikkDTO hentetOppgave = oppgaveRepository.hentOppgavehistorikkForBruker(aktorId).get(0);
-        assertThat(hentetOppgave.getTema()).isEqualTo("tema");
+        OppgavehistorikkDTO hentetOppgave = oppgavehistorikkRepository.hentOppgavehistorikkForBruker(aktorId).get(0);
+        assertEquals("tema", hentetOppgave.getTema());
     }
 
     @Test
@@ -45,12 +53,11 @@ public class OppgaveRepositoryTest {
         OppgavehistorikkDTO oppgave2 = new OppgavehistorikkDTO("tema", "type", opprettet,"Z000000",
                 "gsakid",aktoerid.get());
 
-        oppgaveRepository.insertOppgaveHistorikk(oppgave1);
-        oppgaveRepository.insertOppgaveHistorikk(oppgave2);
+        oppgavehistorikkRepository.insertOppgaveHistorikk(oppgave1);
+        oppgavehistorikkRepository.insertOppgaveHistorikk(oppgave2);
 
-        List<OppgavehistorikkDTO> hentetOppgaver = oppgaveRepository.hentOppgavehistorikkForBruker(aktoerid);
-        assertThat(hentetOppgaver.size()).isEqualTo(2);
-
+        List<OppgavehistorikkDTO> hentetOppgaver = oppgavehistorikkRepository.hentOppgavehistorikkForBruker(aktoerid);
+        assertEquals(2, hentetOppgaver.size());
     }
 
 }

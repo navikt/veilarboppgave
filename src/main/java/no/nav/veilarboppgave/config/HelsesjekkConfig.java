@@ -9,8 +9,8 @@ import no.nav.common.health.HealthCheckResult;
 import no.nav.common.health.selftest.SelfTestCheck;
 import no.nav.common.health.selftest.SelfTestChecks;
 import no.nav.common.health.selftest.SelfTestMeterBinder;
-import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClient;
+import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +50,7 @@ public class HelsesjekkConfig {
     private HealthCheck checkDbHealth(JdbcTemplate jdbcTemplate) {
         return () -> {
             try {
-                jdbcTemplate.queryForObject("SELECT 1 FROM DUAL", Long.class);
+                jdbcTemplate.queryForObject("SELECT 1", Long.class);
                 return HealthCheckResult.healthy();
             } catch (Exception e) {
                 log.error("Helsesjekk mot database feilet", e);

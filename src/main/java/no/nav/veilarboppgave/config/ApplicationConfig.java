@@ -7,9 +7,12 @@ import no.nav.common.sts.NaisSystemUserTokenProvider;
 import no.nav.common.sts.SystemUserTokenProvider;
 import no.nav.common.utils.Credentials;
 import no.nav.common.utils.NaisUtils;
+import no.nav.veilarboppgave.util.DbUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 import static no.nav.common.utils.NaisUtils.getCredentials;
 
@@ -17,7 +20,7 @@ import static no.nav.common.utils.NaisUtils.getCredentials;
 @Configuration
 public class ApplicationConfig {
 
-    static final String APPLICATION_NAME = "veilarboppgave";
+    public static final String APPLICATION_NAME = "veilarboppgave";
 
     @Bean
     public Credentials serviceUserCredentials() {
@@ -36,6 +39,11 @@ public class ApplicationConfig {
                 properties.getAbacUrl(), serviceUserCredentials.username,
                 serviceUserCredentials.password, new SpringAuditRequestInfoSupplier()
         );
+    }
+
+    @Bean
+    public DataSource dataSource(EnvironmentProperties properties) {
+        return DbUtils.createDataSource(properties.getDbUrl());
     }
 
 }

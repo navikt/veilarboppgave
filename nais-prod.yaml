@@ -21,12 +21,8 @@ spec:
     paths:
       - kvPath: /serviceuser/data/prod/srvveilarboppgave
         mountPath: /var/run/secrets/nais.io/service_user
-      - kvPath: /oracle/data/prod/creds/veilarboppgave_p-user
-        mountPath: /var/run/secrets/nais.io/oracle_creds
       - kvPath: /kv/prod/fss/veilarboppgave/default
         mountPath: /var/run/secrets/nais.io/vault
-      - kvPath: /oracle/data/prod/config/veilarboppgave_p
-        mountPath: /var/run/secrets/nais.io/oracle_config
   envFrom:
     - configmap: pto-config
   prometheus:
@@ -41,7 +37,7 @@ spec:
   resources:
     limits:
       cpu: "2"
-      memory: 1Gi
+      memory: 2Gi
     requests:
       cpu: 500m
       memory: 512Mi

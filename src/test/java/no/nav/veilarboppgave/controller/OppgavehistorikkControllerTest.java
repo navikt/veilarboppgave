@@ -4,34 +4,45 @@ package no.nav.veilarboppgave.controller;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
 import no.nav.veilarboppgave.domain.Oppgavehistorikk;
-import no.nav.veilarboppgave.repositoyry.OppgaveRepository;
 import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
+import no.nav.veilarboppgave.repositoyry.OppgavehistorikkRepository;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.OppgavehistorikkService;
-import no.nav.veilarboppgave.utils.LocalH2Database;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import no.nav.veilarboppgave.utils.LocalPostgresDatabase;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+import static no.nav.veilarboppgave.utils.LocalPostgresDatabase.createPostgresJdbcTemplate;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-class OppgavehistorikkControllerTest {
+public class OppgavehistorikkControllerTest {
+
+    @Rule
+    public PostgreSQLContainer<?> postgresContainer = LocalPostgresDatabase.createPostgresContainer();
 
     private AuthService authService = mock(AuthService.class);
 
-    private OppgaveRepository oppgaveRepository;
+    private OppgavehistorikkRepository oppgavehistorikkRepository;
 
     private OppgavehistorikkController oppgavehistorikkController;
 
-    @BeforeEach
+    @Before
     public void resetMocks() {
-        reset(authService);
-        oppgaveRepository = new OppgaveRepository(LocalH2Database.getDb());
-        OppgavehistorikkService oppgavehistorikkService = new OppgavehistorikkService(oppgaveRepository);
+        JdbcTemplate jdbcTemplate = createPostgresJdbcTemplate(postgresContainer);
+        LocalPostgresDatabase.cleanAndMigrate(jdbcTemplate.getDataSource());
+
+        oppgavehistorikkRepository = new OppgavehistorikkRepository(jdbcTemplate);
+        OppgavehistorikkService oppgavehistorikkService = new OppgavehistorikkService(oppgavehistorikkRepository);
         oppgavehistorikkController = new OppgavehistorikkController(authService, oppgavehistorikkService);
+
+        reset(authService);
     }
 
     @Test
@@ -42,8 +53,8 @@ class OppgavehistorikkControllerTest {
         when(authService.getAktorIdOrThrow(any())).thenReturn(aktoerid);
 //        when(authService.getFnr(aktoerid)).thenReturn(Optional.of(fnr));
 
-        oppgaveRepository.insertOppgaveHistorikk(getOppgaveHitorikk(aktoerid));
-        oppgaveRepository.insertOppgaveHistorikk(getOppgaveHitorikk(aktoerid));
+        oppgavehistorikkRepository.insertOppgaveHistorikk(getOppgaveHitorikk(aktoerid));
+        oppgavehistorikkRepository.insertOppgaveHistorikk(getOppgaveHitorikk(aktoerid));
 
         List<Oppgavehistorikk> oppgavehistorikkDTOS = oppgavehistorikkController.getOppgavehistorikk(fnr);
         assertEquals(oppgavehistorikkDTOS.size(), 2);
