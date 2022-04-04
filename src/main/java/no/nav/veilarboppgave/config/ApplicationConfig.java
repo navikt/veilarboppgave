@@ -2,7 +2,10 @@ package no.nav.veilarboppgave.config;
 
 import no.nav.common.abac.Pep;
 import no.nav.common.abac.VeilarbPep;
+import no.nav.common.abac.VeilarbPepFactory;
 import no.nav.common.abac.audit.SpringAuditRequestInfoSupplier;
+import no.nav.common.auth.context.AuthContextHolder;
+import no.nav.common.auth.context.AuthContextHolderThreadLocal;
 import no.nav.common.sts.NaisSystemUserTokenProvider;
 import no.nav.common.sts.SystemUserTokenProvider;
 import no.nav.common.utils.Credentials;
@@ -33,12 +36,15 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Pep veilarbPep(EnvironmentProperties properties) {
-        Credentials serviceUserCredentials = NaisUtils.getCredentials("service_user");
-        return new VeilarbPep(
+    public Pep veilarbPep(EnvironmentProperties properties, Credentials serviceUserCredentials) {
+        return VeilarbPepFactory.get(
                 properties.getAbacUrl(), serviceUserCredentials.username,
-                serviceUserCredentials.password, new SpringAuditRequestInfoSupplier()
-        );
+                serviceUserCredentials.password, new SpringAuditRequestInfoSupplier());
+    }
+
+    @Bean
+    public AuthContextHolder authContextHolder() {
+        return AuthContextHolderThreadLocal.instance();
     }
 
     @Bean

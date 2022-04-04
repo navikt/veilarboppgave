@@ -2,16 +2,10 @@ package no.nav.veilarboppgave.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.common.abac.AbacUtils;
 import no.nav.common.abac.Pep;
-import no.nav.common.abac.XacmlResponseParser;
-import no.nav.common.abac.constants.AbacDomain;
-import no.nav.common.abac.constants.NavAttributter;
-import no.nav.common.abac.constants.StandardAttributter;
-import no.nav.common.abac.domain.Attribute;
-import no.nav.common.abac.domain.request.*;
+import no.nav.common.abac.domain.request.ActionId;
 import no.nav.common.auth.context.AuthContextHolder;
-import no.nav.common.client.aktorregister.AktorregisterClient;
+import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
 import org.springframework.http.HttpStatus;
@@ -25,7 +19,8 @@ public class AuthService {
 
     private final Pep veilarbPep;
 
-    private final AktorregisterClient aktorregisterClient;
+    private final AktorOppslagClient aktorOppslagClient;
+    private final AuthContextHolder authContextHolder;
 
     public void sjekkLesetilgangMedAktorId(AktorId aktorId) {
         if (!veilarbPep.harTilgangTilPerson(getInnloggetBrukerToken(), ActionId.READ, aktorId)) {
@@ -34,16 +29,16 @@ public class AuthService {
     }
 
     public AktorId getAktorIdOrThrow(Fnr fnr) {
-        return aktorregisterClient.hentAktorId(fnr);
+        return aktorOppslagClient.hentAktorId(fnr);
     }
 
     public String getInnloggetBrukerToken() {
-        return AuthContextHolder.getIdTokenString().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fant ikke token for innlogget bruker"));
+        return authContextHolder.getIdTokenString().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fant ikke token for innlogget bruker"));
     }
 
     // NAV ident, fnr eller annen ID
     public String getInnloggetBrukerIdent() {
-        return AuthContextHolder.getSubject().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "NAV ident is missing"));
+        return authContextHolder.getSubject().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "NAV ident is missing"));
     }
 
 }
