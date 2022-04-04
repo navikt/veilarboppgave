@@ -2,32 +2,24 @@ package no.nav.veilarboppgave.repositoyry;
 
 import no.nav.common.types.identer.AktorId;
 import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
-import no.nav.veilarboppgave.utils.LocalPostgresDatabase;
+import no.nav.veilarboppgave.utils.SingletonPostgresContainer;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import static no.nav.veilarboppgave.utils.LocalPostgresDatabase.createPostgresJdbcTemplate;
 import static org.junit.Assert.assertEquals;
 
 
 public class OppgaveRepositoryTest {
-
-    @Rule
-    public PostgreSQLContainer<?> postgresContainer = LocalPostgresDatabase.createPostgresContainer();
-
     private OppgavehistorikkRepository oppgavehistorikkRepository;
 
     @Before
     public void setUp() {
-        JdbcTemplate jdbcTemplate = createPostgresJdbcTemplate(postgresContainer);
-        LocalPostgresDatabase.cleanAndMigrate(jdbcTemplate.getDataSource());
-        oppgavehistorikkRepository = new OppgavehistorikkRepository(jdbcTemplate);
+        JdbcTemplate db = SingletonPostgresContainer.init().createJdbcTemplate();
+        oppgavehistorikkRepository = new OppgavehistorikkRepository(db);
     }
 
     @Test

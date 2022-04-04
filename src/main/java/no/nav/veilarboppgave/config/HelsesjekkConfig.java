@@ -2,7 +2,7 @@ package no.nav.veilarboppgave.config;
 
 import lombok.extern.slf4j.Slf4j;
 import no.nav.common.abac.Pep;
-import no.nav.common.client.aktorregister.AktorregisterClient;
+import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.client.norg2.Norg2Client;
 import no.nav.common.health.HealthCheck;
 import no.nav.common.health.HealthCheckResult;
@@ -27,7 +27,7 @@ public class HelsesjekkConfig {
     public SelfTestChecks selfTestChecks(
             JdbcTemplate jdbcTemplate,
             Pep pep,
-            AktorregisterClient aktorregisterClient,
+            AktorOppslagClient aktorOppslagClient,
             OppgaveClient oppgaveClient,
             Norg2ArbeidsfordelingClient norg2ArbeidsfordelingClient,
             Norg2Client norg2Client,
@@ -37,7 +37,7 @@ public class HelsesjekkConfig {
         List<SelfTestCheck> selfTestChecks = Arrays.asList(
                 new SelfTestCheck("Enkel spørring mot Databasen til veilarboppfolging.", true, checkDbHealth(jdbcTemplate)),
                 new SelfTestCheck("ABAC tilgangskontroll - ping", true, pep.getAbacClient()),
-                new SelfTestCheck("Aktorregister (konvertere mellom aktorId og Fnr).", true, aktorregisterClient),
+                new SelfTestCheck("Aktoroppslag(PDL) (konvertere mellom aktorId og Fnr).", true, aktorOppslagClient),
                 new SelfTestCheck("Gsak (oppretting av oppgave)", true, oppgaveClient),
                 new SelfTestCheck("Norg2 arbeidsfordeling", true, norg2ArbeidsfordelingClient),
                 new SelfTestCheck("Norg2", true, norg2Client),

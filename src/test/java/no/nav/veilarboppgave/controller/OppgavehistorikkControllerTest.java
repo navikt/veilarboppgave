@@ -8,24 +8,21 @@ import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
 import no.nav.veilarboppgave.repositoyry.OppgavehistorikkRepository;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.OppgavehistorikkService;
-import no.nav.veilarboppgave.utils.LocalPostgresDatabase;
+import no.nav.veilarboppgave.utils.SingletonPostgresContainer;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import static no.nav.veilarboppgave.utils.LocalPostgresDatabase.createPostgresJdbcTemplate;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
 public class OppgavehistorikkControllerTest {
-
-    @Rule
-    public PostgreSQLContainer<?> postgresContainer = LocalPostgresDatabase.createPostgresContainer();
 
     private AuthService authService = mock(AuthService.class);
 
@@ -35,10 +32,8 @@ public class OppgavehistorikkControllerTest {
 
     @Before
     public void resetMocks() {
-        JdbcTemplate jdbcTemplate = createPostgresJdbcTemplate(postgresContainer);
-        LocalPostgresDatabase.cleanAndMigrate(jdbcTemplate.getDataSource());
-
-        oppgavehistorikkRepository = new OppgavehistorikkRepository(jdbcTemplate);
+        JdbcTemplate db = SingletonPostgresContainer.init().createJdbcTemplate();
+        oppgavehistorikkRepository = new OppgavehistorikkRepository(db);
         OppgavehistorikkService oppgavehistorikkService = new OppgavehistorikkService(oppgavehistorikkRepository);
         oppgavehistorikkController = new OppgavehistorikkController(authService, oppgavehistorikkService);
 

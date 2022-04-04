@@ -44,13 +44,13 @@ public class OppgavehistorikkRepository {
     public List<OppgavehistorikkDTO> hentOppgavehistorikkForBruker(AktorId aktorId) {
         String sql = format("SELECT * FROM %s WHERE %s = ?", OPPGAVEHISTORIKK, AKTOERID);
 
-        return db.query(sql, new Object[]{aktorId.get()}, OppgavehistorikkRepository::mapOppgavehistorikkRow);
+        return db.query(sql, OppgavehistorikkRepository::mapOppgavehistorikkRow, aktorId.get());
     }
 
     public OppgavehistorikkDTO hentOppgavehistorikkForGsakId(OppgaveId gsakid) {
         String sql = format("SELECT * FROM %s WHERE %s = ? LIMIT 1", OPPGAVEHISTORIKK, GSAK_ID);
 
-        List<OppgavehistorikkDTO> result = db.query(sql, new Object[]{gsakid.getOppgaveId()}, OppgavehistorikkRepository::mapOppgavehistorikkRow);
+        List<OppgavehistorikkDTO> result = db.query(sql, OppgavehistorikkRepository::mapOppgavehistorikkRow, gsakid.getOppgaveId());
 
         return result.isEmpty() ? null : result.get(0);
     }
