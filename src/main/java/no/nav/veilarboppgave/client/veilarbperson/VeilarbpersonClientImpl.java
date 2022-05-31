@@ -40,7 +40,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
     @Override
     public Personalia hentPersonalia(Fnr fnr) {
         Request request = new Request.Builder()
-                .url(joinPaths(veilarbpersonUrl, "api/v2/person", fnr.get()))
+                .url(joinPaths(veilarbpersonUrl, "api/v2/person?fnr=") + fnr)
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .build();
