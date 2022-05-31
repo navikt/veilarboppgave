@@ -40,7 +40,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
     @Override
     public Personalia hentPersonalia(Fnr fnr) {
         Request request = new Request.Builder()
-                .url(joinPaths(veilarbpersonUrl, "api/person", fnr.get()))
+                .url(joinPaths(veilarbpersonUrl, "api/v2/person", fnr.get()))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .build();
@@ -48,24 +48,6 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         try (okhttp3.Response response = client.newCall(request).execute()) {
             RestUtils.throwIfNotSuccessful(response);
             return RestUtils.parseJsonResponseOrThrow(response, Personalia.class);
-        }
-    }
-
-    @Override
-    public Optional<String> hentGeografiskTilknytning(Fnr fnr) {
-        Request request = new Request.Builder()
-                .url(joinPaths(veilarbpersonUrl, "api/person/geografisktilknytning?fnr=" + fnr.get()))
-                .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
-                .build();
-
-        try (okhttp3.Response response = client.newCall(request).execute()) {
-            RestUtils.throwIfNotSuccessful(response);
-            GeografiskTilknytningResponse geografiskTilknytningResponse = RestUtils.parseJsonResponseOrThrow(response, GeografiskTilknytningResponse.class);
-            return Optional.ofNullable(geografiskTilknytningResponse.geografiskTilknytning);
-        } catch (Exception e) {
-            log.error("Klarte ikke å hente geografisk tilknytning", e);
-            return Optional.empty();
         }
     }
 
