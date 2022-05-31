@@ -6,4 +6,5 @@ import lombok.Data;
 public class Personalia {
     String diskresjonskode;
     boolean egenAnsatt;
+    String geografiskTilknytning;
 }

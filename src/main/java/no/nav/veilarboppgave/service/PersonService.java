@@ -14,10 +14,6 @@ public class PersonService {
 
     private final VeilarbpersonClient veilarbpersonClient;
 
-    public Optional<String> hentGeografiskTilknytning(Fnr fnr) {
-        return veilarbpersonClient.hentGeografiskTilknytning(fnr);
-    }
-
     public Personalia hentPersonalia(Fnr fnr) {
         return veilarbpersonClient.hentPersonalia(fnr);
     }

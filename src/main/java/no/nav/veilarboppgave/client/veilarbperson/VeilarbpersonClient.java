@@ -6,9 +6,6 @@ import no.nav.common.types.identer.Fnr;
 import java.util.Optional;
 
 public interface VeilarbpersonClient extends HealthCheck {
-
     Personalia hentPersonalia(Fnr fnr);
-
-    Optional<String> hentGeografiskTilknytning(Fnr fnr);
 
 }

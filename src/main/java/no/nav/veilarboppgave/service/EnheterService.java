@@ -40,8 +40,7 @@ public class EnheterService {
             return norg2ArbeidsfordelingClient.hentBestMatchEnheter(kriterier);
         }
 
-        Optional<String> maybeGeografiskTilknytning = personService
-                .hentGeografiskTilknytning(fnr);
+        Optional<String> maybeGeografiskTilknytning = Optional.ofNullable(personalia.getGeografiskTilknytning());
 
         ArbeidsfordelingKriterier kriterier = new ArbeidsfordelingKriterier();
         kriterier.setSkjermet(personalia.isEgenAnsatt());
