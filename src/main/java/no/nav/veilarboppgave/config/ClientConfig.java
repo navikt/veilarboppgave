@@ -14,14 +14,18 @@ import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.client.oppgave.OppgaveClientImpl;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClientImpl;
-import no.nav.veilarboppgave.service.AuthService;
+import no.nav.veilarboppgave.service.ContextAwareService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.function.Supplier;
 
 import static no.nav.common.utils.UrlUtils.createDevInternalIngressUrl;
 import static no.nav.common.utils.UrlUtils.createNaisAdeoIngressUrl;
 import static no.nav.common.utils.UrlUtils.createNaisPreprodIngressUrl;
 import static no.nav.common.utils.UrlUtils.createProdInternalIngressUrl;
+import static no.nav.veilarboppgave.config.DownstreamApis.downstreamOppgave;
+import static no.nav.veilarboppgave.config.DownstreamApis.downstreamVeilarbperson;
 
 @Configuration
 public class ClientConfig {
@@ -46,22 +50,30 @@ public class ClientConfig {
     }
 
     @Bean
-    public Norg2ArbeidsfordelingClient norg2ArbeidsfordelingClient(EnvironmentProperties properties, AuthService authService) {
-        return new Norg2ArbeidsfordelingClientImpl(properties.getNorg2Url(), authService::getInnloggetBrukerToken);
+    public Norg2ArbeidsfordelingClient norg2ArbeidsfordelingClient(EnvironmentProperties properties) {
+        return new Norg2ArbeidsfordelingClientImpl(properties.getNorg2Url());
     }
 
     @Bean
-    public OppgaveClient oppgaveClient(AuthService authService) {
+    public OppgaveClient oppgaveClient(ContextAwareService contextAwareService) {
+        String safCluster = isProduction() ? "prod-fss"  : "dev-fss";
+        Supplier<String> userTokenSupplier = contextAwareService.contextAwareUserTokenSupplier(
+                downstreamOppgave(safCluster)
+        );
         String url = EnvironmentUtils.isDevelopment().orElse(false)
                 ? "https://oppgave.nais.preprod.local"
                 : createNaisAdeoIngressUrl("oppgave", false);
 
-        return new OppgaveClientImpl(url, authService::getInnloggetBrukerToken);
+        return new OppgaveClientImpl(url, userTokenSupplier);
     }
 
     @Bean
-    public VeilarbpersonClient veilarbpersonClient(AuthService authService) {
-        return new VeilarbpersonClientImpl(naisPreprodOrNaisAdeoIngress("veilarbperson", true), authService::getInnloggetBrukerToken);
+    public VeilarbpersonClient veilarbpersonClient(ContextAwareService contextAwareService) {
+        String safCluster = isProduction() ? "prod-fss"  : "dev-fss";
+        Supplier<String> userTokenSupplier = contextAwareService.contextAwareUserTokenSupplier(
+                downstreamVeilarbperson(safCluster)
+        );
+        return new VeilarbpersonClientImpl(naisPreprodOrNaisAdeoIngress("veilarbperson", true), userTokenSupplier);
     }
 
     private static String naisPreprodOrNaisAdeoIngress(String appName, boolean withAppContextPath) {

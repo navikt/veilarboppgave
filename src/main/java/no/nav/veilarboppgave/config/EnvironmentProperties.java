@@ -19,6 +19,8 @@ public class EnvironmentProperties {
 
     private String naisAadClientId;
 
+    public String naisAadIssuer;
+
     private String naisStsDiscoveryUrl;
 
     private String naisStsClientId;
