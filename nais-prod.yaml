@@ -16,6 +16,7 @@ spec:
   ingresses:
     - https://veilarboppgave.nais.adeo.no
     - https://app.adeo.no/veilarboppgave
+    - https://veilarboppgave.prod-fss-pub.nais.io
   vault:
     enabled: true
     paths:

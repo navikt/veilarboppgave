@@ -18,6 +18,7 @@ spec:
     - https://app.dev.adeo.no/veilarboppgave
     - https://app-q1.dev.adeo.no/veilarboppgave
     - https://app-q1.adeo.no/veilarboppgave
+    - https://veilarboppgave.dev-fss-pub.nais.io
   vault:
     enabled: true
     paths:
