@@ -25,6 +25,18 @@ spec:
         mountPath: /var/run/secrets/nais.io/service_user
       - kvPath: /kv/preprod/fss/veilarboppgave/q1
         mountPath: /var/run/secrets/nais.io/vault
+  azure:
+    application:
+      enabled: true
+      claims:
+        extra:
+          - "NAVident"
+  accessPolicy:
+    inbound:
+      rules:
+        - application: veilarbpersonflate
+          namespace: poao
+          cluster: dev-gcp
   envFrom:
     - configmap: pto-config
   prometheus:

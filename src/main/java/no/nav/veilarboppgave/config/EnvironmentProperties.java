@@ -15,11 +15,9 @@ public class EnvironmentProperties {
 
     private String openAmRefreshUrl;
 
+    private String naisAadDiscoveryUrl;
 
-    private String aadDiscoveryUrl;
-
-    private String veilarbloginAadClientId;
-
+    private String naisAadClientId;
 
     private String naisStsDiscoveryUrl;
 
