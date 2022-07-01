@@ -43,5 +43,5 @@ public class AuthService {
         return AuthContextHolderThreadLocal.instance()
                 .getUid()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Id is missing from subject"));
-
+    }
 }
