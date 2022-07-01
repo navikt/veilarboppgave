@@ -18,6 +18,7 @@ spec:
     - https://app.dev.adeo.no/veilarboppgave
     - https://app-q1.dev.adeo.no/veilarboppgave
     - https://app-q1.adeo.no/veilarboppgave
+    - https://veilarboppgave.dev-fss-pub.nais.io
   vault:
     enabled: true
     paths:
@@ -25,6 +26,18 @@ spec:
         mountPath: /var/run/secrets/nais.io/service_user
       - kvPath: /kv/preprod/fss/veilarboppgave/q1
         mountPath: /var/run/secrets/nais.io/vault
+  azure:
+    application:
+      enabled: true
+      claims:
+        extra:
+          - "NAVident"
+  accessPolicy:
+    inbound:
+      rules:
+        - application: veilarbpersonflate
+          namespace: poao
+          cluster: dev-gcp
   envFrom:
     - configmap: pto-config
   prometheus:

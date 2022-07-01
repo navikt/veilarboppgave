@@ -16,6 +16,7 @@ spec:
   ingresses:
     - https://veilarboppgave.nais.adeo.no
     - https://app.adeo.no/veilarboppgave
+    - https://veilarboppgave.prod-fss-pub.nais.io
   vault:
     enabled: true
     paths:
@@ -23,6 +24,18 @@ spec:
         mountPath: /var/run/secrets/nais.io/service_user
       - kvPath: /kv/prod/fss/veilarboppgave/default
         mountPath: /var/run/secrets/nais.io/vault
+  azure:
+    application:
+      enabled: true
+      claims:
+        extra:
+          - "NAVident"
+  accessPolicy:
+    inbound:
+      rules:
+        - application: veilarbpersonflate
+          namespace: poao
+          cluster: prod-gcp
   envFrom:
     - configmap: pto-config
   prometheus:

@@ -42,7 +42,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         Request request = new Request.Builder()
                 .url(joinPaths(veilarbpersonUrl, "api/v2/person?fnr=") + fnr)
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
+                .header(AUTHORIZATION, userTokenSupplier.get())
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {

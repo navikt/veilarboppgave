@@ -1,15 +1,15 @@
 package no.nav.veilarboppgave.config;
 
 import no.nav.common.abac.Pep;
-import no.nav.common.abac.VeilarbPep;
 import no.nav.common.abac.VeilarbPepFactory;
 import no.nav.common.abac.audit.SpringAuditRequestInfoSupplier;
 import no.nav.common.auth.context.AuthContextHolder;
 import no.nav.common.auth.context.AuthContextHolderThreadLocal;
 import no.nav.common.sts.NaisSystemUserTokenProvider;
 import no.nav.common.sts.SystemUserTokenProvider;
+import no.nav.common.token_client.builder.AzureAdTokenClientBuilder;
+import no.nav.common.token_client.client.AzureAdOnBehalfOfTokenClient;
 import no.nav.common.utils.Credentials;
-import no.nav.common.utils.NaisUtils;
 import no.nav.veilarboppgave.util.DbUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +45,13 @@ public class ApplicationConfig {
     @Bean
     public AuthContextHolder authContextHolder() {
         return AuthContextHolderThreadLocal.instance();
+    }
+
+    @Bean
+    public AzureAdOnBehalfOfTokenClient azureAdOnBehalfOfTokenClient(){
+        return AzureAdTokenClientBuilder.builder()
+                .withNaisDefaults()
+                .buildOnBehalfOfTokenClient();
     }
 
     @Bean

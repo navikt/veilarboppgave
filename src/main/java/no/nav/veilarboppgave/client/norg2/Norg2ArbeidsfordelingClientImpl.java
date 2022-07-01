@@ -8,33 +8,25 @@ import no.nav.common.rest.client.RestClient;
 import no.nav.common.rest.client.RestUtils;
 import no.nav.common.utils.UrlUtils;
 import no.nav.veilarboppgave.domain.OppfolgingEnhet;
-import no.nav.veilarboppgave.domain.TemaDTO;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static no.nav.common.utils.UrlUtils.joinPaths;
-import static no.nav.veilarboppgave.util.RestUtils.bearerTokenFromSupplier;
 import static org.springframework.http.HttpHeaders.ACCEPT;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 public class Norg2ArbeidsfordelingClientImpl implements Norg2ArbeidsfordelingClient {
 
     private final String norg2Url;
-
-    private final Supplier<String> userTokenSupplier;
-
     private final OkHttpClient client;
 
-    public Norg2ArbeidsfordelingClientImpl(String norg2Url, Supplier<String> userTokenSupplier) {
+    public Norg2ArbeidsfordelingClientImpl(String norg2Url) {
         this.norg2Url = norg2Url;
-        this.userTokenSupplier = userTokenSupplier;
         this.client = RestClient.baseClient();
     }
 
@@ -44,7 +36,6 @@ public class Norg2ArbeidsfordelingClientImpl implements Norg2ArbeidsfordelingCli
         Request request = new Request.Builder()
                 .url(joinPaths(norg2Url, "api/v1/arbeidsfordeling/enheter/bestmatch"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .post(RestUtils.toJsonRequestBody(kriterier))
                 .build();
 
