@@ -6,7 +6,7 @@ metadata:
   labels:
     team: pto
 spec:
-  image: docker.pkg.github.com/navikt/veilarboppgave/veilarboppgave:{{version}}
+  image: ghcr.io/navikt/veilarboppgave/veilarboppgave:{{version}}
   replicas:
     min: 1
     max: 1
