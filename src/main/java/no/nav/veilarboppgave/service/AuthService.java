@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import no.nav.common.abac.Pep;
 import no.nav.common.abac.domain.request.ActionId;
 import no.nav.common.auth.context.AuthContextHolder;
+import no.nav.common.auth.context.AuthContextHolderThreadLocal;
 import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
+import no.nav.common.types.identer.NavIdent;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -38,7 +40,13 @@ public class AuthService {
 
     // NAV ident, fnr eller annen ID
     public String getInnloggetBrukerIdent() {
-        return authContextHolder.getSubject().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "NAV ident is missing"));
+        return AuthContextHolderThreadLocal
+                .instance().getNavIdent()
+                .map(NavIdent::toString)
+                .orElse(authContextHolder
+                                .getSubject()
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Id is missing from subject"))
+                );
     }
 
 }
