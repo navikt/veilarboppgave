@@ -40,13 +40,8 @@ public class AuthService {
 
     // NAV ident, fnr eller annen ID
     public String getInnloggetBrukerIdent() {
-        return AuthContextHolderThreadLocal
-                .instance().getNavIdent()
-                .map(NavIdent::toString)
-                .orElse(authContextHolder
-                                .getSubject()
-                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Id is missing from subject"))
-                );
-    }
+        return AuthContextHolderThreadLocal.instance()
+                .getUid()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Id is missing from subject"));
 
 }
