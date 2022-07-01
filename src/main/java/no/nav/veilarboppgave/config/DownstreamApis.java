@@ -8,6 +8,6 @@ public class DownstreamApis {
     }
 
     public static DownstreamApi downstreamOppgave(String cluster){
-        return new DownstreamApi(cluster, ("dev-fss".equals(cluster)) ? "oppgave-q1" : "oppgave",  "oppgavehandtering");
+        return new DownstreamApi(cluster,  "oppgavehandtering", ("dev-fss".equals(cluster)) ? "oppgave-q1" : "oppgave");
     }
 }
