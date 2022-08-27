@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <common.version>2.2022.06.20_04.34-44e077dc9a78</common.version>
+        <common.version>2.2022.08.05_09.14-03f10c73206e</common.version>
     </properties>
 
     <build>
