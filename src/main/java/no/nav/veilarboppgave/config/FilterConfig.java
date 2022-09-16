@@ -19,17 +19,6 @@ import static no.nav.common.utils.EnvironmentUtils.requireApplicationName;
 @Configuration
 public class FilterConfig {
 
-    private OidcAuthenticatorConfig openAmAuthConfig(EnvironmentProperties properties) {
-        return new OidcAuthenticatorConfig()
-                .withDiscoveryUrl(properties.getOpenAmDiscoveryUrl())
-                .withClientId(properties.getVeilarbloginOpenAmClientId())
-                .withIdTokenCookieName(OPEN_AM_ID_TOKEN_COOKIE_NAME)
-                .withRefreshTokenCookieName(REFRESH_TOKEN_COOKIE_NAME)
-                .withIdTokenFinder(new UserTokenFinder())
-                .withRefreshUrl(properties.getOpenAmRefreshUrl())
-                .withUserRole(UserRole.INTERN);
-    }
-
     private OidcAuthenticatorConfig azureAdAuthConfig(EnvironmentProperties properties) {
         return new OidcAuthenticatorConfig()
                 .withDiscoveryUrl(properties.getNaisAadDiscoveryUrl())
@@ -38,7 +27,7 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean logFilterRegistrationBean() {
+    public FilterRegistrationBean<LogFilter> logFilterRegistrationBean() {
         FilterRegistrationBean<LogFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new LogFilter(requireApplicationName(), isDevelopment().orElse(false)));
         registration.setOrder(1);
@@ -47,11 +36,10 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean authenticationFilterRegistrationBean(EnvironmentProperties properties) {
+    public FilterRegistrationBean<OidcAuthenticationFilter> authenticationFilterRegistrationBean(EnvironmentProperties properties) {
         FilterRegistrationBean<OidcAuthenticationFilter> registration = new FilterRegistrationBean<>();
         OidcAuthenticationFilter authenticationFilter = new OidcAuthenticationFilter(
                 fromConfigs(
-                        openAmAuthConfig(properties),
                         azureAdAuthConfig(properties)
                 )
         );
@@ -63,7 +51,7 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean setStandardHeadersFilterRegistrationBean() {
+    public FilterRegistrationBean<SetStandardHttpHeadersFilter> setStandardHeadersFilterRegistrationBean() {
         FilterRegistrationBean<SetStandardHttpHeadersFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new SetStandardHttpHeadersFilter());
         registration.setOrder(3);

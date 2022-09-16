@@ -1,12 +1,12 @@
 package no.nav.veilarboppgave.config;
 
+import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.client.aktoroppslag.CachedAktorOppslagClient;
 import no.nav.common.client.aktoroppslag.PdlAktorOppslagClient;
 import no.nav.common.client.norg2.CachedNorg2Client;
 import no.nav.common.client.norg2.Norg2Client;
 import no.nav.common.client.norg2.NorgHttp2Client;
-import no.nav.common.client.pdl.PdlClientImpl;
-import no.nav.common.sts.SystemUserTokenProvider;
+import no.nav.common.token_client.client.MachineToMachineTokenClient;
 import no.nav.common.utils.EnvironmentUtils;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClient;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClientImpl;
@@ -31,17 +31,19 @@ import static no.nav.veilarboppgave.config.DownstreamApis.downstreamVeilarbperso
 public class ClientConfig {
 
     @Bean
-    public CachedAktorOppslagClient aktorOppslagClient(SystemUserTokenProvider systemUserTokenProvider) {
+    public CachedAktorOppslagClient aktorOppslagClient(MachineToMachineTokenClient tokenClient) {
         String url = isProduction()
                 ? createProdInternalIngressUrl("pdl-api")
-                : createDevInternalIngressUrl("pdl-api-q1");
+                : createDevInternalIngressUrl("pdl-api");
+        String tokenScope = String.format("api://%s.pdl.pdl-api/.default",
+                isProduction() ? "prod-fss" : "dev-fss");
 
-        PdlClientImpl pdlClient = new PdlClientImpl(
+        AktorOppslagClient aktorOppslagClient = new PdlAktorOppslagClient(
                 url,
-                systemUserTokenProvider::getSystemUserToken,
-                systemUserTokenProvider::getSystemUserToken);
+                () -> tokenClient.createMachineToMachineToken(tokenScope)
+        );
 
-        return new CachedAktorOppslagClient(new PdlAktorOppslagClient(pdlClient));
+        return new CachedAktorOppslagClient(aktorOppslagClient);
     }
 
     @Bean
