@@ -28,6 +28,8 @@ public class EnvironmentProperties {
 
     private String abacUrl;
 
+    private String unleashUrl;
+
     private String norg2Url;
 
     private String aktorregisterUrl;

@@ -25,6 +25,7 @@ public class AuthService {
     private final AuthContextHolder authContextHolder;
 
     public void sjekkLesetilgangMedAktorId(AktorId aktorId) {
+//
         if (!veilarbPep.harTilgangTilPerson(getInnloggetBrukerToken(), ActionId.READ, aktorId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

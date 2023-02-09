@@ -6,6 +6,8 @@ import no.nav.common.client.aktoroppslag.PdlAktorOppslagClient;
 import no.nav.common.client.norg2.CachedNorg2Client;
 import no.nav.common.client.norg2.Norg2Client;
 import no.nav.common.client.norg2.NorgHttp2Client;
+import no.nav.common.featuretoggle.UnleashClient;
+import no.nav.common.featuretoggle.UnleashClientImpl;
 import no.nav.common.token_client.client.MachineToMachineTokenClient;
 import no.nav.common.utils.EnvironmentUtils;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClient;
@@ -15,6 +17,8 @@ import no.nav.veilarboppgave.client.oppgave.OppgaveClientImpl;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClientImpl;
 import no.nav.veilarboppgave.service.ContextAwareService;
+import no.nav.veilarboppgave.service.UnleashService;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +32,7 @@ import static no.nav.veilarboppgave.config.DownstreamApis.downstreamOppgave;
 import static no.nav.veilarboppgave.config.DownstreamApis.downstreamVeilarbperson;
 
 @Configuration
+@EnableConfigurationProperties({EnvironmentProperties.class})
 public class ClientConfig {
 
     @Bean
@@ -77,6 +82,11 @@ public class ClientConfig {
         );
         return new VeilarbpersonClientImpl(naisPreprodOrNaisAdeoIngress("veilarbperson", true), userTokenSupplier);
     }
+
+    @Bean
+    public UnleashClient unleashClient(EnvironmentProperties properties) {
+        return new UnleashClientImpl(properties.getUnleashUrl(), ApplicationConfig.APPLICATION_NAME);
+    };
 
     private static String naisPreprodOrNaisAdeoIngress(String appName, boolean withAppContextPath) {
         return EnvironmentUtils.isDevelopment().orElse(false)
