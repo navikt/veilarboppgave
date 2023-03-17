@@ -19,8 +19,21 @@
 
     <properties>
         <java.version>11</java.version>
-        <common.version>2.2022.09.15_07.46-e4fa96eb6813</common.version>
+        <common.version>2.2022.11.16_08.36-35c94368bc44</common.version>
+
     </properties>
+
+    <repositories>
+        <!-- Legger til central eksplisitt for prioritet over jitpack -->
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -206,6 +219,11 @@
             <groupId>no.nav.common</groupId>
             <artifactId>feature-toggle</artifactId>
             <version>2.2022.10.28_07.58-948a0174f7b3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.navikt.poao-tilgang</groupId>
+            <artifactId>client</artifactId>
+            <version>2023.02.14_14.26-93d678a1fbe6</version>
         </dependency>
     </dependencies>
 
