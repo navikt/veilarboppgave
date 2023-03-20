@@ -10,12 +10,10 @@ import no.nav.common.auth.context.AuthContextHolderThreadLocal;
 import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
-import no.nav.poao_tilgang.client.Decision;
-import no.nav.poao_tilgang.client.NavAnsattTilgangTilEksternBrukerPolicyInput;
-import no.nav.poao_tilgang.client.PoaoTilgangClient;
-import no.nav.poao_tilgang.client.TilgangType;
+import no.nav.poao_tilgang.client.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -28,7 +26,6 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-
     private final Pep veilarbPep;
 
     private final AktorOppslagClient aktorOppslagClient;
@@ -36,7 +33,7 @@ public class AuthService {
     private final PoaoTilgangClient poaoTilgangClient;
     private final UnleashService unleashService;
 
-    public Decision harTilgangTilPerson(Fnr fnr) {
+    public Decision harTilgangTilPersonPoaoTilgang(Fnr fnr) {
         return poaoTilgangClient.evaluatePolicy(new NavAnsattTilgangTilEksternBrukerPolicyInput(
                 hentInnloggetVeilederUUID(authContextHolder),
                 TilgangType.LESE,
@@ -45,7 +42,10 @@ public class AuthService {
     }
     public void sjekkLesetilgangMedAktorId(AktorId aktorId) {
         if (unleashService.isPoaoTilgangEnabled()) {
-            harTilgangTilPerson(getFnrOrThrow(aktorId));
+            var decision = harTilgangTilPersonPoaoTilgang(getFnrOrThrow(aktorId));
+            if (decision.isDeny()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
         } else {
             if (!veilarbPep.harTilgangTilPerson(getInnloggetBrukerToken(), ActionId.READ, aktorId)) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);

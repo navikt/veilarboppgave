@@ -36,4 +36,10 @@ public class EnvironmentProperties {
 
     private String dbUrl;
 
+    private String unleashUrl;
+
+    private String poaoTilgangUrl;
+
+    private String poaoTilgangScope;
+
 }
