@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
+        <version>3.0.4</version>
         <relativePath/>
     </parent>
 
@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <common.version>2023.01.27_14.56-b6b8e613bd9d</common.version>
+        <common.version>3.2023.04.11_09.05-411b59915166</common.version>
     </properties>
 
     <build>
@@ -56,12 +56,12 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.11</version>
+            <version>1.7.0</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>3.4.5</version>
+            <version>5.0.1</version>
         </dependency>
 
         <dependency>
@@ -91,7 +91,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>7.15.0</version>
+            <version>9.16.0</version>
         </dependency>
         <dependency>
             <groupId>no.nav</groupId>
@@ -165,7 +165,7 @@
         <dependency>
             <groupId>no.bekk.bekkopen</groupId>
             <artifactId>nocommons</artifactId>
-            <version>0.6</version>
+            <version>0.15.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -177,7 +177,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.16.3</version>
+            <version>1.17.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -208,7 +208,6 @@
             <version>2023.03.15_13.26-d286fc9239c3</version>
         </dependency>
     </dependencies>
-
     <repositories>
         <!-- Legger til central eksplisitt for prioritet over jitpack -->
         <repository>
@@ -220,4 +219,5 @@
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
+
 </project>

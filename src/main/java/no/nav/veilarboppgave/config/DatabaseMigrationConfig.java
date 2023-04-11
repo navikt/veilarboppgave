@@ -1,12 +1,12 @@
 package no.nav.veilarboppgave.config;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.common.utils.EnvironmentUtils;
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import static java.lang.String.format;
