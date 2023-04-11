@@ -41,6 +41,11 @@ spec:
           cluster: dev-gcp
   envFrom:
     - configmap: pto-config
+  env:
+    - name: POAO_TILGANG_URL
+      value: https://poao-tilgang.dev.intern.nav.no
+    - name: POAO_TILGANG_SCOPE
+      value: api://dev-gcp.poao.poao-tilgang/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
