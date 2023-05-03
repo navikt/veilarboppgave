@@ -41,9 +41,9 @@ spec:
     - configmap: pto-config
   env:
     - name: POAO_TILGANG_URL
-      value: https://poao-tilgang.intern.nav.no
+      value: http://poao-tilgang.poao.svc.nais.local
     - name: POAO_TILGANG_SCOPE
-      value: api://prod-gcp.poao.poao-tilgang/.default
+      value: api://prod-fss.poao.poao-tilgang/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
