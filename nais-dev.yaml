@@ -43,7 +43,7 @@ spec:
     - configmap: pto-config
   env:
     - name: POAO_TILGANG_URL
-      value: https://poao-tilgang.dev.intern.nav.no
+      value: https://poao-tilgang.intern.dev.nav.no
     - name: POAO_TILGANG_SCOPE
       value: api://dev-gcp.poao.poao-tilgang/.default
   prometheus:
