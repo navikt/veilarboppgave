@@ -1,4 +1,4 @@
-package no.nav.veilarboppgave.controller;
+package no.nav.veilarboppgave.controller.v1;
 
 import lombok.RequiredArgsConstructor;
 import no.nav.common.types.identer.AktorId;
