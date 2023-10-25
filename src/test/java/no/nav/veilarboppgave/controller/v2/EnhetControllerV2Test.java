@@ -1,6 +1,6 @@
-package no.nav.veilarboppgave.controller;
+package no.nav.veilarboppgave.controller.v2;
 
-import no.nav.common.types.identer.Fnr;
+import no.nav.veilarboppgave.domain.EnheterRequest;
 import no.nav.veilarboppgave.domain.TemaDTO;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.EnheterService;
@@ -12,22 +12,22 @@ import org.springframework.web.server.ResponseStatusException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class EnhetControllerTest {
+public class EnhetControllerV2Test {
 
-    private EnheterController enheterController;
+    private EnheterControllerV2 enheterControllerV2;
     private AuthService authServiceMock;
 
     @BeforeEach
     public void setUp() {
         authServiceMock = mock(AuthService.class);
-        enheterController = new EnheterController(mock(EnheterService.class), authServiceMock);
+        enheterControllerV2 = new EnheterControllerV2(mock(EnheterService.class), authServiceMock);
     }
 
     @Test
     public void skal_sjekke_tilgang() {
-        Fnr fnr = TestData.genererTilfeldigFnrUtenTilgang();
+        EnheterRequest enheterRequest = new EnheterRequest(TestData.genererTilfeldigFnrUtenTilgang());
 
-        enheterController.hentEnheter(fnr, TemaDTO.OPPFOLGING.name());
+        enheterControllerV2.hentEnheter(enheterRequest, TemaDTO.OPPFOLGING.name());
 
         verify(authServiceMock, atLeastOnce()).sjekkLesetilgangMedAktorId(any());
     }
@@ -35,8 +35,8 @@ public class EnhetControllerTest {
     @Test
     public void skal_kaste_exception_ved_validering_av_ugyldig_tema() {
         assertThrows(ResponseStatusException.class, () -> {
-            Fnr fnr = TestData.genererTilfeldigFnrMedTilgang();
-            enheterController.hentEnheter(fnr, "UGYLDIG_TEMA");
+            EnheterRequest enheterRequest = new EnheterRequest(TestData.genererTilfeldigFnrMedTilgang());
+            enheterControllerV2.hentEnheter(enheterRequest, "UGYLDIG_TEMA");
         });
     }
 }

@@ -1,8 +1,9 @@
-package no.nav.veilarboppgave.controller;
+package no.nav.veilarboppgave.controller.v1;
 
 
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
+import no.nav.veilarboppgave.controller.v1.OppgavehistorikkController;
 import no.nav.veilarboppgave.domain.Oppgavehistorikk;
 import no.nav.veilarboppgave.domain.OppgavehistorikkDTO;
 import no.nav.veilarboppgave.repositoyry.OppgavehistorikkRepository;

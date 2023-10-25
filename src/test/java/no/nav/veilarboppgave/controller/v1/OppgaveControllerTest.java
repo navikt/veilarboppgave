@@ -1,5 +1,6 @@
-package no.nav.veilarboppgave.controller;
+package no.nav.veilarboppgave.controller.v1;
 
+import no.nav.veilarboppgave.controller.v1.OppgaveController;
 import no.nav.veilarboppgave.domain.OppgaveDTO;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.OppgaveService;
