@@ -29,6 +29,7 @@ public class EnheterController {
     private final EnheterService enheterService;
     private final AuthService authService;
 
+    @Deprecated(forRemoval = true)
     @GetMapping
     public List<OppfolgingEnhet> hentEnheter(@RequestParam("fnr") Fnr fnr, @RequestParam("tema") String tema) {
         AktorId aktorid = authService.getAktorIdOrThrow(fnr);

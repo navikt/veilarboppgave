@@ -1,5 +1,6 @@
 package no.nav.veilarboppgave.controller.v2;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
@@ -16,13 +17,14 @@ import static no.nav.veilarboppgave.util.OppgaveUtils.tilTemaDto;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v2/enheter")
+@RequestMapping("/api/v2")
 public class EnheterControllerV2 {
 
     private final EnheterService enheterService;
     private final AuthService authService;
 
-    @PostMapping
+    @PostMapping("/hent-enheter")
+    @Operation(summary = "Hent enheter")
     public List<OppfolgingEnhet> hentEnheter(@RequestBody EnheterRequest enheterRequest, @RequestParam("tema") String tema) {
         Fnr fnr = enheterRequest.fnr();
         AktorId aktorid = authService.getAktorIdOrThrow(fnr);
