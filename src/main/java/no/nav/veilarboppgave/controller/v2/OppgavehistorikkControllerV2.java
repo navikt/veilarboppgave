@@ -1,5 +1,6 @@
 package no.nav.veilarboppgave.controller.v2;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.nav.common.types.identer.AktorId;
 import no.nav.veilarboppgave.domain.Oppgavehistorikk;
@@ -15,13 +16,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v2/oppgavehistorikk")
+@RequestMapping("/api/v2")
 public class OppgavehistorikkControllerV2 {
 
     private final AuthService authService;
     private final OppgavehistorikkService oppgavehistorikkService;
 
-    @PostMapping
+    @PostMapping("/hent-oppgavehistorikk")
+    @Operation(summary = "Hent oppgavehistorikk")
     public List<Oppgavehistorikk> getOppgavehistorikk(@RequestBody OppgavehistorikkRequest oppgavehistorikkRequest) {
         AktorId aktorId = authService.getAktorIdOrThrow(oppgavehistorikkRequest.fnr());
 
