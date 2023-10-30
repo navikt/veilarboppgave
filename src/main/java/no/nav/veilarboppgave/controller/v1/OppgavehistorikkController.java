@@ -21,6 +21,7 @@ public class OppgavehistorikkController {
     private final AuthService authService;
     private final OppgavehistorikkService oppgavehistorikkService;
 
+    @Deprecated(forRemoval = true)
     @GetMapping
     public List<Oppgavehistorikk> getOppgavehistorikk(@RequestParam("fnr") Fnr fnr) {
         AktorId aktorId = authService.getAktorIdOrThrow(fnr);
