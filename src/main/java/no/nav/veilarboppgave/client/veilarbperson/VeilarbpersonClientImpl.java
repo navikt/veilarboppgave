@@ -12,11 +12,9 @@ import no.nav.common.utils.UrlUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import static no.nav.common.utils.UrlUtils.joinPaths;
-import static no.nav.veilarboppgave.util.RestUtils.bearerTokenFromSupplier;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -40,9 +38,10 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
     @Override
     public Personalia hentPersonalia(Fnr fnr) {
         Request request = new Request.Builder()
-                .url(joinPaths(veilarbpersonUrl, "api/v2/person?fnr=") + fnr)
+                .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, userTokenSupplier.get())
+                .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr)))
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -61,4 +60,6 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         String geografiskTilknytning;
     }
 
+    private record PersonRequest(Fnr fnr) {
+    }
 }
