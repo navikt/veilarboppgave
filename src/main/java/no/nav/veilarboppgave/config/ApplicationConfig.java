@@ -2,20 +2,13 @@ package no.nav.veilarboppgave.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import no.nav.common.abac.Pep;
-import no.nav.common.abac.VeilarbPepFactory;
-import no.nav.common.abac.audit.SpringAuditRequestInfoSupplier;
 import no.nav.common.auth.context.AuthContextHolder;
 import no.nav.common.auth.context.AuthContextHolderThreadLocal;
-import no.nav.common.featuretoggle.UnleashClient;
-import no.nav.common.featuretoggle.UnleashClientImpl;
 import no.nav.common.rest.client.RestClient;
 import no.nav.common.token_client.builder.AzureAdTokenClientBuilder;
 import no.nav.common.token_client.client.AzureAdMachineToMachineTokenClient;
 import no.nav.common.token_client.client.AzureAdOnBehalfOfTokenClient;
-import no.nav.common.utils.Credentials;
 import no.nav.poao_tilgang.client.*;
-import no.nav.veilarboppgave.service.UnleashService;
 import no.nav.veilarboppgave.util.DbUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +19,6 @@ import javax.sql.DataSource;
 import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
-
-import static no.nav.common.utils.NaisUtils.getCredentials;
 
 @EnableConfigurationProperties({EnvironmentProperties.class})
 @Configuration
@@ -53,14 +44,6 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Pep veilarbPep(EnvironmentProperties properties) {
-        Credentials serviceUserCredentials = getCredentials("service_user");
-        return VeilarbPepFactory.get(
-                properties.getAbacUrl(), serviceUserCredentials.username,
-                serviceUserCredentials.password, new SpringAuditRequestInfoSupplier());
-    }
-
-    @Bean
     public AuthContextHolder authContextHolder() {
         return AuthContextHolderThreadLocal.instance();
     }
@@ -75,11 +58,6 @@ public class ApplicationConfig {
     @Bean
     public DataSource dataSource(EnvironmentProperties properties) {
         return DbUtils.createDataSource(properties.getDbUrl());
-    }
-
-    @Bean
-    public UnleashClient unleashClient(EnvironmentProperties properties) {
-        return new UnleashClientImpl(properties.getUnleashUrl(), APPLICATION_NAME);
     }
 
     @Bean

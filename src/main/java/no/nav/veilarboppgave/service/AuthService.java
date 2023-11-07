@@ -3,8 +3,6 @@ package no.nav.veilarboppgave.service;
 import com.nimbusds.jwt.JWTClaimsSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import no.nav.common.abac.Pep;
-import no.nav.common.abac.domain.request.ActionId;
 import no.nav.common.auth.context.AuthContextHolder;
 import no.nav.common.auth.context.AuthContextHolderThreadLocal;
 import no.nav.common.client.aktoroppslag.AktorOppslagClient;
@@ -13,7 +11,6 @@ import no.nav.common.types.identer.Fnr;
 import no.nav.poao_tilgang.client.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -26,12 +23,10 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-    private final Pep veilarbPep;
 
     private final AktorOppslagClient aktorOppslagClient;
     private final AuthContextHolder authContextHolder;
     private final PoaoTilgangClient poaoTilgangClient;
-    private final UnleashService unleashService;
 
     public Decision harTilgangTilPersonPoaoTilgang(Fnr fnr) {
         return poaoTilgangClient.evaluatePolicy(new NavAnsattTilgangTilEksternBrukerPolicyInput(
@@ -41,15 +36,9 @@ public class AuthService {
         ).getOrThrow();
     }
     public void sjekkLesetilgangMedAktorId(AktorId aktorId) {
-        if (unleashService.isPoaoTilgangEnabled()) {
-            var decision = harTilgangTilPersonPoaoTilgang(getFnrOrThrow(aktorId));
-            if (decision.isDeny()) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-            }
-        } else {
-            if (!veilarbPep.harTilgangTilPerson(getInnloggetBrukerToken(), ActionId.READ, aktorId)) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-            }
+        var decision = harTilgangTilPersonPoaoTilgang(getFnrOrThrow(aktorId));
+        if (decision.isDeny()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -59,9 +48,6 @@ public class AuthService {
 
     public Fnr getFnrOrThrow(AktorId aktorId){
         return aktorOppslagClient.hentFnr(aktorId);
-    }
-    public String getInnloggetBrukerToken() {
-        return authContextHolder.getIdTokenString().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Fant ikke token for innlogget bruker"));
     }
 
     // NAV ident, fnr eller annen ID
