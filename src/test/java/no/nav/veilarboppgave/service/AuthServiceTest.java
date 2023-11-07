@@ -1,7 +1,6 @@
 package no.nav.veilarboppgave.service;
 
 import com.nimbusds.jwt.JWTClaimsSet;
-import no.nav.common.abac.VeilarbPep;
 import no.nav.common.auth.context.AuthContextHolder;
 import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.types.identer.AktorId;
@@ -24,16 +23,13 @@ public class AuthServiceTest {
     private AuthService authService;
     private AuthContextHolder authContextHolder = mock(AuthContextHolder.class);
     private final PoaoTilgangClient poaoTilgangClient = mock(PoaoTilgangClient.class);
-    private final UnleashService unleashService = mock(UnleashService.class);
 
     @BeforeEach
     public void setUp() {
         authService = new AuthService(
-                mock(VeilarbPep.class),
                 mock(AktorOppslagClient.class),
                 authContextHolder,
-                poaoTilgangClient,
-                unleashService);
+                poaoTilgangClient);
     }
 
     @Test
@@ -44,7 +40,6 @@ public class AuthServiceTest {
         JWTClaimsSet claims = TestUtils.getJwtClaimsSet(navIdent, FNR);
         ApiResult apiresult = new ApiResult<>(null, Decision.Permit.INSTANCE);
 
-        when(unleashService.isPoaoTilgangEnabled()).thenReturn(true);
         when(authService.getFnrOrThrow(any())).thenReturn(FNR);
         when(authContextHolder.getIdTokenClaims()).thenReturn(Optional.of(claims));
         when(poaoTilgangClient.evaluatePolicy(any())).thenReturn(apiresult);
