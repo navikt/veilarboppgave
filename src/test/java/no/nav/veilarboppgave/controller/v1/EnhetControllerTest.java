@@ -37,7 +37,7 @@ public class EnhetControllerTest {
     public void skal_kaste_exception_ved_validering_av_ugyldig_tema() {
         assertThrows(ResponseStatusException.class, () -> {
             Fnr fnr = TestData.genererTilfeldigFnrMedTilgang();
-            enheterController.hentEnheter(fnr, "UGYLDIG_TEMA");
+            enheterController.hentEnheter(fnr,  "UGYLDIG_TEMA");
         });
     }
 }

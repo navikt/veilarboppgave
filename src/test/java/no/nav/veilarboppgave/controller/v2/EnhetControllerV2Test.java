@@ -25,7 +25,7 @@ public class EnhetControllerV2Test {
 
     @Test
     public void skal_sjekke_tilgang() {
-        EnheterRequest enheterRequest = new EnheterRequest(TestData.genererTilfeldigFnrUtenTilgang());
+        EnheterRequest enheterRequest = new EnheterRequest(TestData.genererTilfeldigFnrUtenTilgang(), null);
 
         enheterControllerV2.hentEnheter(enheterRequest, TemaDTO.OPPFOLGING.name());
 
@@ -35,7 +35,7 @@ public class EnhetControllerV2Test {
     @Test
     public void skal_kaste_exception_ved_validering_av_ugyldig_tema() {
         assertThrows(ResponseStatusException.class, () -> {
-            EnheterRequest enheterRequest = new EnheterRequest(TestData.genererTilfeldigFnrMedTilgang());
+            EnheterRequest enheterRequest = new EnheterRequest(TestData.genererTilfeldigFnrMedTilgang(), null);
             enheterControllerV2.hentEnheter(enheterRequest, "UGYLDIG_TEMA");
         });
     }
