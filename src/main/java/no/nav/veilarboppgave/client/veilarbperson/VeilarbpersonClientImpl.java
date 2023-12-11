@@ -41,8 +41,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
                 .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, userTokenSupplier.get())
-                .header("behandlingsnummer", behandlingsnummer)
-                .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr)))
+                .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr, behandlingsnummer)))
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -61,6 +60,6 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         String geografiskTilknytning;
     }
 
-    private record PersonRequest(Fnr fnr) {
+    private record PersonRequest(Fnr fnr, String behandlingsnummer) {
     }
 }
