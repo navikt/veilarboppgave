@@ -36,12 +36,12 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
 
     @SneakyThrows
     @Override
-    public Personalia hentPersonalia(Fnr fnr) {
+    public Personalia hentPersonalia(Fnr fnr, String behandlingsnummer) {
         Request request = new Request.Builder()
                 .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, userTokenSupplier.get())
-                .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr)))
+                .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr, behandlingsnummer)))
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -60,6 +60,6 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         String geografiskTilknytning;
     }
 
-    private record PersonRequest(Fnr fnr) {
+    private record PersonRequest(Fnr fnr, String behandlingsnummer) {
     }
 }

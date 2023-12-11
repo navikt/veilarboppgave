@@ -14,8 +14,8 @@ public class PersonService {
 
     private final VeilarbpersonClient veilarbpersonClient;
 
-    public Personalia hentPersonalia(Fnr fnr) {
-        return veilarbpersonClient.hentPersonalia(fnr);
+    public Personalia hentPersonalia(Fnr fnr, String behandlingsnummer) {
+        return veilarbpersonClient.hentPersonalia(fnr, behandlingsnummer);
     }
 
 }

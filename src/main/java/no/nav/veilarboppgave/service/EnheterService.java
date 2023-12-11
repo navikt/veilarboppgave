@@ -31,8 +31,8 @@ public class EnheterService {
 
     private final Norg2Client norg2Client;
 
-    public List<OppfolgingEnhet> hentEnheter(Fnr fnr, TemaDTO tema) {
-        Personalia personalia = personService.hentPersonalia(fnr);
+    public List<OppfolgingEnhet> hentEnheter(Fnr fnr, String behandlingsnummer, TemaDTO tema) {
+        Personalia personalia = personService.hentPersonalia(fnr, behandlingsnummer);
 
         if ("6".equals(personalia.getDiskresjonskode())) {
             ArbeidsfordelingKriterier kriterier = new ArbeidsfordelingKriterier();

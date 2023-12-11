@@ -38,7 +38,7 @@ public class EnheterController {
 
         Valider.validerTema(tema);
 
-        return enheterService.hentEnheter(fnr, tilTemaDto(tema));
+        return enheterService.hentEnheter(fnr, null, tilTemaDto(tema));
     }
 
 }
