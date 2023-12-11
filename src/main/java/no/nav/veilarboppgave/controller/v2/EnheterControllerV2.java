@@ -33,7 +33,7 @@ public class EnheterControllerV2 {
 
         Valider.validerTema(tema);
 
-        return enheterService.hentEnheter(fnr, tilTemaDto(tema));
+        return enheterService.hentEnheter(fnr, enheterRequest.behandlingsnummer(), tilTemaDto(tema));
     }
 
 }
