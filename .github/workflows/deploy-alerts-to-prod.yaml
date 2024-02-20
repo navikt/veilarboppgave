@@ -11,6 +11,7 @@ on:
 permissions:
   packages: write
   contents: write
+  id-token: write
 jobs:
   deploy-alerts:
     name: Deploy alerts to prod-fss
@@ -22,6 +23,5 @@ jobs:
       - name: Deploy to prod-fss
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY_OBO }}
           CLUSTER: prod-fss
           RESOURCE: .nais/alerts/alerts-config-prod.yaml
