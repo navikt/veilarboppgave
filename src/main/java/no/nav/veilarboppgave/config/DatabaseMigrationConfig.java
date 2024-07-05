@@ -27,7 +27,7 @@ public class DatabaseMigrationConfig {
 
         Flyway.configure()
                 .dataSource(dataSource)
-                .initSql(format("SET ROLE \"veilarboppgave-%s-admin\"", environment))
+                .initSql(format("SET ROLE \"veilarboppgave-pg15-%s-admin\"", environment))
                 .load()
                 .migrate();
     }
