@@ -27,3 +27,4 @@ Ny database må legges inn i terraform/teams/pto/apps/veilarboppgave.yml og i te
 5. I dev: Vault: Sjekk at url til ny database stemmer med det som er satt i database-iac. Gå inn i Secrets kv/preprod/fss og velg veilarboppgave , q1. 
 Hvis ikke VEILARBOPPGAVE_DB_URL er riktig, velg Edit secret og sett riktige verdier.
 6. Oppdater koden med riktig databasenavn, se f.eks https://github.com/navikt/veilarboppgave/pull/160/files
+
