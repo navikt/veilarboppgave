@@ -13,9 +13,20 @@ Interne henvendelser kan sendes via Slack i kanalen #po-arbeidsoppfølging.
 
 Dette repoet bruker GitHub Copilot til å generere kode.
 ## PostgreSQL
+
 Innloggingsinformasjon til databasen: https://vault.adeo.no/
 
-Dev: vault read postgresql/preprod-fss/creds/veilarboppgave-pg15-dev-admin
+## DB Creds
+
+Dev: 
+```console
+vault read postgresql/preprod-fss/creds/veilarboppgave-pg15-dev-admin
+```
+
+Prod: 
+```console
+vault read postgresql/prod-fss/creds/veilarboppgave-pg15-prod-readonly
+```
 
 Ting å passe på ved oppgradering av databasen:
 1. Lag PR i repo database-iac, eksempel https://github.com/navikt/database-iac/pull/592 Ny database får gjerne nytt navn, eks veilarboppgave-pg15
