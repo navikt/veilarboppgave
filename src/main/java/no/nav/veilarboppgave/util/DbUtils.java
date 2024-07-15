@@ -2,13 +2,8 @@ package no.nav.veilarboppgave.util;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.SneakyThrows;
-import no.nav.vault.jdbc.hikaricp.HikariCPVaultUtil;
 
 import javax.sql.DataSource;
-
-import static no.nav.common.utils.EnvironmentUtils.isProduction;
-import static no.nav.veilarboppgave.config.ApplicationConfig.APPLICATION_NAME;
 
 public class DbUtils {
 
