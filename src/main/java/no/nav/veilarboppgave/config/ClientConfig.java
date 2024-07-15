@@ -46,7 +46,7 @@ public class ClientConfig {
     public Norg2Client norg2Client(EnvironmentProperties properties) {
         String url = EnvironmentUtils.isDevelopment().orElse(false)
                 ? "https://norg2.dev-fss-pub.nais.io/norg2"
-                : "https://norg2.prod-fss-pub.nais.io";
+                : "https://norg2.prod-fss-pub.nais.io/norg2";
         return new CachedNorg2Client(new NorgHttp2Client(url));
     }
 
@@ -54,7 +54,7 @@ public class ClientConfig {
     public Norg2ArbeidsfordelingClient norg2ArbeidsfordelingClient(EnvironmentProperties properties) {
         String url = EnvironmentUtils.isDevelopment().orElse(false)
                 ? "https://norg2.dev-fss-pub.nais.io/norg2"
-                : "https://norg2.prod-fss-pub.nais.io";
+                : "https://norg2.prod-fss-pub.nais.io/norg2";
         return new Norg2ArbeidsfordelingClientImpl(url);
     }
 
