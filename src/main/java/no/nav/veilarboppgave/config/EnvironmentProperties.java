@@ -15,8 +15,6 @@ public class EnvironmentProperties {
 
     public String naisAadIssuer;
 
-    private String norg2Url;
-
     private String dbUrl;
 
     private String poaoTilgangUrl;

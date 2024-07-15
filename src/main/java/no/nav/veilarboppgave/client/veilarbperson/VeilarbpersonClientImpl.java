@@ -55,11 +55,6 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         return HealthCheckUtils.pingUrl(UrlUtils.joinPaths(this.veilarbpersonUrl, "/internal/isAlive"), this.client);
     }
 
-    @Data
-    private static class GeografiskTilknytningResponse {
-        String geografiskTilknytning;
-    }
-
     private record PersonRequest(Fnr fnr, String behandlingsnummer) {
     }
 }

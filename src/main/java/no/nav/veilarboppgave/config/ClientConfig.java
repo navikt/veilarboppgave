@@ -20,10 +20,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.function.Supplier;
 
-import static no.nav.common.utils.UrlUtils.createDevInternalIngressUrl;
-import static no.nav.common.utils.UrlUtils.createNaisAdeoIngressUrl;
-import static no.nav.common.utils.UrlUtils.createNaisPreprodIngressUrl;
-import static no.nav.common.utils.UrlUtils.createProdInternalIngressUrl;
 import static no.nav.veilarboppgave.config.DownstreamApis.downstreamOppgave;
 import static no.nav.veilarboppgave.config.DownstreamApis.downstreamVeilarbperson;
 
@@ -32,9 +28,9 @@ public class ClientConfig {
 
     @Bean
     public CachedAktorOppslagClient aktorOppslagClient(MachineToMachineTokenClient tokenClient) {
-        String url = isProduction()
-                ? createProdInternalIngressUrl("pdl-api")
-                : createDevInternalIngressUrl("pdl-api");
+        String url = EnvironmentUtils.isDevelopment().orElse(false)
+                ? "https://pdl-api.dev-fss-pub.nais.io"
+                : "https://pdl-api.prod-fss-pub.nais.io";
         String tokenScope = String.format("api://%s.pdl.pdl-api/.default",
                 isProduction() ? "prod-fss" : "dev-fss");
 
@@ -48,12 +44,18 @@ public class ClientConfig {
 
     @Bean
     public Norg2Client norg2Client(EnvironmentProperties properties) {
-        return new CachedNorg2Client(new NorgHttp2Client(properties.getNorg2Url()));
+        String url = EnvironmentUtils.isDevelopment().orElse(false)
+                ? "https://norg2.dev-fss-pub.nais.io"
+                : "https://norg2.prod-fss-pub.nais.io";
+        return new CachedNorg2Client(new NorgHttp2Client(url));
     }
 
     @Bean
     public Norg2ArbeidsfordelingClient norg2ArbeidsfordelingClient(EnvironmentProperties properties) {
-        return new Norg2ArbeidsfordelingClientImpl(properties.getNorg2Url());
+        String url = EnvironmentUtils.isDevelopment().orElse(false)
+                ? "https://norg2.dev-fss-pub.nais.io"
+                : "https://norg2.prod-fss-pub.nais.io";
+        return new Norg2ArbeidsfordelingClientImpl(url);
     }
 
     @Bean
@@ -63,8 +65,8 @@ public class ClientConfig {
                 downstreamOppgave(safCluster)
         );
         String url = EnvironmentUtils.isDevelopment().orElse(false)
-                ? "https://oppgave.nais.preprod.local"
-                : createNaisAdeoIngressUrl("oppgave", false);
+                ? "https://oppgave-q1.dev-fss-pub.nais.io"
+                : "https://oppgave.prod-fss-pub.nais.io";
 
         return new OppgaveClientImpl(url, userTokenSupplier);
     }
@@ -75,13 +77,11 @@ public class ClientConfig {
         Supplier<String> userTokenSupplier = contextAwareService.contextAwareUserTokenSupplier(
                 downstreamVeilarbperson(safCluster)
         );
-        return new VeilarbpersonClientImpl(naisPreprodOrNaisAdeoIngress("veilarbperson", true), userTokenSupplier);
-    }
+        String url = EnvironmentUtils.isDevelopment().orElse(false)
+                ? "https://veilarbperson.dev-fss-pub.nais.io/veilarbperson"
+                : "https://veilarbperson.prod-fss-pub.nais.io/veilarbperson";
 
-    private static String naisPreprodOrNaisAdeoIngress(String appName, boolean withAppContextPath) {
-        return EnvironmentUtils.isDevelopment().orElse(false)
-                ? createNaisPreprodIngressUrl(appName, "q1", withAppContextPath)
-                : createNaisAdeoIngressUrl(appName, withAppContextPath);
+        return new VeilarbpersonClientImpl(url, userTokenSupplier);
     }
 
     private static boolean isProduction() {
