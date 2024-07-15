@@ -15,6 +15,12 @@ spec:
   webproxy: true
   ingresses:
     - https://veilarboppgave.intern.dev.nav.no
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_15
+        databases:
+          - name: veilarboppgave
+            envVarPrefix: DB
   azure:
     application:
       allowAllUsers: true
