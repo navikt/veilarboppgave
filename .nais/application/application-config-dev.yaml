@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarboppgave
-  namespace: pto
+  namespace: obo
   labels:
-    team: pto
+    team: obo
 spec:
   image: {{image}}
   replicas:
@@ -14,18 +14,13 @@ spec:
   port: 8080
   webproxy: true
   ingresses:
-    - https://veilarboppgave-q1.nais.preprod.local
-    - https://app.dev.adeo.no/veilarboppgave
-    - https://app-q1.dev.adeo.no/veilarboppgave
-    - https://app-q1.adeo.no/veilarboppgave
-    - https://veilarboppgave.dev-fss-pub.nais.io
-  vault:
-    enabled: true
-    paths:
-      - kvPath: /serviceuser/data/dev/srvveilarboppgave
-        mountPath: /var/run/secrets/nais.io/service_user
-      - kvPath: /kv/preprod/fss/veilarboppgave/q1
-        mountPath: /var/run/secrets/nais.io/vault
+    - https://veilarboppgave.intern.dev.nav.no
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_15
+        databases:
+          - name: veilarboppgave
+            envVarPrefix: DB
   azure:
     application:
       allowAllUsers: true
@@ -38,17 +33,13 @@ spec:
       rules:
         - application: veilarbpersonflate
           namespace: poao
-          cluster: dev-gcp
         - application: azure-token-generator
           namespace: aura
-          cluster: dev-gcp
-  envFrom:
-    - configmap: pto-config
   env:
     - name: POAO_TILGANG_URL
-      value: http://poao-tilgang.poao.svc.nais.local
+      value: http://poao-tilgang.poao
     - name: POAO_TILGANG_SCOPE
-      value: api://dev-fss.poao.poao-tilgang/.default
+      value: api://dev-gcp.poao.poao-tilgang/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
