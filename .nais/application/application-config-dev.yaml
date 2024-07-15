@@ -35,6 +35,12 @@ spec:
           namespace: poao
         - application: azure-token-generator
           namespace: aura
+    outbound:
+      external:
+        - host: https://pdl-api.dev-fss-pub.nais.io
+        - host: https://norg2.dev-fss-pub.nais.io
+        - host: https://oppgave-q1.dev-fss-pub.nais.io
+        - host: https://veilarbperson.dev-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
       value: http://poao-tilgang.poao
