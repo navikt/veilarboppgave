@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.nav.common.types.identer.AktorId;
 import no.nav.common.types.identer.Fnr;
-import no.nav.veilarboppgave.domain.EnheterRequest;
 import no.nav.veilarboppgave.domain.OppfolgingEnhet;
 import no.nav.veilarboppgave.service.AuthService;
 import no.nav.veilarboppgave.service.EnheterService;
