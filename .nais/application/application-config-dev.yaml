@@ -29,8 +29,6 @@ spec:
           namespace: poao
         - application: azure-token-generator
           namespace: aura
-  envFrom:
-    - configmap: pto-config
   env:
     - name: POAO_TILGANG_URL
       value: http://poao-tilgang.poao
