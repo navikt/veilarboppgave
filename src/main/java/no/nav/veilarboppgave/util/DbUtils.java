@@ -1,6 +1,7 @@
 package no.nav.veilarboppgave.util;
 
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.SneakyThrows;
 import no.nav.vault.jdbc.hikaricp.HikariCPVaultUtil;
 
@@ -13,7 +14,7 @@ public class DbUtils {
 
     public static DataSource createDataSource(String dbUrl) {
         HikariConfig config = createDataSourceConfig(dbUrl);
-        return createVaultRefreshDataSource(config);
+        return new HikariDataSource(config);
     }
 
     public static HikariConfig createDataSourceConfig(String dbUrl) {
@@ -22,19 +23,6 @@ public class DbUtils {
         config.setMaximumPoolSize(5);
         config.setMinimumIdle(1);
         return config;
-    }
-
-    @SneakyThrows
-    private static DataSource createVaultRefreshDataSource(HikariConfig config) {
-        String environment = isProduction().orElse(false) ? "prod" : "dev";
-        String role = String.join("-", APPLICATION_NAME, "pg15", environment, "admin");
-
-        return HikariCPVaultUtil.createHikariDataSourceWithVaultIntegration(config, getMountPath(), role);
-    }
-
-    private static String getMountPath() {
-        boolean isProd = isProduction().orElse(false);
-        return "postgresql/" + (isProd ? "prod-fss" : "preprod-fss");
     }
 
 }
