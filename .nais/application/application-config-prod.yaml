@@ -35,10 +35,10 @@ spec:
           namespace: poao
     outbound:
       external:
-        - host: https://pdl-api.prod-fss-pub.nais.io
-        - host: https://norg2.prod-fss-pub.nais.io
-        - host: https://oppgave.dev-fss-pub.nais.io
-        - host: https://veilarbperson.prod-fss-pub.nais.io
+        - host: pdl-api.prod-fss-pub.nais.io
+        - host: norg2.prod-fss-pub.nais.io
+        - host: oppgave.dev-fss-pub.nais.io
+        - host: veilarbperson.prod-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
       value: http://poao-tilgang.poao
