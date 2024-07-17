@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 public class OppgavehistorikkControllerTest {
 
-    private AuthService authService = mock(AuthService.class);
+    private final AuthService authService = mock(AuthService.class);
 
     private OppgavehistorikkRepository oppgavehistorikkRepository;
 

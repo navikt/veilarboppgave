@@ -4,44 +4,37 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 
 import javax.sql.DataSource;
 
 public class PostgresContainer {
 
-    private final static String DB_IMAGE = "postgres:11.5";
-    private final static String DB_USER = "postgres";
-    private final static int DB_PORT = 5432;
+    public static PostgreSQLContainer<?> postgreDBContainer = new PostgreSQLContainer<>("postgres:14.1-alpine");
 
-    private final GenericContainer container;
-
-    public PostgresContainer() {
-        container = new GenericContainer(DB_IMAGE).withExposedPorts(DB_PORT);
-        container.start(); // This will block until the container is started
+    static {
+        postgreDBContainer.setWaitStrategy(Wait.defaultWaitStrategy());
+        postgreDBContainer.start();
     }
 
     public void stopContainer() {
-        container.stop();
+        postgreDBContainer.stop();
     }
 
     public DataSource createDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(getDbContainerUrl());
+        config.setJdbcUrl(postgreDBContainer.getJdbcUrl());
+        config.setUsername(postgreDBContainer.getUsername());
+        config.setPassword(postgreDBContainer.getPassword());
+        config.setDriverClassName("org.postgresql.Driver");
         config.setMaximumPoolSize(3);
         config.setMinimumIdle(1);
-        config.setUsername(DB_USER);
-
         return new HikariDataSource(config);
     }
 
     public JdbcTemplate createJdbcTemplate() {
         return new JdbcTemplate(createDataSource());
-    }
-
-    private String getDbContainerUrl() {
-        String containerIp = container.getContainerIpAddress();
-        String containerPort = container.getFirstMappedPort().toString();
-        return String.format("jdbc:postgresql://%s:%s/postgres", containerIp, containerPort);
     }
 
 }

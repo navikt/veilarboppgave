@@ -23,11 +23,8 @@ public class DatabaseMigrationConfig {
     public void migrateDb() {
         log.info("Starting database migration...");
 
-        String environment = EnvironmentUtils.isDevelopment().orElse(true) ? "dev" : "prod";
-
         Flyway.configure()
                 .dataSource(dataSource)
-                .initSql(format("SET ROLE \"veilarboppgave-pg15-%s-admin\"", environment))
                 .load()
                 .migrate();
     }
