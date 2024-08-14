@@ -2,9 +2,9 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: veilarboppgave
-  namespace: pto
+  namespace: obo
   labels:
-    team: pto
+    team: obo
 spec:
   image: {{image}}
   replicas:
@@ -14,16 +14,14 @@ spec:
   port: 8080
   webproxy: true
   ingresses:
-    - https://veilarboppgave.nais.adeo.no
-    - https://app.adeo.no/veilarboppgave
-    - https://veilarboppgave.prod-fss-pub.nais.io
-  vault:
-    enabled: true
-    paths:
-      - kvPath: /serviceuser/data/prod/srvveilarboppgave
-        mountPath: /var/run/secrets/nais.io/service_user
-      - kvPath: /kv/prod/fss/veilarboppgave/default
-        mountPath: /var/run/secrets/nais.io/vault
+    - https://veilarboppgave.intern.nav.no
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_15
+        databases:
+          - name: veilarboppgave
+            envVarPrefix: DB
+            tier: db-custom-1-3840
   azure:
     application:
       allowAllUsers: true
@@ -36,14 +34,20 @@ spec:
       rules:
         - application: veilarbpersonflate
           namespace: poao
-          cluster: prod-gcp
-  envFrom:
-    - configmap: pto-config
+    outbound:
+      rules:
+        - application: poao-tilgang
+          namespace: poao
+      external:
+        - host: pdl-api.prod-fss-pub.nais.io
+        - host: norg2.prod-fss-pub.nais.io
+        - host: oppgave.prod-fss-pub.nais.io
+        - host: veilarbperson.prod-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
-      value: http://poao-tilgang.poao.svc.nais.local
+      value: http://poao-tilgang.poao
     - name: POAO_TILGANG_SCOPE
-      value: api://prod-fss.poao.poao-tilgang/.default
+      value: api://prod-gcp.poao.poao-tilgang/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus

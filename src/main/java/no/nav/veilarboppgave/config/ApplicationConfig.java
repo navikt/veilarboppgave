@@ -24,8 +24,6 @@ import java.util.UUID;
 @Configuration
 public class ApplicationConfig {
 
-    public static final String APPLICATION_NAME = "veilarboppgave";
-
     private final Cache<PolicyInput, Decision> policyInputToDecisionCache = Caffeine.newBuilder()
             .expireAfterWrite(Duration.ofMinutes(30))
             .build();

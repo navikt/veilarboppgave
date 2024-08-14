@@ -14,14 +14,14 @@ permissions:
   id-token: write
 jobs:
   deploy-alerts:
-    name: Deploy alerts to prod-fss
+    name: Deploy alerts to prod-gcp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy to prod-fss
+      - name: Deploy to prod-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: prod-fss
+          CLUSTER: prod-gcp
           RESOURCE: .nais/alerts/alerts-config-prod.yaml
