@@ -18,10 +18,10 @@ spec:
   gcp:
     sqlInstances:
       - type: POSTGRES_15
+        tier: db-custom-1-3840
         databases:
           - name: veilarboppgave
             envVarPrefix: DB
-            tier: db-custom-1-3840
   azure:
     application:
       allowAllUsers: true
