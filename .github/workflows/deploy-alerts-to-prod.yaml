@@ -1,4 +1,4 @@
-name: Deploy alerts for veilarboppgave to prod-fss
+name: Deploy alerts for veilarboppgave to prod-gcp
 
 on:
   push:
