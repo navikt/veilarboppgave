@@ -17,6 +17,7 @@ spec:
     - https://veilarboppgave.intern.dev.nav.no
   gcp:
     sqlInstances:
+      - tier: db-custom-1-3840
       - type: POSTGRES_15
         databases:
           - name: veilarboppgave
