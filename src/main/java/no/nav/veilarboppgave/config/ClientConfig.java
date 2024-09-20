@@ -1,12 +1,13 @@
 package no.nav.veilarboppgave.config;
 
+import no.nav.common.auth.context.AuthContextHolder;
 import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.client.aktoroppslag.CachedAktorOppslagClient;
 import no.nav.common.client.aktoroppslag.PdlAktorOppslagClient;
 import no.nav.common.client.norg2.CachedNorg2Client;
 import no.nav.common.client.norg2.Norg2Client;
 import no.nav.common.client.norg2.NorgHttp2Client;
-import no.nav.common.token_client.client.AzureAdMachineToMachineTokenClient;
+import no.nav.common.token_client.client.AzureAdOnBehalfOfTokenClient;
 import no.nav.common.token_client.client.MachineToMachineTokenClient;
 import no.nav.common.utils.EnvironmentUtils;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClient;
@@ -72,10 +73,10 @@ public class ClientConfig {
     }
 
     @Bean
-    public VeilarbpersonClient veilarbpersonClient(EnvironmentProperties properties, AzureAdMachineToMachineTokenClient tokenClient) {
+    public VeilarbpersonClient veilarbpersonClient(EnvironmentProperties properties, AzureAdOnBehalfOfTokenClient tokenClient, AuthContextHolder authContextHolder) {
         return new VeilarbpersonClientImpl(
                 properties.getVeilarbpersonUrl(),
-                () -> tokenClient.createMachineToMachineToken(properties.getVeilarbpersonScope())
+                () -> tokenClient.exchangeOnBehalfOfToken(properties.getVeilarbpersonScope(), authContextHolder.requireIdTokenString())
         );
     }
 
