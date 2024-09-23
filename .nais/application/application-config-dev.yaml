@@ -53,7 +53,7 @@ spec:
     - name: POAO_TILGANG_SCOPE
       value: api://dev-gcp.poao.poao-tilgang/.default
     - name: VEILARBPERSON_URL
-      value: http://veilarbperson.obo/veilarbperson
+      value: http://veilarbperson.obo
     - name: VEILARBPERSON_SCOPE
       value: api://dev-gcp.obo.veilarbperson/.default
   prometheus:
