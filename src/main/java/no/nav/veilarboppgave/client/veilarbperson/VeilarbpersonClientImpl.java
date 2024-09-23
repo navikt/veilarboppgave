@@ -38,7 +38,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
     @Override
     public Personalia hentPersonalia(Fnr fnr, String behandlingsnummer) {
         Request request = new Request.Builder()
-                .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person"))
+                .url(joinPaths(veilarbpersonUrl, "/veilarbperson/api/v3/hent-person"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, userTokenSupplier.get())
                 .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr, behandlingsnummer)))
