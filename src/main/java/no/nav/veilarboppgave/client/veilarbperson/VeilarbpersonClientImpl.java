@@ -40,7 +40,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         Request request = new Request.Builder()
                 .url(joinPaths(veilarbpersonUrl, "/veilarbperson/api/v3/hent-person"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, userTokenSupplier.get())
+                .header(AUTHORIZATION, "Bearer " + userTokenSupplier.get())
                 .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr, behandlingsnummer)))
                 .build();
 
