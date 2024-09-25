@@ -4,7 +4,7 @@ import no.nav.veilarboppgave.util.DownstreamApi;
 
 public class DownstreamApis {
     public static DownstreamApi downstreamVeilarbperson(String cluster){
-        return new DownstreamApi(cluster, "obo", "veilarbperson");
+        return new DownstreamApi(cluster, "pto", "veilarbperson");
     }
 
     public static DownstreamApi downstreamOppgave(String cluster){
