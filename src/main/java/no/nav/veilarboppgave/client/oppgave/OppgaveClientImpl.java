@@ -61,7 +61,7 @@ public class OppgaveClientImpl implements OppgaveClient {
         Request request = new Request.Builder()
                 .url(joinPaths(oppgaveUrl, "/api/v1/oppgaver"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, userTokenSupplier.get())
+                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .header("X-Correlation-Id", correlationId)
                 .post(RestUtils.toJsonRequestBody(opprettOppgaveRequest))
                 .build();
