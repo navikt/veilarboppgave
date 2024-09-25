@@ -61,6 +61,10 @@ spec:
       value: http://norg2.org/norg2
     - name: NORG2_SCOPE
       value: api://dev-gcp.org.norg2/.default
+    - name: OPPGAVE_URL
+      value: https://oppgave-q1.dev-fss-pub.nais.io
+    - name: OPPGAVE_SCOPE
+      value: api://dev-fss.oppgavehandtering.oppgave-q1/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
