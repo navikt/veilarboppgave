@@ -25,4 +25,6 @@ public class EnvironmentProperties {
 
     private String veilarbpersonScope;
 
+    private String norg2Url;
+
 }

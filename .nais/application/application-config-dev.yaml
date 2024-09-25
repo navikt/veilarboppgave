@@ -43,9 +43,10 @@ spec:
           namespace: poao
         - application: veilarbperson
           namespace: obo
+        - application: norg2
+          namespace: org
       external:
         - host: pdl-api.dev-fss-pub.nais.io
-        - host: norg2.dev-fss-pub.nais.io
         - host: oppgave-q1.dev-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
@@ -56,6 +57,8 @@ spec:
       value: http://veilarbperson.obo/veilarbperson
     - name: VEILARBPERSON_SCOPE
       value: api://dev-gcp.obo.veilarbperson/.default
+    - name: NORG2_URL
+      value: http://norg2.org/norg2
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
