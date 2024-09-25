@@ -43,7 +43,7 @@ public class OppgaveService {
                 .setAvsenderenhetId(oppgaveDto.getAvsenderenhetId());
 
         OppgaveId oppgaveId = oppgaveClient.opprettOppgave(oppgave)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Klarte ikke å opprette oppgave"));
+               // .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Klarte ikke å opprette oppgave"));
 
         oppgavehistorikkRepository.insertOppgaveHistorikk(new OppgavehistorikkDTO(
                 oppgaveDto.getTema(),
