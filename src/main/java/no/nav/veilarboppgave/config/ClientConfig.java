@@ -72,16 +72,13 @@ public class ClientConfig {
     }
 
     @Bean
-    public VeilarbpersonClient veilarbpersonClient(ContextAwareService contextAwareService) {
-        String safCluster = isProduction() ? "prod-fss"  : "dev-fss";
+    public VeilarbpersonClient veilarbpersonClient(EnvironmentProperties properties, ContextAwareService contextAwareService) {
+        String safCluster = isProduction() ? "prod-gcp"  : "dev-gcp";
         Supplier<String> userTokenSupplier = contextAwareService.contextAwareUserTokenSupplier(
                 downstreamVeilarbperson(safCluster)
         );
-        String url = EnvironmentUtils.isDevelopment().orElse(false)
-                ? "https://veilarbperson.dev-fss-pub.nais.io/veilarbperson"
-                : "https://veilarbperson.prod-fss-pub.nais.io/veilarbperson";
 
-        return new VeilarbpersonClientImpl(url, userTokenSupplier);
+        return new VeilarbpersonClientImpl(properties.getVeilarbpersonUrl(), userTokenSupplier);
     }
 
     private static boolean isProduction() {

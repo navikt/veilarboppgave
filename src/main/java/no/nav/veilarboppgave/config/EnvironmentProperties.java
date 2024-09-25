@@ -21,4 +21,7 @@ public class EnvironmentProperties {
 
     private String poaoTilgangScope;
 
+    private String veilarbpersonUrl;
+
+    private String veilarbpersonScope;
 }

@@ -41,16 +41,21 @@ spec:
       rules:
         - application: poao-tilgang
           namespace: poao
+        - application: veilarbperson
+          namespace: obo
       external:
         - host: pdl-api.dev-fss-pub.nais.io
         - host: norg2.dev-fss-pub.nais.io
         - host: oppgave-q1.dev-fss-pub.nais.io
-        - host: veilarbperson.dev-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
       value: http://poao-tilgang.poao
     - name: POAO_TILGANG_SCOPE
       value: api://dev-gcp.poao.poao-tilgang/.default
+    - name: VEILARBPERSON_URL
+      value: http://veilarbperson.obo/veilarbperson
+    - name: VEILARBPERSON_SCOPE
+      value: api://dev-gcp.obo.veilarbperson/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
