@@ -16,13 +16,8 @@ import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.client.oppgave.OppgaveClientImpl;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClientImpl;
-import no.nav.veilarboppgave.service.ContextAwareService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.function.Supplier;
-
-import static no.nav.veilarboppgave.config.DownstreamApis.downstreamOppgave;
 
 @Configuration
 public class ClientConfig {
