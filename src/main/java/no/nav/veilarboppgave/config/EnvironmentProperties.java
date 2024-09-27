@@ -25,4 +25,10 @@ public class EnvironmentProperties {
 
     private String veilarbpersonScope;
 
+    private String norg2Url;
+
+    private String oppgaveUrl;
+
+    private String oppgaveScope;
+
 }
