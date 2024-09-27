@@ -52,7 +52,7 @@ public class Norg2ArbeidsfordelingClientImpl implements Norg2ArbeidsfordelingCli
 
     @Override
     public HealthCheckResult checkHealth() {
-        return HealthCheckUtils.pingUrl(UrlUtils.joinPaths(this.norg2Url, "/internal/isAlive"), this.client);
+        return HealthCheckUtils.pingUrl(UrlUtils.joinPaths(this.norg2Url, "/internal/health/readiness"), this.client);
     }
 
 }
