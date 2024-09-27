@@ -1,11 +1,13 @@
 package no.nav.veilarboppgave.config;
 
+import no.nav.common.auth.context.AuthContextHolder;
 import no.nav.common.client.aktoroppslag.AktorOppslagClient;
 import no.nav.common.client.aktoroppslag.CachedAktorOppslagClient;
 import no.nav.common.client.aktoroppslag.PdlAktorOppslagClient;
 import no.nav.common.client.norg2.CachedNorg2Client;
 import no.nav.common.client.norg2.Norg2Client;
 import no.nav.common.client.norg2.NorgHttp2Client;
+import no.nav.common.token_client.client.AzureAdOnBehalfOfTokenClient;
 import no.nav.common.token_client.client.MachineToMachineTokenClient;
 import no.nav.common.utils.EnvironmentUtils;
 import no.nav.veilarboppgave.client.norg2.Norg2ArbeidsfordelingClient;
@@ -14,14 +16,8 @@ import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.client.oppgave.OppgaveClientImpl;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClient;
 import no.nav.veilarboppgave.client.veilarbperson.VeilarbpersonClientImpl;
-import no.nav.veilarboppgave.service.ContextAwareService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.function.Supplier;
-
-import static no.nav.veilarboppgave.config.DownstreamApis.downstreamOppgave;
-import static no.nav.veilarboppgave.config.DownstreamApis.downstreamVeilarbperson;
 
 @Configuration
 public class ClientConfig {
@@ -44,44 +40,28 @@ public class ClientConfig {
 
     @Bean
     public Norg2Client norg2Client(EnvironmentProperties properties) {
-        String url = EnvironmentUtils.isDevelopment().orElse(false)
-                ? "https://norg2.dev-fss-pub.nais.io/norg2"
-                : "https://norg2.prod-fss-pub.nais.io/norg2";
-        return new CachedNorg2Client(new NorgHttp2Client(url));
+        return new CachedNorg2Client(new NorgHttp2Client(properties.getNorg2Url()));
     }
 
     @Bean
     public Norg2ArbeidsfordelingClient norg2ArbeidsfordelingClient(EnvironmentProperties properties) {
-        String url = EnvironmentUtils.isDevelopment().orElse(false)
-                ? "https://norg2.dev-fss-pub.nais.io/norg2"
-                : "https://norg2.prod-fss-pub.nais.io/norg2";
-        return new Norg2ArbeidsfordelingClientImpl(url);
+        return new Norg2ArbeidsfordelingClientImpl(properties.getNorg2Url());
     }
 
     @Bean
-    public OppgaveClient oppgaveClient(ContextAwareService contextAwareService) {
-        String safCluster = isProduction() ? "prod-fss"  : "dev-fss";
-        Supplier<String> userTokenSupplier = contextAwareService.contextAwareUserTokenSupplier(
-                downstreamOppgave(safCluster)
+    public OppgaveClient oppgaveClient(EnvironmentProperties properties, AzureAdOnBehalfOfTokenClient tokenClient, AuthContextHolder authContextHolder) {
+        return new OppgaveClientImpl(
+                properties.getOppgaveUrl(),
+                () -> tokenClient.exchangeOnBehalfOfToken(properties.getOppgaveScope(), authContextHolder.requireIdTokenString())
         );
-        String url = EnvironmentUtils.isDevelopment().orElse(false)
-                ? "https://oppgave-q1.dev-fss-pub.nais.io"
-                : "https://oppgave.prod-fss-pub.nais.io";
-
-        return new OppgaveClientImpl(url, userTokenSupplier);
     }
 
     @Bean
-    public VeilarbpersonClient veilarbpersonClient(ContextAwareService contextAwareService) {
-        String safCluster = isProduction() ? "prod-fss"  : "dev-fss";
-        Supplier<String> userTokenSupplier = contextAwareService.contextAwareUserTokenSupplier(
-                downstreamVeilarbperson(safCluster)
+    public VeilarbpersonClient veilarbpersonClient(EnvironmentProperties properties, AzureAdOnBehalfOfTokenClient tokenClient, AuthContextHolder authContextHolder) {
+        return new VeilarbpersonClientImpl(
+                properties.getVeilarbpersonUrl(),
+                () -> tokenClient.exchangeOnBehalfOfToken(properties.getVeilarbpersonScope(), authContextHolder.requireIdTokenString())
         );
-        String url = EnvironmentUtils.isDevelopment().orElse(false)
-                ? "https://veilarbperson.dev-fss-pub.nais.io/veilarbperson"
-                : "https://veilarbperson.prod-fss-pub.nais.io/veilarbperson";
-
-        return new VeilarbpersonClientImpl(url, userTokenSupplier);
     }
 
     private static boolean isProduction() {

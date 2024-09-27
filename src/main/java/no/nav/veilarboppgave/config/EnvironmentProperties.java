@@ -21,4 +21,14 @@ public class EnvironmentProperties {
 
     private String poaoTilgangScope;
 
+    private String veilarbpersonUrl;
+
+    private String veilarbpersonScope;
+
+    private String norg2Url;
+
+    private String oppgaveUrl;
+
+    private String oppgaveScope;
+
 }

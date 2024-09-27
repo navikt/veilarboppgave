@@ -15,6 +15,7 @@ import okhttp3.Request;
 import java.util.function.Supplier;
 
 import static no.nav.common.utils.UrlUtils.joinPaths;
+import static no.nav.veilarboppgave.util.RestUtils.bearerTokenFromSupplier;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -40,7 +41,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
         Request request = new Request.Builder()
                 .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, userTokenSupplier.get())
+                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr, behandlingsnummer)))
                 .build();
 

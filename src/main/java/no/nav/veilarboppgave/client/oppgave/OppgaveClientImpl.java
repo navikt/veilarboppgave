@@ -61,7 +61,7 @@ public class OppgaveClientImpl implements OppgaveClient {
         Request request = new Request.Builder()
                 .url(joinPaths(oppgaveUrl, "/api/v1/oppgaver"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .header(AUTHORIZATION, userTokenSupplier.get())
+                .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .header("X-Correlation-Id", correlationId)
                 .post(RestUtils.toJsonRequestBody(opprettOppgaveRequest))
                 .build();
@@ -69,6 +69,11 @@ public class OppgaveClientImpl implements OppgaveClient {
         try (okhttp3.Response response = client.newCall(request).execute()) {
             if (response.code() == 403) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bruker har ikke tilgang til å opprette oppgave");
+            }
+
+            if(!response.isSuccessful()) {
+                log.error("Feil i request til oppgave: {}", response.message());
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Feil i request til oppgave");
             }
 
             RestUtils.throwIfNotSuccessful(response);

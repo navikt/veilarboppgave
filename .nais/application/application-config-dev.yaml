@@ -17,7 +17,9 @@ spec:
     - https://veilarboppgave.intern.dev.nav.no
   gcp:
     sqlInstances:
-      - type: POSTGRES_15
+      - name: veilarboppgave
+        type: POSTGRES_15
+        tier: db-custom-1-3840
         databases:
           - name: veilarboppgave
             envVarPrefix: DB
@@ -39,16 +41,30 @@ spec:
       rules:
         - application: poao-tilgang
           namespace: poao
+        - application: veilarbperson
+          namespace: obo
+        - application: norg2
+          namespace: org
       external:
         - host: pdl-api.dev-fss-pub.nais.io
-        - host: norg2.dev-fss-pub.nais.io
-        - host: oppgave-q1.dev-fss-pub.nais.io
-        - host: veilarbperson.dev-fss-pub.nais.io
+        - host: oppgave.dev-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
       value: http://poao-tilgang.poao
     - name: POAO_TILGANG_SCOPE
       value: api://dev-gcp.poao.poao-tilgang/.default
+    - name: VEILARBPERSON_URL
+      value: http://veilarbperson.obo/veilarbperson
+    - name: VEILARBPERSON_SCOPE
+      value: api://dev-gcp.obo.veilarbperson/.default
+    - name: NORG2_URL
+      value: http://norg2.org/norg2
+    - name: NORG2_SCOPE
+      value: api://dev-gcp.org.norg2/.default
+    - name: OPPGAVE_URL
+      value: https://oppgave.dev-fss-pub.nais.io
+    - name: OPPGAVE_SCOPE
+      value: api://dev-fss.oppgavehandtering.oppgave/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
