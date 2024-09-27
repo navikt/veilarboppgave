@@ -47,7 +47,7 @@ spec:
           namespace: org
       external:
         - host: pdl-api.dev-fss-pub.nais.io
-        - host: oppgave-q1.dev-fss-pub.nais.io
+        - host: oppgave.dev-fss-pub.nais.io
   env:
     - name: POAO_TILGANG_URL
       value: http://poao-tilgang.poao
@@ -62,9 +62,9 @@ spec:
     - name: NORG2_SCOPE
       value: api://dev-gcp.org.norg2/.default
     - name: OPPGAVE_URL
-      value: https://oppgave-q1.dev-fss-pub.nais.io
+      value: https://oppgave.dev-fss-pub.nais.io
     - name: OPPGAVE_SCOPE
-      value: api://dev-fss.oppgavehandtering.oppgave-q1/.default
+      value: api://dev-fss.oppgavehandtering.oppgave/.default
   prometheus:
     enabled: true
     path: veilarboppgave/internal/prometheus
