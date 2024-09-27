@@ -71,6 +71,11 @@ public class OppgaveClientImpl implements OppgaveClient {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bruker har ikke tilgang til å opprette oppgave");
             }
 
+            if(!response.isSuccessful()) {
+                log.error("Feil i request til oppgave: {}", response.message());
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Feil i request til oppgave");
+            }
+
             RestUtils.throwIfNotSuccessful(response);
 
             OpprettOppgaveResponse opprettOppgaveResponse = RestUtils.parseJsonResponseOrThrow(response, OpprettOppgaveResponse.class);
