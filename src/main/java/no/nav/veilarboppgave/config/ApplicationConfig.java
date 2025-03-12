@@ -8,6 +8,7 @@ import no.nav.common.rest.client.RestClient;
 import no.nav.common.token_client.builder.AzureAdTokenClientBuilder;
 import no.nav.common.token_client.client.AzureAdMachineToMachineTokenClient;
 import no.nav.common.token_client.client.AzureAdOnBehalfOfTokenClient;
+import no.nav.poao_tilgang.api.dto.response.TilgangsattributterResponse;
 import no.nav.poao_tilgang.client.*;
 import no.nav.veilarboppgave.util.DbUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,6 +32,9 @@ public class ApplicationConfig {
             .expireAfterWrite(Duration.ofMinutes(30))
             .build();
     private final Cache<String, Boolean> norskIdentToErSkjermetCache = Caffeine.newBuilder()
+            .expireAfterWrite(Duration.ofMinutes(30))
+            .build();
+    private final Cache<String, TilgangsattributterResponse> tilgangsAttributterCache = Caffeine.newBuilder()
             .expireAfterWrite(Duration.ofMinutes(30))
             .build();
 
@@ -68,7 +72,8 @@ public class ApplicationConfig {
                 ),
                 policyInputToDecisionCache,
                 navAnsattIdToAzureAdGrupperCache,
-                norskIdentToErSkjermetCache
+                norskIdentToErSkjermetCache,
+                tilgangsAttributterCache
         );
     }
 }

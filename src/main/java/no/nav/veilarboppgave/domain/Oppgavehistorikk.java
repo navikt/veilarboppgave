@@ -1,19 +1,19 @@
 package no.nav.veilarboppgave.domain;
 
 import lombok.Value;
-import lombok.experimental.Wither;
+import lombok.With;
 
 import java.sql.Timestamp;
 
+@With
 @Value(staticConstructor = "of")
-@Wither
 public class Oppgavehistorikk {
-    private final String type;
-    private final String oppgaveTema;
-    private final String oppgaveType;
-    private final String opprettetAv;
-    private final String opprettetAvBrukerId;
-    private final Timestamp dato;
+    String type;
+    String oppgaveTema;
+    String oppgaveType;
+    String opprettetAv;
+    String opprettetAvBrukerId;
+    Timestamp dato;
 
     public static Oppgavehistorikk of(OppgavehistorikkDTO dto) {
         return Oppgavehistorikk.of(
