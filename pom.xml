@@ -98,7 +98,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
-            <version>11.3.4</version>
+            <version>11.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
