@@ -15,6 +15,11 @@ spec:
   webproxy: true
   ingresses:
     - https://veilarboppgave.intern.dev.nav.no
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   gcp:
     sqlInstances:
       - name: veilarboppgave
