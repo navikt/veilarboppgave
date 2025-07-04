@@ -1,0 +1,1 @@
+CREATE INDEX oppgavehistorikk_gsak_id_idx ON oppgavehistorikk(gsak_id);
