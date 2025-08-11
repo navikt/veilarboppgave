@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>21</java.version>
-        <common.version>3.2025.04.01_09.46-936a3ae3d5d9</common.version>
+        <common.version>3.2025.06.23_14.50-3af3985d8555</common.version>
         <testcontainers.version>1.21.3</testcontainers.version>
     </properties>
 
