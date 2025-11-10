@@ -16,6 +16,9 @@ spec:
   ingresses:
     - https://veilarboppgave.intern.dev.nav.no
   observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
     logging:
       destinations:
         - id: elastic
