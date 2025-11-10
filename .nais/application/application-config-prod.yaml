@@ -15,6 +15,14 @@ spec:
   webproxy: true
   ingresses:
     - https://veilarboppgave.intern.nav.no
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
   gcp:
     sqlInstances:
       - type: POSTGRES_15
