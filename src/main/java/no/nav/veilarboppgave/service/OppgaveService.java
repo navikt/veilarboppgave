@@ -27,12 +27,14 @@ public class OppgaveService {
 
     public OppgavehistorikkDTO opprettOppgave(AktorId aktorId, OppgaveDTO oppgaveDto) {
         TemaDTO temaDTO = OppgaveUtils.tilTemaDto(oppgaveDto.getTema());
+        BehandlingstemaDTO behandlingstemaDTO = OppgaveUtils.tilBehadlingstemaDto(oppgaveDto.getBehandlingstema());
         OppgaveType oppgaveType = OppgaveUtils.tilOppgaveType(oppgaveDto.getType());
         Prioritet prioritet = OppgaveUtils.tilPrioritet(oppgaveDto.getPrioritet());
 
         Oppgave oppgave = new Oppgave()
                 .setAktorId(aktorId)
                 .setTemaDTO(temaDTO)
+                .setBehandlingstemaDTO(behandlingstemaDTO)
                 .setType(oppgaveType)
                 .setPrioritet(prioritet)
                 .setBeskrivelse(oppgaveDto.getBeskrivelse())

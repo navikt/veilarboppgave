@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class OppgaveDTO {
     String fnr;
     String tema;
+    String behandlingstema;
     String type;
     String prioritet;
     String beskrivelse;
