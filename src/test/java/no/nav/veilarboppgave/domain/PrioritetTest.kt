@@ -1,17 +1,15 @@
-package no.nav.veilarboppgave.domain;
+package no.nav.veilarboppgave.domain
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class PrioritetTest {
-
+internal class PrioritetTest {
     @Test
-    void skal_utlede_korrekt_prioritetkode_basert_paa_tema_og_prioritet() {
-        TemaDTO temaDTO = TemaDTO.OPPFOLGING;
-        Prioritet pri = Prioritet.NORM;
+    fun skal_utlede_korrekt_prioritetkode_basert_paa_tema_og_prioritet() {
+        val temaDTO = TemaDTO.OPPFOLGING
+        val pri = Prioritet.NORM
 
-        String kode = Prioritet.utledPrioritetKode(temaDTO, pri);
-        assertEquals("NORM_OPP", kode);
+        val kode = Prioritet.utledPrioritetKode(temaDTO, pri)
+        Assertions.assertEquals("NORM_OPP", kode)
     }
 }
