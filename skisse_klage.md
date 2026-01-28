@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
 start((👩‍💼 Starter
 klagebehandling)) --> formkrav[✏️ Vurderer formkrav]
@@ -9,3 +10,4 @@ vedtak -->|Vedtaket opprettholdes| kaBrev[Send brev til bruker om at klagen er s
 kaBrev -.-> kaVurderer[/KA vurderer klagen... ⏳/]
 kaVurderer --> opprettSak[Opprettes _VurderKonsekvensForYtelse_-oppgave i TS-sak]
 ferdigstill -.-> revurdering[\Saksbehandler må manuelt opprette revurdering i TS-sak\]
+```
