@@ -27,7 +27,7 @@ public class OppgaveService {
 
     public OppgavehistorikkDTO opprettOppgave(AktorId aktorId, OppgaveDTO oppgaveDto) {
         TemaDTO temaDTO = OppgaveUtils.tilTemaDto(oppgaveDto.getTema());
-        BehandlingstemaDTO behandlingstemaDTO = OppgaveUtils.tilBehadlingstemaDto(oppgaveDto.getBehandlingstema());
+        BehandlingstemaDTO behandlingstemaDTO = OppgaveUtils.tilBehandlingstemaDto(oppgaveDto.getBehandlingsTema());
         OppgaveType oppgaveType = OppgaveUtils.tilOppgaveType(oppgaveDto.getType());
         Prioritet prioritet = OppgaveUtils.tilPrioritet(oppgaveDto.getPrioritet());
 

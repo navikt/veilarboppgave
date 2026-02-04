@@ -2,7 +2,6 @@ package no.nav.veilarboppgave.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class OppgaveDTO {
     String fnr;
     String tema;
-    String behandlingstema;
+    String behandlingsTema;
     String type;
     String prioritet;
     String beskrivelse;
