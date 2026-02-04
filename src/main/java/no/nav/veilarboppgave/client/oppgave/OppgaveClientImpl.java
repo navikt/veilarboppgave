@@ -59,6 +59,7 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
+        log.info("Opprett oppgave med behandlingsTema {}", oppgave.getBehandlingstemaDTO());
         if (oppgave.getBehandlingstemaDTO() != null) {
             opprettOppgaveRequest.setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
         }
