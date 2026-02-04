@@ -61,7 +61,6 @@ public class OppgaveClientImpl implements OppgaveClient {
 
         log.info("Opprett oppgave med behandlingsTema {}", oppgave.getBehandlingstemaDTO());
         if (oppgave.getBehandlingstemaDTO() != null) {
-            log.info("Opprett oppgave med behandlingsTema {}", oppgave.getBehandlingstemaDTO());
             opprettOppgaveRequest.setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
         }
 
@@ -74,6 +73,7 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
+            log.info("Response body {}", response.body());
             if (response.code() == 403) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bruker har ikke tilgang til å opprette oppgave");
             }
