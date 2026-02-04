@@ -59,7 +59,6 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
-        log.info("Opprett oppgave med behandlingstema {}", oppgave.getBehandlingstemaDTO());
         if (oppgave.getBehandlingstemaDTO() != null) {
             opprettOppgaveRequest.setBehandlingstema(oppgave.getBehandlingstemaDTO().name());
         }
@@ -78,7 +77,7 @@ public class OppgaveClientImpl implements OppgaveClient {
             }
 
             if(!response.isSuccessful()) {
-                log.error("Feil i request til oppgave: {}", response.message());
+                log.error("Feil i request til oppgave: {} {}", response.message(), response.body() != null ? response.body().string() : "");
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Feil i request til oppgave");
             }
 
