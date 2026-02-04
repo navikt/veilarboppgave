@@ -17,6 +17,7 @@ import okhttp3.Request;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -56,8 +57,11 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setOpprettetAvEnhetsnr(oppgave.getAvsenderenhetId())
                 .setTilordnetRessurs(oppgave.getVeilederId())
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
-                .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()))
-                .setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
+                .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
+
+        if (oppgave.getBehandlingstemaDTO() != null) {
+            opprettOppgaveRequest.setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
+        }
 
         Request request = new Request.Builder()
                 .url(joinPaths(oppgaveUrl, "/api/v1/oppgaver"))
@@ -95,6 +99,7 @@ public class OppgaveClientImpl implements OppgaveClient {
 
     @Data
     @Accessors(chain = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private static class OpprettOppgaveRequest {
         String aktoerId;
         String tema;
