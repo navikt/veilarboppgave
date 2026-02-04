@@ -59,7 +59,6 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
-        log.info("Opprett oppgave med behandlingsTema {}", oppgave.getBehandlingstemaDTO());
         if (oppgave.getBehandlingstemaDTO() != null) {
             opprettOppgaveRequest.setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
         }
@@ -73,7 +72,6 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
-            log.info("Response body {}", response.body());
             if (response.code() == 403) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bruker har ikke tilgang til å opprette oppgave");
             }

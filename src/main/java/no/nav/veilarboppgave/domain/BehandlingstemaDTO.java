@@ -8,7 +8,4 @@ public enum BehandlingstemaDTO {
     BehandlingstemaDTO(String behandlingstema) {
         this.behandlingstema = behandlingstema;
     }
-  public String getBehandlingstema() {
-        return behandlingstema;
-  }
 }
