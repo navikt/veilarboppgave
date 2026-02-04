@@ -56,7 +56,8 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setOpprettetAvEnhetsnr(oppgave.getAvsenderenhetId())
                 .setTilordnetRessurs(oppgave.getVeilederId())
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
-                .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
+                .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()))
+                .setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
 
         Request request = new Request.Builder()
                 .url(joinPaths(oppgaveUrl, "/api/v1/oppgaver"))
@@ -105,6 +106,7 @@ public class OppgaveClientImpl implements OppgaveClient {
         String tilordnetRessurs; // veileder ident
         String aktivDato; // yyyy-mm-dd (fraDato)
         String fristFerdigstillelse; // yyyy-mm-dd (tilDato)
+        String behandlingsTema;
     }
 
     @Data
