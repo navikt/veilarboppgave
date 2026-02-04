@@ -73,7 +73,7 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
-            log.info("Response body {}", response.body());
+            log.info("Request {}", request);
             if (response.code() == 403) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bruker har ikke tilgang til å opprette oppgave");
             }
