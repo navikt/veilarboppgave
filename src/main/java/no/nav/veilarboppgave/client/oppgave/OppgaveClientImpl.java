@@ -59,8 +59,9 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
+        log.info("Opprett oppgave med behandlingstema {}", oppgave.getBehandlingstemaDTO());
         if (oppgave.getBehandlingstemaDTO() != null) {
-            opprettOppgaveRequest.setBehandlingsTema(oppgave.getBehandlingstemaDTO().name());
+            opprettOppgaveRequest.setBehandlingstema(oppgave.getBehandlingstemaDTO().name());
         }
 
         Request request = new Request.Builder()
@@ -103,6 +104,7 @@ public class OppgaveClientImpl implements OppgaveClient {
     private static class OpprettOppgaveRequest {
         String aktoerId;
         String tema;
+        String behandlingstema;
         String oppgavetype;
         String prioritet;
         String tildeltEnhetsnr;
@@ -111,7 +113,6 @@ public class OppgaveClientImpl implements OppgaveClient {
         String tilordnetRessurs; // veileder ident
         String aktivDato; // yyyy-mm-dd (fraDato)
         String fristFerdigstillelse; // yyyy-mm-dd (tilDato)
-        String behandlingsTema;
     }
 
     @Data
