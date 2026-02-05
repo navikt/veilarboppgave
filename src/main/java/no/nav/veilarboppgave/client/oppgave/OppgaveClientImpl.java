@@ -17,7 +17,6 @@ import okhttp3.Request;
 import org.slf4j.MDC;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -37,6 +36,7 @@ public class OppgaveClientImpl implements OppgaveClient {
     private final Supplier<String> userTokenSupplier;
 
     private final OkHttpClient client;
+
 
     public OppgaveClientImpl(String oppgaveUrl, Supplier<String> userTokenSupplier) {
         this.oppgaveUrl = oppgaveUrl;
@@ -60,7 +60,7 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
         if (oppgave.getBehandlingstemaDTO() != null) {
-            opprettOppgaveRequest.setBehandlingstema(oppgave.getBehandlingstemaDTO().name());
+            opprettOppgaveRequest.setBehandlingstema(oppgave.getBehandlingstemaDTO().getBehandlingstema());
         }
 
         Request request = new Request.Builder()
@@ -68,7 +68,7 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .header("X-Correlation-Id", correlationId)
-                .post(RestUtils.toJsonRequestBody(opprettOppgaveRequest))
+                .post(RestUtils.toJsonRequestBodyWithoutNullValues(opprettOppgaveRequest))
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -99,7 +99,6 @@ public class OppgaveClientImpl implements OppgaveClient {
 
     @Data
     @Accessors(chain = true)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private static class OpprettOppgaveRequest {
         String aktoerId;
         String tema;
