@@ -9,8 +9,10 @@ import no.nav.common.log.MDCConstants;
 import no.nav.common.rest.client.RestClient;
 import no.nav.common.rest.client.RestUtils;
 import no.nav.common.utils.IdUtils;
+import no.nav.veilarboppgave.domain.BehandlingstemaDTO;
 import no.nav.veilarboppgave.domain.Oppgave;
 import no.nav.veilarboppgave.domain.OppgaveId;
+import no.nav.veilarboppgave.domain.TemaDTO;
 import no.nav.veilarboppgave.util.DateUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -59,8 +61,8 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
-        if (oppgave.getBehandlingstemaDTO() != null) {
-            opprettOppgaveRequest.setBehandlingstema(oppgave.getBehandlingstemaDTO().getBehandlingstema());
+        if (oppgave.getTemaDTO() == TemaDTO.ARBEIDSAVKLARING) {
+            opprettOppgaveRequest.setBehandlingstema((BehandlingstemaDTO.FERDIG_AVKLART_MOT_UFØRETRYGD.getBehandlingstema()));
         }
 
         Request request = new Request.Builder()
