@@ -1,6 +1,7 @@
 package no.nav.veilarboppgave.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import no.nav.common.types.identer.AktorId;
 import no.nav.veilarboppgave.client.oppgave.OppgaveClient;
 import no.nav.veilarboppgave.domain.*;
@@ -17,6 +18,7 @@ import static no.nav.veilarboppgave.util.DateUtils.tilDato;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class OppgaveService {
 
     private final OppgaveClient oppgaveClient;
@@ -27,12 +29,14 @@ public class OppgaveService {
 
     public OppgavehistorikkDTO opprettOppgave(AktorId aktorId, OppgaveDTO oppgaveDto) {
         TemaDTO temaDTO = OppgaveUtils.tilTemaDto(oppgaveDto.getTema());
+        BehandlingstemaDTO behandlingstemaDTO = OppgaveUtils.tilBehandlingstemaDto(oppgaveDto.getBehandlingstema());
         OppgaveType oppgaveType = OppgaveUtils.tilOppgaveType(oppgaveDto.getType());
         Prioritet prioritet = OppgaveUtils.tilPrioritet(oppgaveDto.getPrioritet());
 
         Oppgave oppgave = new Oppgave()
                 .setAktorId(aktorId)
                 .setTemaDTO(temaDTO)
+                .setBehandlingstemaDTO(behandlingstemaDTO)
                 .setType(oppgaveType)
                 .setPrioritet(prioritet)
                 .setBeskrivelse(oppgaveDto.getBeskrivelse())
@@ -42,6 +46,7 @@ public class OppgaveService {
                 .setVeilederId(oppgaveDto.getVeilederId())
                 .setAvsenderenhetId(oppgaveDto.getAvsenderenhetId());
 
+        log.info("Oppgave {}", oppgave);
         OppgaveId oppgaveId = oppgaveClient.opprettOppgave(oppgave)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Klarte ikke å opprette oppgave"));
 

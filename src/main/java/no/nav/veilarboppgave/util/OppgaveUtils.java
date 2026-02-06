@@ -1,17 +1,14 @@
 package no.nav.veilarboppgave.util;
 
+import no.nav.veilarboppgave.domain.BehandlingstemaDTO;
 import no.nav.veilarboppgave.domain.OppgaveType;
 import no.nav.veilarboppgave.domain.Prioritet;
 import no.nav.veilarboppgave.domain.TemaDTO;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-
-import static java.util.Optional.ofNullable;
 
 public class OppgaveUtils {
 
@@ -24,6 +21,15 @@ public class OppgaveUtils {
 
     public static TemaDTO tilTemaDto(String tema) {
         return TemaDTO.valueOf(tema.toUpperCase());
+    }
+
+    public static BehandlingstemaDTO tilBehandlingstemaDto(String behandlingsTema) {
+        if (behandlingsTema == null) return null;
+
+        if (!BehandlingstemaDTO.FERDIG_AVKLART_MOT_UFØRETRYGD.name().equalsIgnoreCase(behandlingsTema)) {
+            return null;
+        }
+        return BehandlingstemaDTO.FERDIG_AVKLART_MOT_UFØRETRYGD;
     }
 
     public static Prioritet tilPrioritet(String prioritet) {

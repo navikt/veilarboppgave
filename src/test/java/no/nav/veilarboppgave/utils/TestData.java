@@ -19,6 +19,7 @@ public class TestData {
         return new OppgaveDTO(
                 fnr.get(),
                 "oppfolging",
+                "",
                 "vurder_konsekvens_for_ytelse",
                 "norm",
                 "beskrivelse",

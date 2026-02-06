@@ -9,8 +9,10 @@ import no.nav.common.log.MDCConstants;
 import no.nav.common.rest.client.RestClient;
 import no.nav.common.rest.client.RestUtils;
 import no.nav.common.utils.IdUtils;
+import no.nav.veilarboppgave.domain.BehandlingstemaDTO;
 import no.nav.veilarboppgave.domain.Oppgave;
 import no.nav.veilarboppgave.domain.OppgaveId;
+import no.nav.veilarboppgave.domain.TemaDTO;
 import no.nav.veilarboppgave.util.DateUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,6 +39,7 @@ public class OppgaveClientImpl implements OppgaveClient {
 
     private final OkHttpClient client;
 
+
     public OppgaveClientImpl(String oppgaveUrl, Supplier<String> userTokenSupplier) {
         this.oppgaveUrl = oppgaveUrl;
         this.userTokenSupplier = userTokenSupplier;
@@ -58,12 +61,16 @@ public class OppgaveClientImpl implements OppgaveClient {
                 .setAktivDato(DateUtils.tilDatoStr(oppgave.getFraDato()))
                 .setFristFerdigstillelse(DateUtils.tilDatoStr(oppgave.getTilDato()));
 
+        if (oppgave.getTemaDTO() == TemaDTO.ARBEIDSAVKLARING) {
+            opprettOppgaveRequest.setBehandlingstema((BehandlingstemaDTO.FERDIG_AVKLART_MOT_UFØRETRYGD.getBehandlingstema()));
+        }
+
         Request request = new Request.Builder()
                 .url(joinPaths(oppgaveUrl, "/api/v1/oppgaver"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .header("X-Correlation-Id", correlationId)
-                .post(RestUtils.toJsonRequestBody(opprettOppgaveRequest))
+                .post(RestUtils.toJsonRequestBodyWithoutNullValues(opprettOppgaveRequest))
                 .build();
 
         try (okhttp3.Response response = client.newCall(request).execute()) {
@@ -72,7 +79,7 @@ public class OppgaveClientImpl implements OppgaveClient {
             }
 
             if(!response.isSuccessful()) {
-                log.error("Feil i request til oppgave: {}", response.message());
+                log.error("Feil i request til oppgave: {} {}", response.message(), response.body() != null ? response.body().string() : "");
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Feil i request til oppgave");
             }
 
@@ -97,6 +104,7 @@ public class OppgaveClientImpl implements OppgaveClient {
     private static class OpprettOppgaveRequest {
         String aktoerId;
         String tema;
+        String behandlingstema;
         String oppgavetype;
         String prioritet;
         String tildeltEnhetsnr;
