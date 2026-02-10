@@ -1,5 +1,5 @@
 ```mermaid
-flowchart LR
+flowchart TD
 
 start((Gosys er startpunkt for klagebehandling, det må finnes en Gosys-oppgave for klagen.))
     --> klageStart
