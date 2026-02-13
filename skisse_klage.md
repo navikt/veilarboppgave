@@ -40,7 +40,7 @@ vedtak -->|Vedtaket opprettholdes| sendTilKabal
 sendTilKabal[Send saken til Nav klageinstans via Kabal API] --> lagringOPH
 
 lagringOPH[Lagre status OPPRETTHOLD i db på gammelt vedtak]
-    -->|Vedtaket opprettholdes| kaBrev
+    --> kaBrev
 
 kaBrev[Gosys: Send brev til bruker om at klagen er sendt til KA ✉️]
     -.-> kaVurderer
