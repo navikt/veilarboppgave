@@ -1,6 +1,5 @@
 package no.nav.veilarboppgave.client.veilarbperson;
 
-import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.common.health.HealthCheckResult;
