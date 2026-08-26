@@ -1,6 +1,5 @@
 package no.nav.veilarboppgave.client.veilarbperson;
 
-import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import no.nav.common.health.HealthCheckResult;
@@ -39,7 +38,7 @@ public class VeilarbpersonClientImpl implements VeilarbpersonClient {
     @Override
     public Personalia hentPersonalia(Fnr fnr, String behandlingsnummer) {
         Request request = new Request.Builder()
-                .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person"))
+                .url(joinPaths(veilarbpersonUrl, "/api/v3/hent-person-tilgangsstyrt"))
                 .header(ACCEPT, APPLICATION_JSON_VALUE)
                 .header(AUTHORIZATION, bearerTokenFromSupplier(userTokenSupplier))
                 .post(RestUtils.toJsonRequestBody(new PersonRequest(fnr, behandlingsnummer)))
