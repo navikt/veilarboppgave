@@ -20,7 +20,7 @@
     <properties>
         <java.version>21</java.version>
         <kotlin.version>2.3.21</kotlin.version>
-        <common.version>4.2026.08.03_09.24-8d55c4f00b2f</common.version>
+        <common.version>4.2026.09.14_05.57-40a1ead1e559</common.version>
         <testcontainers.version>1.21.4</testcontainers.version>
     </properties>
 
