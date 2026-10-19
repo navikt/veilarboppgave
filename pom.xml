@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.7</version>
+        <version>4.1.1</version>
         <relativePath/>
     </parent>
 
@@ -89,8 +89,9 @@
             <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>9.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -143,12 +144,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
         </dependency>
-        <!-- Better Jackson <-> Kotlin support for Spring MVC request/response DTOs -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-        </dependency>
-
         <!-- Database -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -217,12 +212,6 @@
             <groupId>no.bekk.bekkopen</groupId>
             <artifactId>nocommons</artifactId>
             <version>0.17.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.common</groupId>
-            <artifactId>test</artifactId>
-            <version>${common.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
