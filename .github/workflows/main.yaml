@@ -77,6 +77,7 @@ jobs:
     needs: test-build-and-push
     permissions:
       id-token: write
+      contents: write # Create release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
