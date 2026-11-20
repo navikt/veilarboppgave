@@ -80,9 +80,8 @@ spec:
     path: veilarboppgave/internal/health/liveness
     initialDelay: 45
   resources:
-    limits:
-      cpu: "2"
-      memory: 2Gi
     requests:
-      cpu: 500m
+      cpu: 50m
+      memory: 512Mi
+    limits:
       memory: 512Mi
