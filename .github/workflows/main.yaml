@@ -93,6 +93,5 @@ jobs:
         uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # ratchet:softprops/action-gh-release@v3.0.4
         with:
           name: Release to prod
-          target_commitish: main
           tag_name: release/prod@${{ env.IMAGE_TAG }}
           prerelease: false
